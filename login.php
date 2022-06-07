@@ -1,5 +1,5 @@
 <?php
-		include("./header.php");
+	include("./header.php");
 ?>
 
 <main>
@@ -17,13 +17,13 @@
 					<button class="btn btn-primary" type="submit">Log in</button>
 				</div>
 				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
-				<div class="form-footer"><a href="/accounts/password/reset/" tabindex="0">Forgot password?</a></div>
+				<div class="form-footer"><a href="#">Forgot password?</a></div>
 			</form>
 		</div>
 		<div class="form-container">
 				<div class="sign-text">
 					<p class="sign-up">Don't have an account?
-						<a data-testid="sign-up-link" href="./signup.php" tabindex="0">
+						<a data-testid="sign-up-link" href="./signup.php">
 							<span class="sign-link">
 								Sign up
 							</span>
@@ -35,5 +35,5 @@
 </main>
 
 <?php
-		include("./footer.php");
+	include("./footer.php");
 ?>

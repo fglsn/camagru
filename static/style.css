@@ -17,6 +17,7 @@ header {
 .navbar {
 	align-content: center
 }
+
 .navbar-brand {
 	display: flex;
 	align-items: center;
@@ -48,6 +49,80 @@ main {
 	display: flex;
 	flex-direction: column;
 	flex-grow: 1;
+}
+
+/* Feed */
+
+.feed {
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.post-listing {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10px;
+	justify-content: space-between;
+}
+
+.post-wrapper {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #dddddd80;
+	border-radius: 8px;
+	margin-bottom: 2rem;
+}
+
+.post-header {
+	display: flex;
+	align-items: center;
+	padding-left: 1rem;
+	border-bottom: 1px solid #dddddd80;
+	height: 3rem;
+}
+
+.post-content {
+	display: flex;
+	justify-content: center;
+}
+
+.post-pic-section {
+	width: 600px;
+	display: flex;
+}
+
+.picture {
+	max-width: 600px;
+	object-fit: cover;
+}
+
+.post-comment-section {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 5rem;
+
+}
+
+.post-buttons {
+	display: flex;
+	flex-direction: row;
+	height: 2.5rem;
+}
+
+.button {
+	align-items: center;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+}
+
+.comment {
+	height: 4rem;
 }
 
 /* Forms */
@@ -146,6 +221,6 @@ span.sign-link {
 /* Footer */
 
 .footer {
-	position:absolute;
+	position: inherit;
 	bottom: 0;
 }

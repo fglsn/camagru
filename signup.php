@@ -31,7 +31,7 @@
 		<div class="form-container">
 				<div class="sign-text">
 					<p class="sign-up">Have an account?
-						<a href="./login.php" tabindex="0">
+						<a href="./login.php">
 							<span class="sign-link">
 								Log in
 							</span>
