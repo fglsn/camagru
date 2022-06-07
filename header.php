@@ -25,8 +25,8 @@
 			</a>
 			<div class="navbar" id="navbarNavAltMarkup">
 				<ul class="navbar-nav ml-auto mt-2">
-					<li class="nav-item"><a class="nav-link" href="./signup.php">Register</a></li>
 					<li class="nav-item"><a class="nav-link" href="./login.php">Log In</a></li>
+					<li class="nav-item"><a class="nav-link" href="./signup.php">Register</a></li>
 				</ul>
 			</div>
 		</nav>

@@ -1,15 +1,44 @@
-/* Header */
+html {
+	min-width: 350px;
+}
 
+a {
+	text-decoration: none!important;
+}
+
+/* Navigation */
+
+header {
+	top: -2px;
+	border: 1px solid #dddddd80;
+	height: 4rem;
+}
+
+.navbar {
+	align-content: center
+}
 .navbar-brand {
 	display: flex;
 	align-items: center;
 	font-family: 'Cookie', cursive;
 	font-size: 2rem!important;
+	margin-left: 1rem;
+}
+
+.nav-item {
+	margin-right: 0.5rem;
 }
 
 @media only screen and (max-width: 992px) {
-	header {
-		display: none;
+	.navbar>.container-fluid {
+		display: flex;
+		flex-wrap: inherit;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.navbar-nav {
+		display: flex!important;
+		flex-direction: row!important;
 	}
 }
 
@@ -37,6 +66,7 @@ main {
 	background-color: #f8f9fa;
 	box-shadow: 3px 3px 8px #e6e6e6;
 	margin: 1.5rem auto;
+	border: 1px solid #dddddd80;
 }
 
 .form-header {
@@ -104,12 +134,14 @@ main {
 
 .sign-up {
 	color: #262626;
-    color: rgba(var(--i1d,38,38,38),1);
-    font-size: 14px;
-    margin: 15px;
-    text-align: center;
+	font-size: 14px;
+	margin: 15px;
+	text-align: center;
 }
 
+span.sign-link {
+	text-decoration: none;
+}
 
 /* Footer */
 
