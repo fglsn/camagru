@@ -5,7 +5,7 @@
 <main>
 	<div class="form-wrapper">
 		<div class="form-container">
-			<h3 class="form-header" style="font-family: 'Cookie', cursive;">CamAgru</h3>
+			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
 			<h4 class="form-header-text">Sign up to see photos and videos from your friends.</h4>
 			<form action="register" class="form-box" method="post">
             <div class="mb-3">
