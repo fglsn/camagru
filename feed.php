@@ -5,6 +5,7 @@
 <main class="main-feed" role="main">
 	<section class="feed">
 		<div class="post-listing">
+
 			<article class="post-wrapper">
 				<div class="post">
 					<div class="post-header">
@@ -48,6 +49,10 @@
 								<h6 class="commentator" style="padding: 12px;">commentator</h6>
 								<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
 							</div>
+						</section>
+						<section class="input-box">
+							<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="input-comment" placeholder="Add a comment..." autocomplete="off" type="input-comment" required>
+							<button type="button" class="btn btn-outline-primary btn-sm">Post</button>
 						</section>
 					</div>
 				</div>
@@ -149,6 +154,7 @@
 					</div>
 				</div>
 			</article>
+
 		</div>
 	</section>
 </main>

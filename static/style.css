@@ -142,6 +142,7 @@ main {
 .comments {
 	padding: 12px 0;
 }
+
 .comment {
     display: flex;
     flex-direction: row;
@@ -158,6 +159,16 @@ main {
 	margin: 0 12px 0 0;
 }
 
+.input-box {
+	display: flex;
+	flex-direction: row;
+	min-height: 4rem;
+	max-height: 10rem;
+}
+
+.btn-outline-primary {
+	border: none!important;
+}
 /* Forms */
 
 .form-wrapper {
