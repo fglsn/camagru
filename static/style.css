@@ -83,6 +83,10 @@ main {
 	height: 3rem;
 }
 
+.author-username {
+	margin: 0px!important;
+}
+
 .post-content {
 	display: flex;
 	justify-content: center;
@@ -101,8 +105,6 @@ main {
 .post-comment-section {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 5rem;
-
 }
 
 .post-buttons {
@@ -121,8 +123,34 @@ main {
     padding: 8px;
 }
 
+.author-section {
+    display: flex;
+    flex-direction: row;
+	align-items: baseline
+}
+
+.post-description {
+	color: #858484;
+	margin: 0 12px 0 0;
+}
+
+.comments {
+	padding: 12px 0;
+}
 .comment {
-	height: 4rem;
+    display: flex;
+    flex-direction: row;
+	align-items: baseline;
+}
+
+.commentator {
+	margin: 0px!important;
+	padding: 0 12px;
+}
+
+.comment-text {
+	color: #666666;
+	margin: 0 12px 0 0;
 }
 
 /* Forms */
