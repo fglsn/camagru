@@ -14,15 +14,14 @@
 			<div class="mb-3">
                 <input type="login" class="form-control" id="login" name="login" placeholder="Username" required>
             </div>
-            <div class="row">
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" type="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long"  required>
-                    <div id="passwordHelp" class="form-text">Your password must be at least 8 characters long, contain uppercase and lowercase letters, numbers and at least one special character.</div>
-                </div>
-                <div class="mb-3">
-                    <input type="password" class="form-control"  name="confirmation" placeholder="Confirm password" id="confirmation" type="password">
-                </div>
-            </div>
+
+			<div class="mb-3">
+				<input type="password" class="form-control" id="password" name="password" placeholder="Password" type="password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long"  required>
+				<div id="passwordHelp" class="form-text">Your password must be at least 8 characters long, contain uppercase and lowercase letters, numbers and at least one special character.</div>
+			</div>
+			<div class="mb-3">
+				<input type="password" class="form-control"  name="confirmation" placeholder="Confirm password" id="confirmation" type="password">
+			</div>
 			<div class="d-grid gap-2">
 					<button class="btn btn-primary" type="submit">Next</button>
 			</div>

@@ -84,7 +84,7 @@
 						</section>
 						<section class="author-section">
 							<h6 class="author-username" style="padding: 12px;">usernamehere</h6>
-							<p class="post-description">post-description-here post-description-here post-description-here post-description-here </p>
+							<p class="post-description">post-description-here post-description-here </p>
 						</section>
 						<div class="line" style="flex-grow: 0"></div>
 						<section class="comments">
@@ -133,7 +133,7 @@
 						</section>
 						<section class="author-section">
 							<h6 class="author-username" style="padding: 12px;">usernamehere</h6>
-							<p class="post-description">post-description-here post-description-here post-description-here post-description-here </p>
+							<p class="post-description"></p>
 						</section>
 						<div class="line" style="flex-grow: 0"></div>
 						<section class="comments">

@@ -6,6 +6,11 @@ a {
 	text-decoration: none!important;
 }
 
+label {
+	color: #606770;
+	font-weight: 600;
+}
+
 /* Navigation */
 
 header {
@@ -175,6 +180,14 @@ main {
 .form-header {
 	padding: 2rem 0 1rem 0;
 	font-size: 4rem;
+}
+
+.form-header-light {
+	font-size: larger;
+	padding: 24px 0;
+	color: #606770;
+	font-weight: 600;
+	text-align: center;
 }
 
 .form-header-text{
