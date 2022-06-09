@@ -10,7 +10,7 @@
 				<h6 class="form-header-light">Change Username</h6>
 				<div class="mb-3">
 					<label for="item">New Username: </label>
-					<input type="new-username" class="form-control" id="new-username" name="new-username"autocomplete="off" required>
+					<input type="text" class="form-control" id="new-username" name="new-username" autocomplete="off" required>
 				</div>
 				<div class="d-grid gap-2">
 					<button class="btn btn-primary" type="submit">Submit</button>
@@ -61,7 +61,7 @@
 				<h6 class="form-header-light">Delete Account</h6>
 				<div class="mb-3">
 					<label for="item">Confirm with password:  </label>
-					<input type="email" class="form-control" id="new-email" name="new-email"autocomplete="off" required>
+					<input type="password" class="form-control" id="password" name="password" autocomplete="off" required>
 				</div>
 				<div class="d-grid gap-2">
 					<button class="btn btn-danger"type="submit" name="submit" value="Delete">Submit</button>
