@@ -1,7 +1,6 @@
 <?php
 	include("./header.php");
 ?>
-
 <main class="main-feed" role="main">
 	<section class="feed">
 		<div class="post-listing">
