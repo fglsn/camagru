@@ -1,17 +1,19 @@
 <?php
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+
+// - debugs:
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ALL);
+
 require_once("./config/database.php");
-session_start();
 
 $submit = $_POST['submit'];
 $email = $_POST['email'];
 $login = $_POST['login'];
-$password = $_POST['password'];
-$confirmation = $_POST['confirmation'];
+$password = hash("whirlpool", $_POST['password']);
+$confirmation = hash("whirlpool", $_POST['confirmation']);
 
-echo "TEST " . '\'' . $submit . '\' ' . $email . ' ' . $login . ' ' . $password . ' ' . $confirmation . PHP_EOL;
+// echo "TEST " . '\'' . $submit . '\' ' . $email . ' ' . $login . ' ' . $password . ' ' . $confirmation . PHP_EOL;
 
 if ($submit != "submit" || $email === "" || $login === "" || $password === "" || $confirmation === "") {
 	echo "Error: Missing fields. " . $submit . ' ' . $email . ' ' . $login . ' ' . $password . ' ' . $confirmation . PHP_EOL;
@@ -39,9 +41,10 @@ if ($address) {
 	return;
 }
 
-$query = $dbc->prepare("INSERT INTO users (`username`, `email`, `password`)
-						VALUES ('$login', '$email', '$password')");
-
-$query->execute();
-echo "OKKKKK!";
+$stmt = $dbc->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+$stmt->bindParam(':username', $login);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':password', $password);
+$stmt->execute();
+echo "Inserted" . PHP_EOL;
 ?>
