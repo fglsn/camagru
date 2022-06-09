@@ -7,6 +7,6 @@ create table if not exists camagru_db.`users` (
 		`username` varchar(10) not null,
 		`email` varchar(40) not null,
 		`password` varchar(30) not null,
-		`created_at` date not null
+		`created_at` timestamp default current_timestamp on update current_timestamp
 	);
 
