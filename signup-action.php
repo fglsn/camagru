@@ -63,3 +63,6 @@ catch (PDOException $e) { //error thrown if username or email already in use, se
 // echo "TEST: " . 'Submit value: \'' . $submit . '\' Email: ' . $email . ' Login: ' . $login . ' Pswd: ' . $password . ' Conf: ' . $confirmation . PHP_EOL;
 ?>
 
+<!-- https://www.w3schools.com/php/php_form_validation.asp
+https://phppot.com/php/php-login-form/
+https://www.javatpoint.com/form-validation-in-php -->
