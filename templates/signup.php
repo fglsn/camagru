@@ -8,7 +8,7 @@
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
 			<h4 class="form-header-text">Sign up to see photos and videos from your friends.</h4>
 
-			<form action="../register.php" class="form-box" method="post">
+			<form action="../signup-action.php" class="form-box" method="post">
 				<div class="mb-3">
 					<input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
 				</div>

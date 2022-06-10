@@ -1,12 +1,13 @@
 <?php
 
 // - debugs:
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
+// ini_set('display_errors', '1');
+// ini_set('display_startup_errors', '1');
+// error_reporting(E_ALL);
 
 require_once("./config/database.php");
 
+// Check if fieds are not empty
 if ($_POST['submit'] !== "submit" || empty($_POST['email']) || empty($_POST['login']) || empty($_POST['password']) || empty($_POST['confirmation'])) {
 	echo "Error: Missing fields. " . PHP_EOL;
 	return;
@@ -19,10 +20,22 @@ else {
 	$confirmation = hash("whirlpool", $_POST['confirmation']);
 }
 
-//echo $password . '    ' . $confirmation;
-// echo "TEST: " . 'Submit value: \'' . $submit . '\' Email: ' . $email . ' Login: ' . $login . ' Pswd: ' . $password . ' Conf: ' . $confirmation . PHP_EOL;
+// Validate email address
+$pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";  
+if (!preg_match($pattern, $email)) {
+	echo "Error: Email is not valid.";
+	return;
+}
+else if (strlen($email) > 100) {
+	echo "Error: Email is too long (Max length is 100 charachters)";
+	return;
+}
+
+// Validate login
 
 
+
+//Check if passwords match
 if ($password !== $confirmation) {
 	echo "Error: Passwords doesnt match." . PHP_EOL;
 	return;
@@ -43,4 +56,10 @@ catch (PDOException $e) { //error thrown if username or email already in use, se
 	else
 		echo "The user could not be added.<br>".$e->getMessage();
 }
+
+
+
+//echo $password . '    ' . $confirmation;
+// echo "TEST: " . 'Submit value: \'' . $submit . '\' Email: ' . $email . ' Login: ' . $login . ' Pswd: ' . $password . ' Conf: ' . $confirmation . PHP_EOL;
 ?>
+
