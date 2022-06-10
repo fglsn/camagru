@@ -171,6 +171,10 @@ main {
 }
 /* Forms */
 
+.error {
+	color: #630000a9;
+} 
+
 .form-wrapper {
 	min-height: 100%;
 	margin: 3rem 0;
