@@ -1,50 +1,46 @@
 <?php
 
 // - debugs:
-// ini_set('display_errors', '1');
-// ini_set('display_startup_errors', '1');
-// error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 require_once("./config/database.php");
 
-$submit = $_POST['submit'];
-$email = $_POST['email'];
-$login = $_POST['login'];
-$password = hash("whirlpool", $_POST['password']);
-$confirmation = hash("whirlpool", $_POST['confirmation']);
-
-// echo "TEST " . '\'' . $submit . '\' ' . $email . ' ' . $login . ' ' . $password . ' ' . $confirmation . PHP_EOL;
-
-if ($submit != "submit" || $email === "" || $login === "" || $password === "" || $confirmation === "") {
-	echo "Error: Missing fields. " . $submit . ' ' . $email . ' ' . $login . ' ' . $password . ' ' . $confirmation . PHP_EOL;
+if ($_POST['submit'] !== "submit" || empty($_POST['email']) || empty($_POST['login']) || empty($_POST['password']) || empty($_POST['confirmation'])) {
+	echo "Error: Missing fields. " . PHP_EOL;
 	return;
 }
+else {
+	$submit = $_POST['submit'];
+	$email = $_POST['email'];
+	$login = $_POST['login'];
+	$password = hash("whirlpool", $_POST['password']);
+	$confirmation = hash("whirlpool", $_POST['confirmation']);
+}
+
+//echo $password . '    ' . $confirmation;
+// echo "TEST: " . 'Submit value: \'' . $submit . '\' Email: ' . $email . ' Login: ' . $login . ' Pswd: ' . $password . ' Conf: ' . $confirmation . PHP_EOL;
+
 
 if ($password !== $confirmation) {
 	echo "Error: Passwords doesnt match." . PHP_EOL;
 	return;
 }
 
-$usr_stmnt = $dbc->prepare("SELECT * FROM users WHERE username=?");
-$usr_stmnt->execute([$login]); 
-$user = $usr_stmnt->fetch();
-if ($user) {
-	echo "Error: Username already exists." . PHP_EOL;
-	return;
-}
 
-$email_stmnt = $dbc->prepare("SELECT * FROM users WHERE email=?");
-$email_stmnt->execute([$email]); 
-$address = $email_stmnt->fetch();
-if ($address) {
-	echo "Error: Email already used." . PHP_EOL;
-	return;
+try {
+	$stmt = $dbc->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+	$stmt->execute(array('username' => $login, 'email' => $email, 'password' => $password));
+	echo "Inserted" . PHP_EOL;
 }
-
-$stmt = $dbc->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-$stmt->bindParam(':username', $login);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':password', $password);
-$stmt->execute();
-echo "Inserted" . PHP_EOL;
+catch (PDOException $e) { //error thrown if username or email already in use, see unique indexes (sql)
+	$err = $e->getMessage();
+	if (strpos($err, "username_index"))
+		echo "Username already exists. Try another username." . PHP_EOL;
+	else if (strpos($err, "email_index"))
+		echo "This email address is already in use. Please try another email address" . PHP_EOL;
+	else
+		echo "The user could not be added.<br>".$e->getMessage();
+}
 ?>

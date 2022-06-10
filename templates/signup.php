@@ -17,7 +17,7 @@
 				</div>
 
 				<div class="mb-3">
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password" pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$' title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long"  required>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long"  required>
 					<div id="passwordHelp" class="form-text">Your password must be at least 8 characters long, contain uppercase and lowercase letters, numbers and at least one special character.</div>
 				</div>
 				<div class="mb-3">
@@ -47,4 +47,5 @@
 	include("./footer.php");
 ?>
 
+<!-- pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$' -->
 <!-- (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,}) -->
