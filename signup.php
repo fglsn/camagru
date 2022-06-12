@@ -82,7 +82,7 @@
 					$err_login = "The user could not be added.<br>".$e->getMessage();
 			}
 		} else {  
-			$error = "Error occured, try again.";
+			$error = "Something went wrong, please try again.";
 		}
 	}
 

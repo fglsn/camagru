@@ -1,5 +1,5 @@
 <?php
-	include(__DIR__ . "/header.php");
+	view('header', ['title' => 'Log in']);
 ?>
 
 <main>

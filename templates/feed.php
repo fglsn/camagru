@@ -1,6 +1,7 @@
 <?php
-	include("./header.php");
+	view('header', ['title' => 'Feed']);
 ?>
+
 <main class="main-feed" role="main">
 	<section class="feed">
 		<div class="post-listing">

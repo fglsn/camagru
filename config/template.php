@@ -7,6 +7,15 @@ function get_template($templatePath, array $vars = array()) {
 	return ob_get_clean();
 }
 
+function view(string $filename, array $data = []): void
+{
+	// create variables from the associative array
+	foreach ($data as $key => $value) {
+		$$key = $value;
+	}
+	require_once(__DIR__ . '/../templates/' . $filename . '.php');
+}
+
 // https://stackoverflow.com/a/2173199
 // https://stackoverflow.com/questions/36577020/php-failed-to-open-stream-no-such-file-or-directory/36577021#36577021
 

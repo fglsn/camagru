@@ -8,8 +8,11 @@ create table if not exists camagru_db.users (
 		email varchar(100) not null,
 		password text not null,
 		verification tinyint not null default 0,
-		notification tinyint not null default 1,
-		created_at timestamp default current_timestamp on update current_timestamp
+		activation_code text not null;
+		activated_at datetime default null,
+		notifications tinyint not null default 1,
+		created_at timestamp default current_timestamp(),
+		updated_at datetime current_timestamp() on update current_timestamp()
 	);
 
 -- Create unique indexes to store only unique username and email, handle pdo-exeption errors in register.php --

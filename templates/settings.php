@@ -1,6 +1,7 @@
 <?php
-	include("./header.php");
+	view('header', ['title' => 'Settings']);
 ?>
+
 
 <main>
 	<div class="form-wrapper">
