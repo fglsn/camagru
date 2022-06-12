@@ -1,34 +1,39 @@
 <?php
+require_once(__DIR__ . "/database.php");
 
-$DB_HOST = 'mysql:host=localhost';
-$DB_USER = 'root';
-$DB_PASSWORD = '452565';
-
+function migrate($conn) {
+	try {
+		$sql = file_get_contents(__DIR__ . "/init_v1.sql");
+		$conn->exec($sql);
+		// echo "Migrated successfully.";
+	} catch(PDOException $e) {
+		echo "Migration failed: " . $e->getMessage();
+		die();
+	}
+}
 
 try {
-  $conn = new PDO($DB_HOST, $DB_USER, $DB_PASSWORD);
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $sql = file_get_contents("./init.sql");
-  $conn->exec($sql);
-  echo "Connected successfully";
+	$conn = new PDO($DB_HOST, $DB_USER, $DB_PASSWORD);
+	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	try {
+		$max_migration = $conn->query("select max(mid) as mid from camagru_db.migrations")->fetch();
+		if (!$max_migration) {
+			migrate($conn);
+		}
+	} catch (PDOException $e) {
+		migrate($conn);
+	}
 } 
 catch(PDOException $e) {
-  echo "Connection failed: " . $e->getMessage();
+	echo "DB setup failed: " . $e->getMessage();
+	die();
 }
+
 $conn = null;
 
-// try {
-// 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-// 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-// 	$sql = $conn->prepare("CREATE TABLE IF NOT EXISTS camagru_db.`users` (
-// 		`id` INT AUTO_INCREMENT PRIMARY KEY
-// 	)");
-// 	$sql->execute();
-// 	echo "Table created";
-// }
-// catch(PDOException $e) {
-// 	echo "Table not created: " . $e->getMessage();
-// }
-// $conn = null;
+$dbc = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+
+// https://www.php.net/manual/en/pdo.connections.php#pdo.connections
 
 ?>

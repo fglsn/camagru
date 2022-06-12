@@ -30,7 +30,6 @@
 		}
 
 		//Validate password
-		// $pattern='^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$';
 		if (empty($_POST["password"])) {
 			$err_pass = "Please provide password.";
 		}

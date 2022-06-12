@@ -1,4 +1,7 @@
 <?php
 	require_once("./config/include.php");
-	header("Location: login.php");
+?>
+
+<?php
+	echo get_template("login.php");
 ?>
