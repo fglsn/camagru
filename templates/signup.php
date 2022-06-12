@@ -1,5 +1,5 @@
 <?php
-	view('header', ['title' => 'Sign up']);
+	include(__DIR__ . "/header.php");
 ?>
 
 <main>

@@ -3,5 +3,5 @@
 ?>
 
 <?php
-	echo get_template("login.php");
+	echo get_template("login.php", array('title' => 'Log in'));
 ?>

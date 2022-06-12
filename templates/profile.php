@@ -1,5 +1,5 @@
 <?php
-	view('header', ['title' => 'Profile']);
+	include("./header.php");
 ?>
 
 <?php

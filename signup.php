@@ -87,6 +87,7 @@
 	}
 
 	echo get_template("signup.php", array(
+		'title' => 'Sign up',
 		'error' => $error,
 		'err_email' => $err_email,
 		'err_login' => $err_login,

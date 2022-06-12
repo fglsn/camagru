@@ -1,7 +1,6 @@
 <?php
-	view('header', ['title' => 'Add new post']);
+	include("./header.php");
 ?>
-
 
 <?php
 	include("./footer.php");

@@ -1,5 +1,5 @@
 <?php
-	view('header', ['title' => 'Feed']);
+	include("./header.php");
 ?>
 
 <main class="main-feed" role="main">
