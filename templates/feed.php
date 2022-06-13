@@ -1,5 +1,5 @@
 <?php
-	include("./header.php");
+	include(__DIR__ . "/header.php");
 ?>
 
 <main class="main-feed" role="main">
@@ -160,5 +160,5 @@
 </main>
 
 <?php
-	include("./footer.php");
+	include(__DIR__ . "/footer.php");
 ?>

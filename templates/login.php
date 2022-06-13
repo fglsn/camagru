@@ -7,7 +7,7 @@
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
-			<form action="login" method="post" class="form-box">
+			<form action="login.php" method="post" class="form-box">
 				<div class="mb-3">
 					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" required>
 				</div>

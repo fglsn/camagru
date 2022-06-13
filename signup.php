@@ -59,14 +59,6 @@
 		}
 	}
 
-	//Sanitize input
-	function input_data($data) {  
-		$data = trim($data);  
-		$data = stripslashes($data);  
-		$data = htmlspecialchars($data);  
-		return $data;  
-	}
-
 	//Create user
 	if(isset($_POST['submit'])) {
 		if($err_login == "" && $err_email == "" && $err_pass == "" && $err_conf == "") {

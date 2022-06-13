@@ -5,6 +5,14 @@
 	class UsernameExistsException extends Exception {};
 	class EmailExistsException extends Exception {};
 
+	//Sanitize input
+	function input_data($data) {  
+		$data = trim($data);  
+		$data = stripslashes($data);  
+		$data = htmlspecialchars($data);  
+		return $data;  
+	}
+
 	// -- Create user --
 	function create_user($dbc, $login, $email, $hash) {
 		$activation_code = md5($email.time());
@@ -28,67 +36,29 @@
 		}
 	}
 
-	// -- Select user --
-	function find_user_by_username($dbc, $username) {
-		$sql = 'select username, password, active, email
-				from users
-				where username=:username';
-
-		$stmt = $dbc->prepare($sql);
-		$stmt->execute(array('username' => $username));
-		return $stmt->fetch();
-	}
-
-	// -- Active user --
-	function is_user_active($user) {
-		return (int)$user['active'] === 1;
-	}
-
-	// -- Login --
-	function login($dbc, $username, $password): bool {
-		$user = find_user_by_username($dbc, $username);
-
-		if ($user && is_user_active($user) && password_verify($password, $user['password'])) {
-			// prevent session fixation attack
-			session_regenerate_id();
-
-			// set username in the session
-			$_SESSION['user_id'] = $user['id'];
-			$_SESSION['username'] = $user['username'];
-
-			return true;
-		}
-		return false;
-	}
-
 	// -- Email user --
 	function send_activation_email($root_url, $sender_email, $email, $activation_code): void {
-		// create the activation link
 		$activation_link = $root_url . "/activate.php?activation_code=$activation_code";
-		// set email subject & body
 		$subject = 'Please activate your account';
 		$message = <<<MESSAGE
 				Hi and thanks for registration!
 				Please click the following link to activate your account:
 				$activation_link
 				MESSAGE;
-		// email header
 		$header = "From:" . $sender_email;
-		// send the email
 		mail($email, $subject, $message, $header);
 	}
 
 	// -- Activate user --
 
-	function find_unverified_user($dbc, $activation_code)
-	{
-		$sql = 'select user_id, activation_code
+	function find_user_by_activation($dbc, $activation_code) {
+		$sql = 'select user_id, active, activation_code
 				from users
-				where active = 0 and activation_code=:activation_code';
+				where activation_code=:activation_code';
 
 		$stmt = $dbc->prepare($sql);
 		$stmt->execute(array('activation_code' => $activation_code));
-		$user = $stmt->fetchAll();
+		$user = $stmt->fetch();
 		if ($user)
 			return ($user);
 		return null;
@@ -99,11 +69,8 @@
 				set active = 1,
 				activated_at = current_timestamp
 				where activation_code=:activation_code';
-
 		$stmt = $dbc->prepare($sql);
 		return $stmt->execute(array('activation_code' => $activation_code));
 	}
 
 ?>
-
-
