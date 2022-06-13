@@ -1,12 +1,12 @@
 <?php
 	require_once("./config/include.php");
+	require_once("./src/user_db.php");
 
 	$err_email = $err_login = $err_pass = $err_conf = $error = '';
-	$submit = $email = $login = $password = $confirmation = '';
+	$submit = $email = $login = $password = $hash = $confirmation = '';
 
 	//Input fields validation  
-	if ($_SERVER['REQUEST_METHOD'] == 'POST') {  
-
+	if (is_post_request()) {  
 		// Validate login
 		if (empty($_POST['login'])) {
 			$err_login = "Username is required";
@@ -39,10 +39,11 @@
 			$uppercase = preg_match('@[A-Z]@', $password);
 			$lowercase = preg_match('@[a-z]@', $password);
 			$specialChars = preg_match('@[^\w]@', $password);
+			$options = ['cost' => 12, ];
 			if(strlen($password) < 8 || !$number || !$uppercase || !$lowercase || !$specialChars) {
 				$err_pass = "Password must be at least 8 characters in length and must contain at least one number, one upper case letter, one lower case letter and one special character.";
 			} else {
-				$password = hash("whirlpool", $_POST['password']);
+				$hash = password_hash($password, PASSWORD_BCRYPT, $options);
 			}
 		}
 
@@ -51,13 +52,14 @@
 			$err_conf = "Please confirm password.";
 		}
 		else {
-			$confirmation = hash("whirlpool", $_POST['confirmation']);
-			if ($password !== $confirmation) {
+			$confirmation = $_POST["confirmation"];
+			if (!password_verify($confirmation, $hash)) {
 				$err_conf = "Password doesn't match.";
 			}
 		}
 	}
 
+	//Sanitize input
 	function input_data($data) {  
 		$data = trim($data);  
 		$data = stripslashes($data);  
@@ -65,24 +67,23 @@
 		return $data;  
 	}
 
+	//Create user
 	if(isset($_POST['submit'])) {
 		if($err_login == "" && $err_email == "" && $err_pass == "" && $err_conf == "") {
 			try {
-				$stmt = $dbc->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-				$stmt->execute(array('username' => $login, 'email' => $email, 'password' => $password));
+				$activation_code = create_user($dbc, $login, $email, $hash);
+				send_activation_email($root_url, $sender_email, $email, $activation_code);
 				header("Location: ./login.php");
 			}
-			catch (PDOException $e) { //error thrown if username or email already in use, see unique indexes (sql)
-				$err = $e->getMessage();
-				if (strpos($err, "username_index"))
-					$err_login = "Username already exists. Try another username." . PHP_EOL;
-				else if (strpos($err, "email_index"))
-					$err_email = "This email address is already in use. Please try another email address" . PHP_EOL;
-				else
-					$err_login = "The user could not be added.<br>".$e->getMessage();
+			catch (UsernameExistsException $e) { //error thrown if username or email already in use, see unique indexes (sql)
+				$err_login = "Username already exists. Try another username." . PHP_EOL;
 			}
-		} else {  
-			$error = "Something went wrong, please try again.";
+			catch (EmailExistsException $e) {
+				$err_email = "This email address is already in use. Please try another email address" . PHP_EOL;
+			}
+			catch (Exception $e) {
+				$err_login = "The user could not be added.<br>".$e->getMessage();
+			}
 		}
 	}
 
@@ -96,6 +97,5 @@
 		'email' => $email,
 		'login' => $login,
 		'password' => $password,
-		'confirmation' => $confirmation
 	));
 ?>
