@@ -120,17 +120,17 @@ main {
 
 .button {
 	align-items: center;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    padding: 8px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	padding: 8px;
 }
 
 .author-section {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 	align-items: baseline
 }
 
@@ -144,8 +144,8 @@ main {
 }
 
 .comment {
-    display: flex;
-    flex-direction: row;
+	display: flex;
+	flex-direction: row;
 	align-items: baseline;
 }
 
@@ -169,6 +169,16 @@ main {
 .btn-outline-primary {
 	border: none!important;
 }
+
+/* Messages */
+.greeting {
+	padding-top: 2.5rem;
+	text-align: center;
+	font-size: 1.3rem;
+	color: #858484;
+	text-shadow: 1px 1px #73737336;
+}
+
 /* Forms */
 
 .error {
@@ -229,10 +239,10 @@ main {
 
 .form-footer {
 	color: rgba(var(--fe0,0,55,107),1);
-    font-size: 12px;
-    line-height: 16px;
-    margin-top: 12px;
-    text-align: center;
+	font-size: 12px;
+	line-height: 16px;
+	margin-top: 12px;
+	text-align: center;
 }
 
 /* Login */

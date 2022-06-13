@@ -1,7 +1,8 @@
 <?php
+	$greeting = '';
 	require_once("./config/include.php");
-?>
-
-<?php
-	echo get_template("login.php", array('title' => 'Log in'));
+	echo get_template("login.php", array(
+		'title' => 'Log in',
+		'greeting' => $greeting,
+	));
 ?>
