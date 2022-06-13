@@ -3,7 +3,7 @@
 	require_once (__DIR__ . '/../config/include.php');
 
 	function is_user_logged_in(): bool {
-		return isset($_SESSION['email']);
+		return isset($_SESSION['user_id']);
 	}
 
 	function require_login(): void {

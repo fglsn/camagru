@@ -30,8 +30,7 @@
 				'error' => $error,
 				'greeting' => $greeting,
 			));
-		}
-		else {
+		} else {
 			echo get_template('feed.php', array(
 				'title' => 'Feed',
 			));

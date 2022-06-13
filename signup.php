@@ -68,7 +68,7 @@
 				$greeting = "Thank you! Activation link was sent to you by the email.";
 				echo get_template("login.php", array(
 					'title' => 'Log in',
-					'greeting' => $greeting,
+					'greeting' => $greeting, //change to redirect and use query parameter to indicate correct greeting.
 				));
 				exit();
 			}

@@ -5,7 +5,7 @@
 	class UsernameExistsException extends Exception {};
 	class EmailExistsException extends Exception {};
 
-	//Sanitize input
+	// -- Sanitize input --
 	function input_data($data) {  
 		$data = trim($data);  
 		$data = stripslashes($data);  
@@ -39,6 +39,7 @@
 	// -- Email user --
 	function send_activation_email($root_url, $sender_email, $email, $activation_code): void {
 		$activation_link = $root_url . "/activate.php?activation_code=$activation_code";
+		// echo $activation_link;
 		$subject = 'Please activate your account';
 		$message = <<<MESSAGE
 				Hi and thanks for registration!
@@ -46,7 +47,7 @@
 				$activation_link
 				MESSAGE;
 		$header = "From:" . $sender_email;
-		mail($email, $subject, $message, $header);
+		mail($email, $subject, $message, $header); //Add check
 	}
 
 	// -- Activate user --
@@ -58,10 +59,7 @@
 
 		$stmt = $dbc->prepare($sql);
 		$stmt->execute(array('activation_code' => $activation_code));
-		$user = $stmt->fetch();
-		if ($user)
-			return ($user);
-		return null;
+		return $stmt->fetch();
 	}
 
 	function activate_user($dbc, $activation_code) {

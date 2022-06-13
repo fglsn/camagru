@@ -7,17 +7,16 @@
 			$activation_code = $_GET['activation_code'];
 			$user = find_user_by_activation($dbc, $activation_code);
 			if ($user && $user['active'] === 0) {
-				if (activate_user($dbc, $activation_code)) {
-					echo get_template("login.php", array(
-						'title' => 'Log in',
-						'greeting' => 'Thank you, account has been activated!',
-					));
-				}
+				activate_user($dbc, $activation_code);
+				echo get_template("login.php", array(
+					'title' => 'Log in',
+					'greeting' => 'Thank you, account has been activated!',
+				));
 			}
 			else if ($user && $user['active'] === 1) {
 				echo get_template("login.php", array(
 					'title' => 'Log in',
-					'greeting' => 'Your account is already verified!',
+					'greeting' => 'Your account is already verified!', // Redirect with query param
 				));
 			}
 		}
