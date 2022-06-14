@@ -13,9 +13,10 @@
 		}
 		else {
 			$login = input_data($_POST["login"]);
-			if (!preg_match("/^[a-zA-Z0-9_-]*$/", $login)) {
+			if (!preg_match("/^[a-zA-Z0-9_-]*$/", $login))
 				$err_login = "Only alphabets, numbers, '_' & '-' are allowed in username.";
-			}
+			if (strlen($login) < 3 || strlen($login) > 100)
+				$err_login = "Invalid length (min 3, max 100 chars).";
 		}
 
 		// Validate email address
