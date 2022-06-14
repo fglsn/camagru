@@ -17,7 +17,7 @@
 
 	// -- Log in --
 	function find_user_by_email($dbc, $email) {
-		$sql = 'select user_id, email, password, active
+		$sql = 'select user_id, username, email, password, active
 				from users
 				where email=:email';
 		$stmt = $dbc->prepare($sql);
@@ -36,6 +36,7 @@
 			session_regenerate_id();
 			$_SESSION['user_id'] = $user['user_id'];
 			$_SESSION['email'] = $user['email'];
+			$_SESSION['username'] = $user['username'];
 			return true;
 		}
 		return false;

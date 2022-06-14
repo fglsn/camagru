@@ -3,7 +3,8 @@
 ?>
 
 <main class="main-feed" role="main">
-	<span class="info"><?php echo $info;?></span>
+
+	<span class="info-log" id="close" style="display:block"><?php echo $info;?></span>
 	<section class="feed">
 		<div class="post-listing">
 			<article class="post-wrapper">
@@ -158,6 +159,13 @@
 		</div>
 	</section>
 </main>
+
+<script type="text/javascript">
+	window.setTimeout("closeDiv();", 2500);
+	function closeDiv(){
+		document.getElementById("close").style.display="none";
+	}
+</script>
 
 <?php
 	include(__DIR__ . "/footer.php");

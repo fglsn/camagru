@@ -21,7 +21,7 @@
 					<button class="btn btn-primary" type="submit">Send Link</button>
 				</div>
 				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
-				<div class="sign-up"><a href="./signup.php">Create New Account</a></div>
+				<div class="sign-up" style="margin: 24px 0 6px;"><a href="./signup.php">Create New Account</a></div>
 			</form>
 		</div>
 		<div class="form-container">

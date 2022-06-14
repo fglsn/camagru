@@ -61,6 +61,7 @@ main {
 .feed {
 	display: flex;
 	flex-direction: column;
+	padding-top: 32px;
 	max-width: 600px;
 	margin: 0 auto;
 }
@@ -186,6 +187,12 @@ main {
 .info {
 	padding: 24px;
 	text-align: center;
+	color: rgba(0, 0, 0, 0.674);
+}
+
+.info-log {
+	padding: 16px 128px 0 0;
+	text-align: right;
 	color: rgba(0, 0, 0, 0.674);
 }
 

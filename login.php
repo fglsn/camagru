@@ -43,6 +43,8 @@
 				$info = 'Your account is already verified!';
 			else if ($_GET['info'] === 'activation_success')
 				$info = 'Thank you, account has been activated!';
+			else if($_GET['info'] === 'logout')
+				$info = 'Logged out!';
 		}
 		echo get_template('login.php', array(
 			'title' => 'Log in',

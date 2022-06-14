@@ -3,7 +3,7 @@
 ?>
 
 <main>
-	<span class="info"><?php echo $info;?> </span>
+	<span class="info" id="close"><?php echo $info;?> </span>
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
@@ -34,6 +34,14 @@
 		</div>
 	</div>
 </main>
+
+<script type="text/javascript">
+	window.setTimeout("closeDiv();", 1500);
+	function closeDiv(){
+		document.getElementById("close").style.display="none";
+	}
+</script>
+
 
 <?php
 	include(__DIR__ . "/footer.php");
