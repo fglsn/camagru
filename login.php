@@ -21,8 +21,14 @@
 			$password = $_POST['password'];
 		}	
 
-		if (!login($dbc, $email, $password)) {
+		try {
+			login($dbc, $email, $password);
+		} catch (UserNotActivatedException $e) {
+			$error = 'Please activate your account first.';
+		} catch (IncorrectEmailOrPwdException $e) {
 			$error = 'Invalid username or password.';
+		}
+		if ($error) {
 			echo get_template('login.php', array(
 				'title' => 'Log in',
 				'err_email' => $err_email,
@@ -35,6 +41,7 @@
 			header('Location: feed.php?' . $qparam);
 		}
 	}
+	//todo: Add message if not activated yet or email incorrect
 	else if (is_get_request()) {
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'activation_link')

@@ -160,6 +160,7 @@
 	</section>
 </main>
 
+<!-- todo: Make toast from this -->
 <script type="text/javascript">
 	window.setTimeout("closeDiv();", 2500);
 	function closeDiv(){

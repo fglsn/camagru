@@ -7,6 +7,7 @@
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
+			<span class="error" style="padding-bottom: 20px"><?php echo $error;?> </span>
 			<form action="login.php" method="post" class="form-box">
 				<div class="mb-3">
 					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" required>
@@ -35,6 +36,7 @@
 	</div>
 </main>
 
+<!-- todo: Make toast from this -->
 <script type="text/javascript">
 	window.setTimeout("closeDiv();", 1500);
 	function closeDiv(){
