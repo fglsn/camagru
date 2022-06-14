@@ -66,12 +66,14 @@
 			try {
 				$activation_code = create_user($dbc, $login, $email, $hash);
 				send_activation_email($root_url, $sender_email, $email, $activation_code);
-				$greeting = "Thank you! Activation link was sent to you by the email.";
-				echo get_template("login.php", array(
-					'title' => 'Log in',
-					'greeting' => $greeting, //change to redirect and use query parameter to indicate correct greeting.
-				));
-				exit();
+				$qparam = http_build_query(array('info' => 'activation_link'));
+				header('Location: login.php?' . $qparam);
+				// $info = "Thank you! Activation link was sent to you by the email.";
+				// echo get_template("login.php", array(
+				// 	'title' => 'Log in',
+				// 	'info' => $info, //change to redirect and use query parameter to indicate correct info.
+				// ));
+				// exit();
 			}
 			catch (UsernameExistsException $e) { //error thrown if username or email already in use, see unique indexes (sql)
 				$err_login = "Username already exists. Try another username." . PHP_EOL;

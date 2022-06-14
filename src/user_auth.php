@@ -10,7 +10,7 @@
 		if (!is_user_logged_in()) {
 			echo get_template("login.php", array(
 				'title' => 'Log in',
-				'greeting' => '',
+				'info' => '',
 			)); //redirect
 		}
 	}

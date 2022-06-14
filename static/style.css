@@ -171,9 +171,19 @@ main {
 }
 
 /* Messages */
-.greeting {
-	padding-top: 2.5rem;
-	text-align: center;
+
+.info-box {
+	margin: 24px;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	width: fit-content;
+	flex-direction: column;
+}
+
+.info {
+	/* text-align: center; */
 	font-size: 1.3rem;
 	color: #858484;
 	text-shadow: 1px 1px #73737336;

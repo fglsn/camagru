@@ -3,7 +3,7 @@
 ?>
 
 <main>
-	<span class="greeting"><?php echo $greeting;?> </span>
+	<span class="info"><?php echo $info;?> </span>
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>

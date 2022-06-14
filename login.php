@@ -5,7 +5,7 @@
 
 	$err_email = $err_login = $err_pass = $err_conf = $error = '';
 	$email = $login = $password = $hash = $confirmation = '';
-	$greeting = '';
+	$info = '';
 
 	if (is_post_request()) {  
 		// Validate login
@@ -28,18 +28,25 @@
 				'err_email' => $err_email,
 				'err_pass' => $err_pass,
 				'error' => $error,
-				'greeting' => $greeting,
+				'info' => $info,
 			));
 		} else {
-			echo get_template('feed.php', array(
-				'title' => 'Feed',
-			));
+			$qparam = http_build_query(array('info' => 'login_success'));
+			header('Location: feed.php?' . $qparam);
 		}
 	}
 	else if (is_get_request()) {
+		if (isset($_GET['info'])) {
+			if ($_GET['info'] === 'activation_link')
+				$info = "Thank you! Activation link was sent to you by the email.";
+			else if ($_GET['info'] === 'already_verified')
+				$info = 'Your account is already verified!';
+			else if ($_GET['info'] === 'activation_success')
+				$info = 'Thank you, account has been activated!';
+		}
 		echo get_template('login.php', array(
 			'title' => 'Log in',
-			'greeting' => $greeting,
+			'info' => $info,
 		));
 	}
 ?>

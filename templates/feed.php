@@ -3,7 +3,9 @@
 ?>
 
 <main class="main-feed" role="main">
+	
 	<section class="feed">
+		<span class="info-box"><div class="info"><?php echo $info;?></div></span>
 		<div class="post-listing">
 
 			<article class="post-wrapper">

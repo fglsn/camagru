@@ -8,16 +8,14 @@
 			$user = find_user_by_activation($dbc, $activation_code);
 			if ($user && $user['active'] === 0) {
 				activate_user($dbc, $activation_code);
-				echo get_template("login.php", array(
-					'title' => 'Log in',
-					'greeting' => 'Thank you, account has been activated!',
-				));
+				$qparam = http_build_query(array('info' => 'activation_success'));
+				header('Location: login.php?' . $qparam);
 			}
 			else if ($user && $user['active'] === 1) {
-				echo get_template("login.php", array(
-					'title' => 'Log in',
-					'greeting' => 'Your account is already verified!', // Redirect with query param
-				));
+				$qparam = http_build_query(array('info' => 'already_verified'));
+				header('Location: login.php?' . $qparam);
+			} else {
+				header("Location: login.php");
 			}
 		}
 		else {
