@@ -18,20 +18,20 @@
 					<button class="btn btn-primary" type="submit">Log in</button>
 				</div>
 				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
-				<div class="form-footer"><a href="#">Forgot password?</a></div>
+				<div class="form-footer"><a href="./forgot_password.php">Forgot password?</a></div>
 			</form>
 		</div>
 		<div class="form-container">
-				<div class="sign-text">
-					<p class="sign-up">Don't have an account?
-						<a data-testid="sign-up-link" href="./signup.php">
-							<span class="sign-link">
-								Sign up
-							</span>
-						</a>
-					</p>
-				</div>
+			<div class="sign-text">
+				<p class="sign-up">Don't have an account?
+					<a data-testid="sign-up-link" href="./signup.php">
+						<span class="sign-link">
+							Sign up
+						</span>
+					</a>
+				</p>
 			</div>
+		</div>
 	</div>
 </main>
 

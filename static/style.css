@@ -172,21 +172,21 @@ main {
 
 /* Messages */
 
-.info-box {
-	margin: 24px;
+/* .info-box {
 	display: flex;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: center;
+	background-color: #92bace17;
+	padding: 6px 32px;
+	text-align: end;
+	margin: 24px 0px 24px 70%;
 	width: fit-content;
-	flex-direction: column;
-}
+	border: 1px solid #ebe9e93e;
+	border-radius: 8px;
+} */
 
 .info {
-	/* text-align: center; */
-	font-size: 1.3rem;
-	color: #858484;
-	text-shadow: 1px 1px #73737336;
+	padding: 24px;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.674);
 }
 
 /* Forms */
@@ -197,7 +197,7 @@ main {
 
 .form-wrapper {
 	min-height: 100%;
-	margin: 3rem 0;
+	margin: 1erm 0;
 }
 
 .form-container {
@@ -249,7 +249,7 @@ main {
 
 .form-footer {
 	color: rgba(var(--fe0,0,55,107),1);
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 16px;
 	margin-top: 12px;
 	text-align: center;
