@@ -173,6 +173,53 @@ main {
 
 /* Messages */
 
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+	visibility: hidden;
+	min-width: 250px;
+	margin-left: -125px;
+	background-color: rgba(168, 168, 168, 0.885);
+	color: #fff;
+	text-align: center;
+	padding: 16px;
+	position: fixed;
+	z-index: 1;
+	left: 50%;
+	top: 30px;
+	border: 1px solid #ebe9e93e;
+	border-radius: 8px;
+}
+
+#snackbar.show {
+	visibility: visible;
+	/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+	However, delay the fade out process for 2.5 seconds */
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+	from {top: 0; opacity: 0;}
+	to {top: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+	from {top: 0; opacity: 0;}
+	to {top: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+	from {top: 30px; opacity: 1;}
+	to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+	from {top: 30px; opacity: 1;}
+	to {top: 0; opacity: 0;}
+}
+
+
 /* .info-box {
 	display: flex;
 	background-color: #92bace17;

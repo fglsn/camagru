@@ -14,6 +14,7 @@
 			echo get_template("login.php", array(
 				'title' => 'Log in',
 				'info' => '',
+				'error' => '',
 			)); //redirect
 		}
 	}

@@ -3,7 +3,8 @@
 ?>
 
 <main>
-	<span class="info" id="close"><?php echo $info;?> </span>
+	<?php if ($info !== '') {
+		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
@@ -36,12 +37,13 @@
 	</div>
 </main>
 
-<!-- todo: Make toast from this -->
 <script type="text/javascript">
-	window.setTimeout("closeDiv();", 1500);
-	function closeDiv(){
-		document.getElementById("close").style.display="none";
-	}
+	window.setTimeout("myFunction();", 0);
+	function myFunction() {
+		var x = document.getElementById("snackbar");
+		x.className = "show";
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+}
 </script>
 
 

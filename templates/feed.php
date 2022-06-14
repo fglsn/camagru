@@ -4,7 +4,8 @@
 
 <main class="main-feed" role="main">
 
-	<span class="info-log" id="close" style="display:block"><?php echo $info;?></span>
+	<?php if ($info !== '') {
+		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<section class="feed">
 		<div class="post-listing">
 			<article class="post-wrapper">
@@ -160,12 +161,13 @@
 	</section>
 </main>
 
-<!-- todo: Make toast from this -->
 <script type="text/javascript">
-	window.setTimeout("closeDiv();", 2500);
-	function closeDiv(){
-		document.getElementById("close").style.display="none";
-	}
+	window.setTimeout("myFunction();", 0);
+	function myFunction() {
+		var x = document.getElementById("snackbar");
+		x.className = "show";
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2000);
+}
 </script>
 
 <?php

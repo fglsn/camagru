@@ -56,6 +56,7 @@
 		echo get_template('login.php', array(
 			'title' => 'Log in',
 			'info' => $info,
+			'error' => $error,
 		));
 	}
 ?>
