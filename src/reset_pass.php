@@ -14,7 +14,6 @@
 			throw new NoUserFoundException();
 		$token = openssl_random_pseudo_bytes(16);
 		$token = bin2hex($token);
-		// echo ($token);
 		try {
 			$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
 								values (:user_id, :requested_at, :token)");
@@ -31,7 +30,6 @@
 	}
 
 	function send_password_reset_link($sender_email, $email, $reset_link): void {
-		// echo $activation_link;
 		$subject = 'Password reset';
 		$message = <<<MESSAGE
 				Please click the following link to reset your password:
@@ -42,7 +40,6 @@
 	}
 
 	function fetch_from_password_reset_table($dbc, $user_id) {
-		// echo $user_id;
 		$token = isset($_GET['t']) ? trim($_GET['t']) : '';
 		$password_request_id = isset($_GET['id']) ? trim($_GET['id']) : '';
 		try {
@@ -65,7 +62,6 @@
 		}
 	}
 
-
 	// -- Reset password --
 	function reset_password($dbc, $user_id, $hash) {
 		try {
@@ -80,30 +76,5 @@
 			echo $e->getMessage();
 		}
 	}
-
-
-	// function get_password_request_id($dbc) {
-	// 	$user_id = isset($_GET['uid']) ? trim($_GET['uid']) : '';
-	// 	$token = isset($_GET['t']) ? trim($_GET['t']) : '';
-	// 	$password_request_id = isset($_GET['id']) ? trim($_GET['id']) : '';
-	// 	$sql = "select id, user_id, requested_at
-	// 			from password_reset_request
-	// 			where user_id = :user_id AND 
-	// 			token = :token AND 
-	// 			id = :id";
-
-	// 	$stmt = $dbc->prepare($sql);
-	// 	$stmt->execute(array(
-	// 		"user_id" => $user_id,
-	// 		"id" => $password_request_id,
-	// 		"token" => $token
-	// 	));
-	// 	$request_data = $stmt->fetch();
-	// 	if (!$request_data)
-	// 		throw new InvalidRequestException();
-	// 	$_SESSION['user_id_reset_pass'] = $user_id;
-	// 	header('Location: create-password.php');
-	// 	exit;
-	// }
 
 ?>

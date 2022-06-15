@@ -3,6 +3,8 @@
 ?>
 
 <main>
+	<?php if ($info !== '') {
+			echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; } ?>
 	<div class="form-wrapper">
 		<div class="form-container">
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
@@ -23,8 +25,16 @@
 				</div>
 			</form>
 		</div>
-
 </main>
+
+<script type="text/javascript">
+	window.setTimeout("myFunction();", 0);
+	function myFunction() {
+		var x = document.getElementById("snackbar");
+		x.className = "show";
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+}
+</script>
 
 <?php
 	include(__DIR__ . "/footer.php");
