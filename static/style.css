@@ -178,7 +178,7 @@ main {
 	visibility: hidden;
 	min-width: 250px;
 	margin-left: -125px;
-	background-color: rgba(168, 168, 168, 0.885);
+	background-color: rgba(168, 168, 168, 0.681);
 	color: #fff;
 	text-align: center;
 	padding: 16px;
@@ -186,7 +186,7 @@ main {
 	z-index: 1;
 	left: 50%;
 	top: 30px;
-	border: 1px solid #ebe9e93e;
+	border: 1px solid #ebe9e924;
 	border-radius: 8px;
 }
 
@@ -194,8 +194,8 @@ main {
 	visibility: visible;
 	/* Add animation: Take 0.5 seconds to fade in and out the snackbar.
 	However, delay the fade out process for 2.5 seconds */
-	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-	animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2s;
+	animation: fadein 0.5s, fadeout 0.5s 2s;
 }
 
 /* Animations to fade the snackbar in and out */
@@ -251,7 +251,7 @@ main {
 
 .form-wrapper {
 	min-height: 100%;
-	margin: 1erm 0;
+	margin: 1rem 0;
 }
 
 .form-container {

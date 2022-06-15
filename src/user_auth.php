@@ -11,11 +11,9 @@
 
 	function require_login(): void {
 		if (!is_user_logged_in()) {
-			echo get_template("login.php", array(
-				'title' => 'Log in',
-				'info' => '',
-				'error' => '',
-			)); //redirect
+			header('Location: login.php');
+		} else {
+			header("Location: feed.php");
 		}
 	}
 
