@@ -8,4 +8,12 @@
 	return strtoupper($_SERVER['REQUEST_METHOD']) === 'GET';
 }
 
+	// -- Sanitize input --
+	function input_data($data) {  
+		$data = trim($data);  
+		$data = stripslashes($data);  
+		$data = htmlspecialchars($data);  
+		return $data;  
+	}
+
 ?>

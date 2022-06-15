@@ -5,14 +5,6 @@
 	class UsernameExistsException extends Exception {};
 	class EmailExistsException extends Exception {};
 
-	// -- Sanitize input --
-	function input_data($data) {  
-		$data = trim($data);  
-		$data = stripslashes($data);  
-		$data = htmlspecialchars($data);  
-		return $data;  
-	}
-
 	// -- Create user --
 	function create_user($dbc, $login, $email, $hash) {
 		$activation_code = md5($email.time());

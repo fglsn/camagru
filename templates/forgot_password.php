@@ -3,7 +3,8 @@
 ?>
 
 <main>
-	<span class="info"><?php echo $info;?> </span>
+	<?php if ($info !== '') {
+		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; } ?>
 	<div class="form-wrapper">
 		<div class="form-container">
 			<div style="padding: 48px 0 0 0;">
@@ -15,7 +16,8 @@
 			<p class="form-header-text" style="font-size: 15px; font-weight: 300;">Enter your email and we'll send you a link to get back into your account.</p>
 			<form action="forgot_password.php" method="post" class="form-box">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" required>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off">
+					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="d-grid gap-2">
 					<button class="btn btn-primary" type="submit">Send Link</button>
@@ -27,7 +29,7 @@
 		<div class="form-container">
 			<div class="sign-text">
 				<p class="sign-up">
-					<a data-testid="sign-up-link" href="./signup.php">
+					<a data-testid="sign-up-link" href="./login.php">
 						<span class="sign-link" style="color: black; font-weight: 500;">
 							Back To Login
 						</span>
@@ -37,6 +39,16 @@
 		</div>
 	</div>
 </main>
+
+<script type="text/javascript">
+	window.setTimeout("myFunction();", 0);
+	function myFunction() {
+		var x = document.getElementById("snackbar");
+		x.className = "show";
+		setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+}
+</script>
+
 
 <?php
 	include(__DIR__ . "/footer.php");
