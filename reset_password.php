@@ -58,10 +58,10 @@
 		}
 	}
 	if (is_get_request()) {
-		header('Location: forgot_password.php');
-		// echo get_template("reset_password.php", array('error' => $error,
-		// 											'err_pass' => $err_pass,
-		// 											'err_conf' => $err_conf,
-		// 											'info' => $info)); // or redirect to forgot_password?
+		// header('Location: forgot_password.php');
+		echo get_template("reset_password.php", array('error' => $error,
+													'err_pass' => $err_pass,
+													'err_conf' => $err_conf,
+													'info' => $info)); // or redirect to forgot_password?
 	}
 ?>
