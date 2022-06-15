@@ -267,7 +267,7 @@ main {
 }
 
 .form-header {
-	padding: 64px 0 16px 0;
+	padding: 64px 0 0 0;
 	font-size: 4rem;
 }
 
@@ -275,14 +275,14 @@ main {
 	font-size: larger;
 	padding: 24px 0;
 	color: #606770;
-	font-weight: 600;
+	font-weight: 400;
 	text-align: center;
 }
 
 .form-header-text{
 	color: #8e8e8e;
 	font-size: 1rem;
-	font-weight: 600;
+	font-weight: 400;
 	line-height: 20px;
 	margin: 0px 40px 25px;
 	text-align: center;

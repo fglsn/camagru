@@ -2,5 +2,7 @@
 	require_once("./config/include.php");
 	require_once('./src/user_auth.php');
 	require_login();
-	header("Location: login.php");
+	// if ($_SESSION('user_id'))
+	// header("Location: login.php");
+
 ?>
