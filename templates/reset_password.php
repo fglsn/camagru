@@ -8,7 +8,7 @@
 			<h3 class="form-header" style="font-family: 'Cookie', cursive;">Camagru</h3>
 			<h4 class="form-header-text">Set up your new password here:</h4>
 			<span class="error"><?php echo $error;?> </span>
-			<form action="signup.php" class="form-box" method="post">
+			<form action="reset_password.php" class="form-box" method="post">
 				<div class="mb-3">
 					<input type="password" class="form-control" id="password" name="password" placeholder="New Password" require title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long">
 					<span class="error"><?php echo $err_pass;?></span>

@@ -24,7 +24,7 @@ create unique index activation_code_index on camagru_db.users (activation_code);
 create table if not exists camagru_db.password_reset_request (
 		id int(10) unsigned not null auto_increment primary key,
 		user_id int(10) unsigned not null,
-		requested_at datetime not null default current_timestamp(),
+		requested_at datetime not null,
 		token varchar(255) collate utf8_unicode_ci not null
 );
 

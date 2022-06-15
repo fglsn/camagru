@@ -1,12 +1,14 @@
 <?php 
-	require_once("./config/include.php");
-	require_once("./src/user_auth.php");
+	require_once (__DIR__ . '/../config/include.php');
+	require_once(__DIR__ . '/user_auth.php');
 
 	class NoUserFoundException extends Exception {};
+	class InvalidRequestException extends Exception {};
 
 	$info = $err_email = '';
 
-	function create_token($dbc, $email) {
+	// -- Forgot password --
+	function create_reset_link($dbc, $email, $root_url) {
 		$user = find_user_by_email($dbc, $email);
 		if (!$user)
 			throw new NoUserFoundException();
@@ -14,19 +16,21 @@
 		$token = bin2hex($token);
 		// echo ($token);
 		try {
-			$stmt = $dbc->prepare("insert into password_reset_request (user_id, token)
-								values (:user_id, :token)");
+			$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
+								values (:user_id, :requested_at, :token)");
 			$stmt->execute(array('user_id' => $user['user_id'],
+								'requested_at' => date("Y-m-d H:i:s"),
 									'token' => $token));
-			return $token;
+			$password_request_id = $dbc->lastInsertId();
+			$reset_link = $root_url . "/forgot_password.php?uid=" . $user['user_id'] . '&id=' . $password_request_id . '&t=' . $token;
+			return $reset_link;
 		}
 		catch (PDOException $e) {
 			throw $e;
 		}
 	}
 
-	function send_password_reset_link($root_url, $sender_email, $email, $token): void {
-		$reset_link = $root_url . "/forgot_password.php?reset=$token";
+	function send_password_reset_link($sender_email, $email, $reset_link): void {
 		// echo $activation_link;
 		$subject = 'Password reset';
 		$message = <<<MESSAGE
@@ -36,5 +40,70 @@
 		$header = "From:" . $sender_email;
 		mail($email, $subject, $message, $header); //Add check r no ?
 	}
+
+	function fetch_from_password_reset_table($dbc, $user_id) {
+		// echo $user_id;
+		$token = isset($_GET['t']) ? trim($_GET['t']) : '';
+		$password_request_id = isset($_GET['id']) ? trim($_GET['id']) : '';
+		try {
+			$sql = "select id, user_id, requested_at
+				from password_reset_request
+				where user_id = :user_id AND 
+				token = :token AND 
+				id = :id";
+	
+			$stmt = $dbc->prepare($sql);
+			$stmt->execute(array(
+				"user_id" => $user_id,
+				"id" => $password_request_id,
+				"token" => $token
+			));
+			return $stmt->fetch();
+		}
+		catch (PDOException $e) {
+			throw $e;
+		}
+	}
+
+
+	// -- Reset password --
+	function reset_password($dbc, $user_id, $hash) {
+		try {
+			$sql = "update users
+					set password=:hash
+					where user_id=:user_id";
+			$stmt = $dbc->prepare($sql);
+			return $stmt->execute(array('user_id' => $user_id,
+										'hash' => $hash));
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+		}
+	}
+
+
+	// function get_password_request_id($dbc) {
+	// 	$user_id = isset($_GET['uid']) ? trim($_GET['uid']) : '';
+	// 	$token = isset($_GET['t']) ? trim($_GET['t']) : '';
+	// 	$password_request_id = isset($_GET['id']) ? trim($_GET['id']) : '';
+	// 	$sql = "select id, user_id, requested_at
+	// 			from password_reset_request
+	// 			where user_id = :user_id AND 
+	// 			token = :token AND 
+	// 			id = :id";
+
+	// 	$stmt = $dbc->prepare($sql);
+	// 	$stmt->execute(array(
+	// 		"user_id" => $user_id,
+	// 		"id" => $password_request_id,
+	// 		"token" => $token
+	// 	));
+	// 	$request_data = $stmt->fetch();
+	// 	if (!$request_data)
+	// 		throw new InvalidRequestException();
+	// 	$_SESSION['user_id_reset_pass'] = $user_id;
+	// 	header('Location: create-password.php');
+	// 	exit;
+	// }
 
 ?>
