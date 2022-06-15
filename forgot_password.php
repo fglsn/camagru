@@ -1,7 +1,7 @@
 <?php
 
 	require_once("./config/include.php");
-	require_once("./src/reset_pass.php");
+	require_once("./src/reset_pwd.php");
 
 	$info = $err_email = $error = '';
 	
@@ -30,9 +30,7 @@
 	}
 
 	if (is_get_request()) {
-		if (isset($_GET['info']) && $_GET['info'] === 'reset')
-			$info = 'Thanks, the link is sent to your email!';
-		else if (isset($_GET['uid'])) {
+		if (isset($_GET['uid'])) {
 			$user_id = isset($_GET['uid']) ? trim($_GET['uid']) : '';
 			try {
 				$request_data = fetch_from_password_reset_table($dbc, $user_id);
@@ -44,8 +42,9 @@
 			$_SESSION['user_id_reset_pass'] = $user_id;
 			$qparam = http_build_query(array('info' => 'reset'));
 			header('Location: reset_password.php?' . $qparam);
-			exit;
 		}
+		if (isset($_GET['info']) && $_GET['info'] === 'reset')
+			$info = 'Thanks, the link is sent to your email!';
 		echo get_template('forgot_password.php', array(
 			'title' => 'Forgot Password',
 			'info' => $info,

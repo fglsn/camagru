@@ -7,6 +7,7 @@
 
 	$info = $err_email = '';
 
+	// todo: check if user already asked for reset, remove previous recordings ?
 	// -- Forgot password --
 	function create_reset_link($dbc, $email, $root_url) {
 		$user = find_user_by_email($dbc, $email);
