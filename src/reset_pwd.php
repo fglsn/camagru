@@ -5,6 +5,7 @@
 	class NoUserFoundException extends Exception {};
 	class InvalidRequestException extends Exception {};
 	class TokenExistsException extends Exception {};
+	class FailedToSendMail extends Exception {};
 
 	$info = $err_email = '';
 
@@ -41,7 +42,8 @@
 				$reset_link
 				MESSAGE;
 		$header = "From:" . $sender_email;
-		mail($email, $subject, $message, $header); //Add check r no ?
+		if (!mail($email, $subject, $message, $header))
+			throw new TokenExistsException();
 	}
 
 	function fetch_from_password_reset_table($dbc, $token) {

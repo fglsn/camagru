@@ -23,6 +23,9 @@
 			catch (TokenExistsException $e) {
 				$info = "Sorry, we couldn't create a link. Please try again." . PHP_EOL;
 			}
+			catch (FailedToSendMail $e) {
+				$info = "Failed to send email." . PHP_EOL;
+			}
 		}
 		echo get_template('forgot_password.php', array(
 			'title' => 'Forgot Password',
@@ -32,7 +35,6 @@
 		));
 	}
 
-	// todo: check only token, get user id by fetching from password_reset_request
 	if (is_get_request()) {
 		if (isset($_GET['t'])) {
 			$token = isset($_GET['t']) ? trim($_GET['t']) : '';

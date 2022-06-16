@@ -75,6 +75,9 @@
 			catch (EmailExistsException $e) {
 				$err_email = "This email address is already in use. Please try another email address" . PHP_EOL;
 			}
+			catch (FailedToSendMail $e) {
+				$info = "Failed to send email." . PHP_EOL;
+			}
 			catch (Exception $e) {
 				$err_login = "The user could not be added. ".$e->getMessage();
 			}

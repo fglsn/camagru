@@ -39,7 +39,8 @@
 				$activation_link
 				MESSAGE;
 		$header = "From:" . $sender_email;
-		mail($email, $subject, $message, $header); //Add check
+		if (!mail($email, $subject, $message, $header))
+			throw new TokenExistsException();
 	}
 
 	// -- Activate user --
