@@ -29,6 +29,7 @@
 		));
 	}
 
+	// todo: check only token, get user id by fetching from password_reset_request
 	if (is_get_request()) {
 		if (isset($_GET['uid'])) {
 			$user_id = isset($_GET['uid']) ? trim($_GET['uid']) : '';

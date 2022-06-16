@@ -8,6 +8,7 @@
 	$info = $err_email = '';
 
 	// todo: check if user already asked for reset, remove previous recordings ?
+	// todo: add only token to the link, add unique index on it to password_reset_request
 	// -- Forgot password --
 	function create_reset_link($dbc, $email, $root_url) {
 		$user = find_user_by_email($dbc, $email);
@@ -15,19 +16,14 @@
 			throw new NoUserFoundException();
 		$token = openssl_random_pseudo_bytes(16);
 		$token = bin2hex($token);
-		try {
-			$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
+		$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
 								values (:user_id, :requested_at, :token)");
-			$stmt->execute(array('user_id' => $user['user_id'],
-								'requested_at' => date("Y-m-d H:i:s"),
-									'token' => $token));
-			$password_request_id = $dbc->lastInsertId();
-			$reset_link = $root_url . "/forgot_password.php?uid=" . $user['user_id'] . '&id=' . $password_request_id . '&t=' . $token;
-			return $reset_link;
-		}
-		catch (PDOException $e) {
-			throw $e;
-		}
+		$stmt->execute(array('user_id' => $user['user_id'],
+				    'requested_at' => date("Y-m-d H:i:s"),
+					'token' => $token));
+		$password_request_id = $dbc->lastInsertId();
+		$reset_link = $root_url . "/forgot_password.php?uid=" . $user['user_id'] . '&id=' . $password_request_id . '&t=' . $token;
+		return $reset_link;
 	}
 
 	function send_password_reset_link($sender_email, $email, $reset_link): void {
