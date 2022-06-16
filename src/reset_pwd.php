@@ -45,12 +45,17 @@
 	}
 
 	function fetch_from_password_reset_table($dbc, $token) {
-		$sql = "select user_id
-				from password_reset_request
-				where token=:token";
-		$stmt = $dbc->prepare($sql);
-		$stmt->execute(array("token" => $token));
-		return $stmt->fetch();
+		try {
+			$sql = "select user_id
+			from password_reset_request
+			where token=:token";
+			$stmt = $dbc->prepare($sql);
+			$stmt->execute(array("token" => $token));
+			return $stmt->fetch();
+		}
+		catch (PDOException $e) {
+			echo $e->getMessage();
+		}
 }
 
 	// -- Reset password --

@@ -38,7 +38,7 @@
 	}
 	if(isset($_POST['submit'])) {
 		if ($error == "" && $err_pass == "" && $err_conf == "") {
-			// if ($_SESSION['user_id_reset_pass']) {
+			if ($_SESSION['user_id_reset_pass']) {
 				try {
 					$user_id_reset_pass = $_SESSION['user_id_reset_pass'];
 					reset_password($dbc, $user_id_reset_pass, $hash);
@@ -48,7 +48,7 @@
 				catch (Exception $e) {
 					$error = "Cannot change password. Check fields.";
 				}
-			// }
+			}
 		}
 		else {
 			echo get_template("reset_password.php", array('error' => $error,
