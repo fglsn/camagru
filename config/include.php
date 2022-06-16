@@ -11,7 +11,7 @@ require_once(__DIR__ . '/../src/web-helpers.php');
 
 date_default_timezone_set('Europe/Helsinki');
 
-$root_url = 'http://localhost:8080/camagru';
+$root_url = 'http://localhost:8081/camagru';
 $sender_email = 'no-reply@email.com';
 
 //echo GetTemplate('login.php', array('username' => 'Ilonya'));

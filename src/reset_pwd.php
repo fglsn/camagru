@@ -4,26 +4,34 @@
 
 	class NoUserFoundException extends Exception {};
 	class InvalidRequestException extends Exception {};
+	class TokenExistsException extends Exception {};
 
 	$info = $err_email = '';
 
 	// todo: check if user already asked for reset, remove previous recordings ?
 	// todo: add only token to the link, add unique index on it to password_reset_request
+
 	// -- Forgot password --
 	function create_reset_link($dbc, $email, $root_url) {
 		$user = find_user_by_email($dbc, $email);
 		if (!$user)
 			throw new NoUserFoundException();
-		$token = openssl_random_pseudo_bytes(16);
-		$token = bin2hex($token);
-		$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
+		$token = bin2hex(openssl_random_pseudo_bytes(16));
+		try {
+			$stmt = $dbc->prepare("insert into password_reset_request (user_id, requested_at, token)
 								values (:user_id, :requested_at, :token)");
-		$stmt->execute(array('user_id' => $user['user_id'],
-				    'requested_at' => date("Y-m-d H:i:s"),
-					'token' => $token));
-		$password_request_id = $dbc->lastInsertId();
-		$reset_link = $root_url . "/forgot_password.php?uid=" . $user['user_id'] . '&id=' . $password_request_id . '&t=' . $token;
-		return $reset_link;
+			$stmt->execute(array('user_id' => $user['user_id'],
+								'requested_at' => date("Y-m-d H:i:s"),
+								'token' => $token));
+			$reset_link = $root_url . '/forgot_password.php?t=' . $token;
+			return $reset_link;
+		} catch (PDOException $e) {
+			$err = $e->getMessage();
+			if (strpos($err, "token"))
+				throw new TokenExistsException();
+			else
+				throw $e;
+		}
 	}
 
 	function send_password_reset_link($sender_email, $email, $reset_link): void {
@@ -36,28 +44,14 @@
 		mail($email, $subject, $message, $header); //Add check r no ?
 	}
 
-	function fetch_from_password_reset_table($dbc, $user_id) {
-		$token = isset($_GET['t']) ? trim($_GET['t']) : '';
-		$password_request_id = isset($_GET['id']) ? trim($_GET['id']) : '';
-		try {
-			$sql = "select id, user_id, requested_at
+	function fetch_from_password_reset_table($dbc, $token) {
+		$sql = "select user_id
 				from password_reset_request
-				where user_id = :user_id AND 
-				token = :token AND 
-				id = :id";
-	
-			$stmt = $dbc->prepare($sql);
-			$stmt->execute(array(
-				"user_id" => $user_id,
-				"id" => $password_request_id,
-				"token" => $token
-			));
-			return $stmt->fetch();
-		}
-		catch (PDOException $e) {
-			throw $e;
-		}
-	}
+				where token=:token";
+		$stmt = $dbc->prepare($sql);
+		$stmt->execute(array("token" => $token));
+		return $stmt->fetch();
+}
 
 	// -- Reset password --
 	function reset_password($dbc, $user_id, $hash) {

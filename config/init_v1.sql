@@ -15,18 +15,19 @@ create table if not exists camagru_db.users (
 		updated_at datetime default current_timestamp() on update current_timestamp()
 	);
 
--- Create unique indexes to store only unique username and email, handle pdo-exeption errors in register.php --
+-- Create unique indexes to store only unique username and email, handle pdo-exeption errors in signup.php --
 create unique index username_index on camagru_db.users (username);
 create unique index email_index on camagru_db.users (email);
 create unique index activation_code_index on camagru_db.users (activation_code);
 
--- Create unique indexes to store only unique username and email, handle pdo-exeption errors in register.php --
 create table if not exists camagru_db.password_reset_request (
 		id int(10) unsigned not null auto_increment primary key,
 		user_id int(10) unsigned not null,
 		requested_at datetime not null,
 		token varchar(255) collate utf8_unicode_ci not null
 );
+-- Create unique index to store only unique tokens, handle pdo-exeption errors in reset_pwp.php --
+create unique index token_index on camagru_db.password_reset_request (token);
 
 -- Create migrations to check if db is expected state --
 create table if not exists camagru_db.migrations (

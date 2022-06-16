@@ -13,12 +13,15 @@
 			$email = input_data($_POST['email']);
 			try {
 				$link = create_reset_link($dbc, $email, $root_url);
-				send_password_reset_link($root_url, $sender_email, $email, $link);
+				send_password_reset_link($sender_email, $email, $link);
 				$qparam = http_build_query(array('info' => 'reset'));
 				header('Location: forgot_password.php?' . $qparam);
 			}
 			catch (NoUserFoundException $e) {
 				$info = "No user found. Please try again." . PHP_EOL;
+			}
+			catch (TokenExistsException $e) {
+				$info = "Sorry, we couldn't create a link. Please try again." . PHP_EOL;
 			}
 		}
 		echo get_template('forgot_password.php', array(
@@ -31,18 +34,18 @@
 
 	// todo: check only token, get user id by fetching from password_reset_request
 	if (is_get_request()) {
-		if (isset($_GET['uid'])) {
-			$user_id = isset($_GET['uid']) ? trim($_GET['uid']) : '';
-			try {
-				$request_data = fetch_from_password_reset_table($dbc, $user_id);
-			}
-			catch (Exception $e) {
+		if (isset($_GET['t'])) {
+			$token = isset($_GET['t']) ? trim($_GET['t']) : '';
+			$request_data = fetch_from_password_reset_table($dbc, $token);
+			if (!$request_data) 
 				$error = "Error fetching request, try again.";
+			else {
+				session_regenerate_id();
+				$_SESSION['user_id_reset_pass'] = $request_data['user_id'];
+				echo ($_SESSION['user_id_reset_pass']);
+				$qparam = http_build_query(array('info' => 'reset'));
+				header('Location: reset_password.php?' . $qparam);
 			}
-			session_regenerate_id();
-			$_SESSION['user_id_reset_pass'] = $user_id;
-			$qparam = http_build_query(array('info' => 'reset'));
-			header('Location: reset_password.php?' . $qparam);
 		}
 		if (isset($_GET['info']) && $_GET['info'] === 'reset')
 			$info = 'Thanks, the link is sent to your email!';
