@@ -1,6 +1,7 @@
 <?php
 	require_once("./config/include.php");
 	require_once("./src/user_db.php");
+	require_once("./src/validations.php");
 
 	$err_email = $err_username = $err_pass = $err_conf = $error = '';
 	$submit = $email = $username = $password = $hash = $confirmation = '';
@@ -13,30 +14,30 @@
 	if (is_post_request()) {
 		// Validate username
 		try {
-			validate_username(input_data($_POST['username']));
+			$username = validate_username($_POST['username']);
 		} catch (ValidationException $e) {
 			$err_username = $e->getMessage();
 		}
 
 		// Validate email address
 		try {
-			validate_email(input_data($_POST['email']));
+			$email = validate_email($_POST['email']);
 		} catch (ValidationException $e) {
 			$err_email = $e->getMessage();
 		}
 
 		//Validate password
 		try {
-			validate_password($_POST["password"], $_POST["confirmation"]);
+			validate_password($_POST["password"]);
 			$options = ['cost' => 12,];
-			$hash = password_hash($password, PASSWORD_BCRYPT, $options);
+			$hash = password_hash($_POST["password"], PASSWORD_BCRYPT, $options);
 		} catch (ValidationException $e) {
 			$err_pass = $e->getMessage();
 		}
 
 		// Validate confirmation
 		try {
-			validate_confirmation($_POST["confirmation"], $hash);
+			validate_confirmation($_POST["password"], $_POST["confirmation"]);
 		} catch (ValidationException $e) {
 			$err_conf = $e->getMessage();
 		}

@@ -4,6 +4,7 @@
 
 	class UsernameExistsException extends Exception {};
 	class EmailExistsException extends Exception {};
+	class TokenExistsException extends Exception {};
 
 	// -- Create user --
 	function create_user($dbc, $username, $email, $hash) {

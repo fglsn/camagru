@@ -1,7 +1,7 @@
 <?php
 	include(__DIR__ . "/header.php");
 ?>
-
+<!-- remember to put required back -->
 <main>
 	<?php if ($info !== '') {
 		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
@@ -11,10 +11,12 @@
 			<span class="error" style="padding-bottom: 20px"><?php echo $error;?> </span>
 			<form action="login.php" method="post" class="form-box">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off" required>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off">
+					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="mb-3">
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" type="password" required>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" type="password">
+					<span class="error"><?php echo $err_pass;?> </span>
 				</div>
 				<div class="d-grid gap-2">
 					<button class="btn btn-primary" type="submit">Log in</button>

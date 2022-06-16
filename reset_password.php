@@ -17,16 +17,16 @@
 	if (is_post_request()) {
 		//Validate password
 		try {
-			validate_password($_POST["password"], $_POST["confirmation"]);
+			validate_password($_POST["password"]);
 			$options = ['cost' => 12,];
-			$hash = password_hash($password, PASSWORD_BCRYPT, $options);
+			$hash = password_hash($_POST["password"], PASSWORD_BCRYPT, $options);
 		} catch (ValidationException $e) {
 			$err_pass = $e->getMessage();
 		}
 
-		//Validate confirmation
+		// Validate confirmation
 		try {
-			validate_confirmation($_POST["confirmation"], $hash);
+			validate_confirmation($_POST["password"], $_POST["confirmation"]);
 		} catch (ValidationException $e) {
 			$err_conf = $e->getMessage();
 		}

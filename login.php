@@ -12,8 +12,8 @@
 		exit();
 	}
 
-	if (is_post_request()) {  
-		// Validate username
+	if (is_post_request()) {
+		// Check fields
 		if (empty($_POST['email'])) {
 			$err_email = 'Please fill the email field.';
 		} else {
@@ -24,14 +24,26 @@
 			$err_pass = 'Please provide password.';	
 		} else {
 			$password = $_POST['password'];
-		}	
+		}
 
+		if (!empty($err_pass) || !empty($err_email)) {
+			echo get_template('login.php', array(
+				'title' => 'Log in',
+				'err_email' => $err_email,
+				'err_pass' => $err_pass,
+				'error' => $error,
+				'info' => $info,
+			));
+			exit;
+		}
+
+		//Login
 		try {
 			login($dbc, $email, $password);
 		} catch (UserNotActivatedException $e) {
 			$error = 'Please activate your account first.';
 		} catch (IncorrectEmailOrPwdException $e) {
-			$error = 'Invalid username or password.';
+			$error = 'Invalid email or password.';
 		}
 		if ($error) {
 			echo get_template('login.php', array(
@@ -64,6 +76,8 @@
 			'title' => 'Log in',
 			'info' => $info,
 			'error' => $error,
+			'err_email' => $err_email,
+			'err_pass' => $err_pass,
 		));
 	}
 ?>
