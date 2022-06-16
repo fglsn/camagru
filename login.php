@@ -3,12 +3,17 @@
 	require_once('./src/user_auth.php');
 	require_once('./src/user_db.php');
 
-	$err_email = $err_login = $err_pass = $err_conf = $error = '';
-	$email = $login = $password = $hash = $confirmation = '';
+	$err_email = $err_username = $err_pass = $err_conf = $error = '';
+	$email = $username = $password = $hash = $confirmation = '';
 	$info = '';
 
+	if (isset($_SESSION['user_id'])) {
+		header('Location: feed.php');
+		exit();
+	}
+
 	if (is_post_request()) {  
-		// Validate login
+		// Validate username
 		if (empty($_POST['email'])) {
 			$err_email = 'Please fill the email field.';
 		} else {

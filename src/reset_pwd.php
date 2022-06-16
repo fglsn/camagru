@@ -58,7 +58,7 @@
 		catch (PDOException $e) {
 			echo $e->getMessage();
 		}
-}
+	}
 
 	// -- Reset password --
 	function reset_password($dbc, $user_id, $hash) {

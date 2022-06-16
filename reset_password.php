@@ -2,52 +2,45 @@
 
 	require_once("./config/include.php");
 	require_once("./src/reset_pwd.php");
+	require_once("./src/validations.php");
+
 
 	$info = $err_pass = $err_conf = $error = '';
 	$submit = $password = $hash = $confirmation = '';
 
+	if (!isset($_SESSION['user_id_reset_pass'])) {
+		header('Location: login.php');
+		exit();
+	}
+	$user_id = $_SESSION['user_id_reset_pass'];
+
 	if (is_post_request()) {
 		//Validate password
-		if (empty($_POST["password"])) {
-			$err_pass = "Please provide password.";
-		}
-		else {
-			$password = $_POST["password"];
-			$number = preg_match('@[0-9]@', $password);
-			$uppercase = preg_match('@[A-Z]@', $password);
-			$lowercase = preg_match('@[a-z]@', $password);
-			$specialChars = preg_match('@[^\w]@', $password);
-			$options = ['cost' => 12, ];
-			if(strlen($password) < 8 || !$number || !$uppercase || !$lowercase || !$specialChars) {
-				$err_pass = "Password must be at least 8 characters in length and must contain at least one number, one upper case letter, one lower case letter and one special character.";
-			} else {
-				$hash = password_hash($password, PASSWORD_BCRYPT, $options);
-			}
+		try {
+			validate_password($_POST["password"], $_POST["confirmation"]);
+			$options = ['cost' => 12,];
+			$hash = password_hash($password, PASSWORD_BCRYPT, $options);
+		} catch (ValidationException $e) {
+			$err_pass = $e->getMessage();
 		}
 
 		//Validate confirmation
-		if (empty($_POST["confirmation"])) {
-			$err_conf = "Please confirm password.";
-		}
-		else {
-			$confirmation = $_POST["confirmation"];
-			if (!password_verify($confirmation, $hash)) {
-				$err_conf = "Password doesn't match.";
-			}
+		try {
+			validate_confirmation($_POST["confirmation"], $hash);
+		} catch (ValidationException $e) {
+			$err_conf = $e->getMessage();
 		}
 	}
+
 	if(isset($_POST['submit'])) {
 		if ($error == "" && $err_pass == "" && $err_conf == "") {
-			if ($_SESSION['user_id_reset_pass']) {
-				try {
-					$user_id_reset_pass = $_SESSION['user_id_reset_pass'];
-					reset_password($dbc, $user_id_reset_pass, $hash);
-					$qparam = http_build_query(array('info' => 'reset_success'));
-					header('Location: login.php?' . $qparam);
-				}
-				catch (Exception $e) {
-					$error = "Cannot change password. Check fields.";
-				}
+			try {
+				$user_id_reset_pass = $user_id;
+				reset_password($dbc, $user_id_reset_pass, $hash);
+				$qparam = http_build_query(array('info' => 'reset_success'));
+				header('Location: login.php?' . $qparam);
+			} catch (Exception $e) {
+				$error = "Cannot change password. Check fields.";
 			}
 		}
 		else {
@@ -57,11 +50,11 @@
 													'info' => $info));
 		}
 	}
+
 	if (is_get_request()) {
-		// header('Location: forgot_password.php');
 		echo get_template("reset_password.php", array('error' => $error,
 													'err_pass' => $err_pass,
 													'err_conf' => $err_conf,
-													'info' => $info)); // or redirect to forgot_password?
+													'info' => $info));
 	}
 ?>

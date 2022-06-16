@@ -6,12 +6,12 @@
 	class EmailExistsException extends Exception {};
 
 	// -- Create user --
-	function create_user($dbc, $login, $email, $hash) {
+	function create_user($dbc, $username, $email, $hash) {
 		$activation_code = md5($email.time());
 		try {
 			$stmt = $dbc->prepare("insert into users (username, email, password, activation_code)
 								values (:username, :email, :password, :activation_code)");
-			$stmt->execute(array('username' => $login,
+			$stmt->execute(array('username' => $username,
 									'email' => $email,
 									'password' => $hash,
 									'activation_code' => $activation_code));

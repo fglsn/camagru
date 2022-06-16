@@ -14,8 +14,8 @@
 					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="mb-3">
-					<input type="login" class="form-control" id="login" name="login" placeholder="Username" value="<?php echo $login?>" require>
-					<span class="error"><?php echo $err_login; ?></span>
+					<input type="username" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $username?>" require>
+					<span class="error"><?php echo $err_username; ?></span>
 				</div>
 
 				<div class="mb-3">
