@@ -38,11 +38,10 @@
 			$token = isset($_GET['t']) ? trim($_GET['t']) : '';
 			$request_data = fetch_from_password_reset_table($dbc, $token);
 			if (!$request_data) 
-				$error = "Error fetching request, try again.";
+				$info = "Error fetching request, try again.";
 			else {
 				session_regenerate_id();
 				$_SESSION['user_id_reset_pass'] = $request_data['user_id'];
-				echo ($_SESSION['user_id_reset_pass']);
 				$qparam = http_build_query(array('info' => 'reset'));
 				header('Location: reset_password.php?' . $qparam);
 			}
