@@ -17,8 +17,7 @@
 									'password' => $hash,
 									'activation_code' => $activation_code));
 			return $activation_code;
-		}
-		catch (PDOException $e) { //error thrown if username or email already in use, see unique indexes (sql)
+		} catch (PDOException $e) { //error thrown if username or email already in use, see unique indexes (sql)
 			$err = $e->getMessage();
 			if (strpos($err, "username_index"))
 				throw new UsernameExistsException();
@@ -32,7 +31,6 @@
 	// -- Email user --
 	function send_activation_email($root_url, $sender_email, $email, $activation_code): void {
 		$activation_link = $root_url . "/activate.php?activation_code=$activation_code";
-		// echo $activation_link;
 		$subject = 'Please activate your account';
 		$message = <<<MESSAGE
 				Hi and thanks for registration!
@@ -45,7 +43,6 @@
 	}
 
 	// -- Activate user --
-
 	function find_user_by_activation($dbc, $activation_code) {
 		$sql = 'select user_id, active, activation_code
 				from users

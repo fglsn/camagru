@@ -12,16 +12,13 @@
 		else {
 			$email = input_data($_POST['email']);
 			try {
-				$link = create_reset_link($dbc, $email, $root_url);
+				$link = create_password_reset_link($dbc, $email, $root_url);
 				send_password_reset_link($sender_email, $email, $link);
 				$qparam = http_build_query(array('info' => 'reset'));
 				header('Location: forgot_password.php?' . $qparam);
 			}
 			catch (NoUserFoundException $e) {
 				$info = "No user found. Please try again." . PHP_EOL;
-			}
-			catch (TokenExistsException $e) {
-				$info = "Sorry, we couldn't create a link. Please try again." . PHP_EOL;
 			}
 			catch (FailedToSendMail $e) {
 				$info = "Failed to send email." . PHP_EOL;
