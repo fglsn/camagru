@@ -2,74 +2,90 @@
 	include(__DIR__ . "/header.php");
 ?>
 
+<!-- todo: Remember to put ' back! -->
+
 <main>
+	<?php if ($info !== '') {
+		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
 		<!-- Change username -->
 		<div class="form-container">
-			<form action="change-username" method="post" class="form-box">
+			<form action="settings.php" method="post" class="form-box">
 				<h6 class="form-header-light">Change Username</h6>
 				<div class="mb-3">
 					<label for="item">New Username: </label>
-					<input type="text" class="form-control" id="new-username" name="new-username" autocomplete="off" required>
+					<input type="text" class="form-control" id="new-username" name="new-username" autocomplete="off">
+					<span class="error"><?php echo $err_username;?></span>
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit-new-username" name="submit-new-username" type="submit">Submit</button>
 				</div>
 			</form>
 		</div>
 		<!-- Change email -->
 		<div class="form-container">
-			<form action="change-email" method="post" class="form-box">
+			<form action="settings.php" method="post" class="form-box">
 				<h6 class="form-header-light">Change Email</h6>
 				<div class="mb-3">
 					<label for="item">Old Email: </label>
-					<input type="email" class="form-control" id="old-email" name="old-email" autocomplete="off" required>
+					<input type="email" class="form-control" id="old-email" name="old-email" autocomplete="off">
 				</div>
 				<div class="mb-3">
 					<label for="item">New Email: </label>
-					<input type="email" class="form-control" id="new-email" name="new-email"autocomplete="off" required>
+					<input type="email" class="form-control" id="new-email" name="new-email"autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" name="submit" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit" name="submit" type="submit">Submit</button>
 				</div>
 			</form>
 		</div>
 		<!-- Change password -->
 		<div class="form-container">
-			<form action="change-password" method="post" class="form-box">
+			<form action="settings.php" method="post" class="form-box">
 				<h6 class="form-header-light">Change Password</h6>
 				<div class="mb-3">
 					<label for="item">Old Password: </label>
-					<input type="password" class="form-control" id="old-password" name="old-password" autocomplete="off" required>
+					<input type="password" class="form-control" id="old-password" name="old-password" autocomplete="off">
 				</div>
 				<div class="mb-3">
 					<label for="item">New Password: </label>
-					<input type="password" class="form-control" id="new-password" name="new-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off" required>
+					<input type="password" class="form-control" id="new-password" name="new-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
 				</div>
 				<div class="mb-3">
 					<label for="item">Confirm New Password: </label>
-					<input type="password" class="form-control" id="repeat-password" name="repeat-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off" required>
+					<input type="password" class="form-control" id="repeat-password" name="repeat-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary"  name="submit" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit" name="submit" type="submit">Submit</button>
 				</div>
 			</form>
 		</div>
 		<!-- Delete user -->
 		<div class="form-container">
-			<form action="./delete-user.php" method="post" class="form-box">
+			<form action="settings.php" method="post" class="form-box">
 				<h6 class="form-header-light">Delete Account</h6>
 				<div class="mb-3">
 					<label for="item">Confirm with password:  </label>
-					<input type="password" class="form-control" id="password" name="password" autocomplete="off" required>
+					<input type="password" class="form-control" id="password" name="password" autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-danger"type="submit" name="submit" value="Delete">Submit</button>
+					<button class="btn btn-danger" value="sumbit" type="submit" name="submit" value="Delete">Submit</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </main>
+
+<script type="text/javascript">
+	function myFunction() {
+		if (document.getElementById("snackbar")) {
+			var x = document.getElementById("snackbar");
+			x.className = "show";
+			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+		}
+	}
+	myFunction();
+</script>
 
 <?php
 	include(__DIR__ . "/footer.php");
