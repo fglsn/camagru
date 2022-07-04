@@ -4,9 +4,11 @@
 	require_once('./src/validations.php');
 
 	class SameUsernameException extends Exception {};
+	class OldEmailException extends Exception {};
+	class SameEmailException extends Exception {};
 
-	$info = $err_username = '';
-	$new_username = '';
+	$info = $err_username = $err_old_email = $err_email = '';
+	$new_username = $new_email = '';
 
 	require_login('');
 
@@ -37,6 +39,46 @@
 					'title' => 'Profile settings',
 					'info' => $info,
 					'err_username' => $err_username,
+					'err_old_email' => $err_old_email,
+					'err_email' => $err_email,
+				));
+			}
+		}
+
+		//Change email address
+		if (isset($_POST['submit-new-email'])) {
+			try {
+				$old_email = validate_email($_POST['old-email']);
+				$new_email = validate_email($_POST['new-email']);
+				if ($old_email !== $_SESSION['email'])
+					throw new OldEmailException();
+				if ($new_email == $_SESSION['email'])
+					throw new SameEmailException();
+				update_email($dbc, $new_email);
+				update_session_email($new_email);
+				$qparam = http_build_query(array('info' => 'email_updated',
+												'email' => $new_email));
+				header('Location: settings.php?' . $qparam);
+			}
+			catch (EmailExistsException $e) {
+				$err_email = "This email is already in use, please try again.";
+			}
+			catch (OldEmailException $e) {
+				$err_old_email = "Please confirm with your current email address.";
+			}
+			catch (SameEmailException $e) {
+				$err_email = "Same email address provided, please insert new one.";
+			}
+			catch (ValidationException $e) {
+				$err_email = $e->getMessage();
+			}
+			if ($err_email || $err_old_email) {
+				echo get_template('settings.php', array(
+					'title' => 'Profile settings',
+					'info' => $info,
+					'err_username' => $err_username,
+					'err_old_email' => $err_old_email,
+					'err_email' => $err_email,
 				));
 			}
 		}
@@ -46,11 +88,15 @@
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'username_updated')
 				$info = "Success! Your new username is now " . $_GET['username'];
+			if ($_GET['info'] === 'email_updated')
+				$info = "Success! Your new email address is now " . $_GET['email'];
 		}
 		echo get_template('settings.php', array(
 			'title' => 'Profile settings',
 			'info' => $info,
 			'err_username' => $err_username,
+			'err_old_email' => $err_old_email,
+			'err_email' => $err_email,
 		));
 	}
 ?>

@@ -29,13 +29,15 @@
 				<div class="mb-3">
 					<label for="item">Old Email: </label>
 					<input type="email" class="form-control" id="old-email" name="old-email" autocomplete="off">
+					<span class="error"><?php echo $err_old_email;?></span>
 				</div>
 				<div class="mb-3">
 					<label for="item">New Email: </label>
 					<input type="email" class="form-control" id="new-email" name="new-email"autocomplete="off">
+					<span class="error"><?php echo $err_email;?></span>
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" value="sumbit" name="submit" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit-new-email" name="submit-new-email" type="submit">Submit</button>
 				</div>
 			</form>
 		</div>
