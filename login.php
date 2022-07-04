@@ -14,10 +14,10 @@
 
 	if (is_post_request()) {
 		// Check fields
-		if (empty($_POST['email'])) {
-			$err_email = 'Please fill the email field.';
+		if (empty($_POST['username'])) {
+			$err_username = 'Please fill the username field.';
 		} else {
-			$email = input_data($_POST['email']);
+			$username = input_data($_POST['username']);
 		}
 
 		if (empty($_POST['password'])) {
@@ -26,10 +26,10 @@
 			$password = $_POST['password'];
 		}
 
-		if (!empty($err_pass) || !empty($err_email)) {
+		if (!empty($err_pass) || !empty($err_username)) {
 			echo get_template('login.php', array(
 				'title' => 'Log in',
-				'err_email' => $err_email,
+				'err_username' => $err_username,
 				'err_pass' => $err_pass,
 				'error' => $error,
 				'info' => $info,
@@ -39,16 +39,16 @@
 
 		//Login
 		try {
-			login($dbc, $email, $password);
+			login($dbc, $username, $password);
 		} catch (UserNotActivatedException $e) {
 			$error = 'Please activate your account first.';
-		} catch (IncorrectEmailOrPwdException $e) {
-			$error = 'Invalid email or password.';
+		} catch (IncorrectUsernameOrPwdException $e) {
+			$error = 'Invalid username or password.';
 		}
 		if ($error) {
 			echo get_template('login.php', array(
 				'title' => 'Log in',
-				'err_email' => $err_email,
+				'err_username' => $err_username,
 				'err_pass' => $err_pass,
 				'error' => $error,
 				'info' => $info,
@@ -58,7 +58,7 @@
 			header('Location: feed.php?' . $qparam);
 		}
 	}
-	//todo: Add message if not activated yet or email incorrect
+	//todo: Add message if not activated yet or username incorrect
 	else if (is_get_request()) {
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'activation_link')
@@ -74,10 +74,10 @@
 		}
 		echo get_template('login.php', array(
 			'title' => 'Log in',
-			'info' => $info,
-			'error' => $error,
-			'err_email' => $err_email,
+			'err_username' => $err_username,
 			'err_pass' => $err_pass,
+			'error' => $error,
+			'info' => $info,
 		));
 	}
 ?>

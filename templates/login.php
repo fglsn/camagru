@@ -11,8 +11,8 @@
 			<span class="error" style="padding-bottom: 20px"><?php echo $error;?> </span>
 			<form action="login.php" method="post" class="form-box">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off">
-					<span class="error"><?php echo $err_email;?> </span>
+					<input type="username" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off">
+					<span class="error"><?php echo $err_username;?> </span>
 				</div>
 				<div class="mb-3">
 					<input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off" type="password">
