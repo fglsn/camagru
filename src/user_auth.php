@@ -1,31 +1,10 @@
-<?php 
+<?php
 
+	require_once(__DIR__ . '/user_db.php');
 	require_once (__DIR__ . '/../config/include.php');
 
 	class IncorrectEmailOrPwdException extends Exception {};
 	class UserNotActivatedException extends Exception {};
-
-	function is_user_logged_in(): bool {
-		return isset($_SESSION['user_id']);
-	}
-
-	function require_login(): void {
-		if (!is_user_logged_in()) {
-			header('Location: login.php');
-		} else {
-			header("Location: feed.php");
-		}
-	}
-
-	// -- Log in --
-	function find_user_by_email($dbc, $email) {
-		$sql = 'select user_id, username, email, password, active
-				from users
-				where email=:email';
-		$stmt = $dbc->prepare($sql);
-		$stmt->execute(array('email' => $email));
-		return $stmt->fetch();
-	}
 
 	function is_user_active($user) {
 		return (int)$user['active'] === 1;

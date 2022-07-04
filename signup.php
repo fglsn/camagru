@@ -1,6 +1,6 @@
 <?php
 	require_once("./config/include.php");
-	require_once("./src/user_db.php");
+	require_once("./src/user_create_activate.php");
 	require_once("./src/validations.php");
 
 	$err_email = $err_username = $err_pass = $err_conf = $error = '';

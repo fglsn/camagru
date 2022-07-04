@@ -1,6 +1,6 @@
 <?php
 	require_once("./config/include.php");
-	require_once("./src/user_db.php");
+	require_once("./src/user_create_activate.php");
 
 	if (is_get_request()) {
 		if (isset($_GET['activation_code'])) {

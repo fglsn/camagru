@@ -1,7 +1,7 @@
 <?php
 	require_once('./config/include.php');
 	require_once('./src/user_auth.php');
-	require_once('./src/user_db.php');
+	require_once('./src/user_create_activate.php');
 
 	$err_email = $err_username = $err_pass = $err_conf = $error = '';
 	$email = $username = $password = $hash = $confirmation = '';
