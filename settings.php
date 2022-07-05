@@ -8,12 +8,11 @@
 	class SameEmailException extends Exception {};
 	class EmptyFieldException extends Exception {};
 
-	$info = $err_username = $err_old_email = $err_email = $err_password = $err_new_password = '';
+	$info = $err_username = $err_old_email = $err_email = $err_password = $err_new_password = $err_pass = '';
 	$new_username = $new_email = $old_email = '';
 
 	require_login('');
 
-	// todo: Send notifications when modification request completed
 	if (is_post_request()) {
 
 		// Change username
@@ -46,6 +45,7 @@
 					'err_email' => $err_email,
 					'err_password' => $err_password,
 					'err_new_password' => $err_new_password,
+					'err_pass' => $err_pass,
 				));
 			}
 		}
@@ -86,12 +86,13 @@
 					'err_email' => $err_email,
 					'err_password' => $err_password,
 					'err_new_password' => $err_new_password,
+					'err_pass' => $err_pass,
 				));
 			}
 		}
 
 		// Change password
-		if (isset($_POST['sumbit-new-password'])) {
+		if (isset($_POST['submit-new-password'])) {
 			try {
 				if (!$_POST['old-password'])
 					throw new EmptyFieldException();
@@ -120,6 +121,36 @@
 					'err_email' => $err_email,
 					'err_password' => $err_password,
 					'err_new_password' => $err_new_password,
+					'err_pass' => $err_pass,
+				));
+			}
+		}
+
+		// Delete user
+		if (isset($_POST['submit-removal'])) {
+			try {
+				if (!$_POST['password'])
+					throw new EmptyFieldException();
+				verify_current_password($dbc, $_POST['password']);
+				delete_user($dbc, $_SESSION['user_id']);
+				header('Location: logout.php');
+			} catch (EmptyFieldException $e) {
+				$err_pass = "Please confirm action with your current password.";
+			} catch (WrongPasswordException $e) {
+				$err_pass = "Wrong password. Try again.";
+			} catch (GeneralErrorException $e) {
+				$info = "Sorry, something went wrong. Please try again.";
+			}
+			if ($err_pass || $info) {
+				echo get_template('settings.php', array(
+					'title' => 'Profile settings',
+					'info' => $info,
+					'err_username' => $err_username,
+					'err_old_email' => $err_old_email,
+					'err_email' => $err_email,
+					'err_password' => $err_password,
+					'err_new_password' => $err_new_password,
+					'err_pass' => $err_pass,
 				));
 			}
 		}
@@ -142,6 +173,7 @@
 			'err_email' => $err_email,
 			'err_password' => $err_password,
 			'err_new_password' => $err_new_password,
+			'err_pass' => $err_pass,
 		));
 	}
 ?>

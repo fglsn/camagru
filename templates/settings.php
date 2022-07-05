@@ -2,7 +2,7 @@
 	include(__DIR__ . "/header.php");
 ?>
 
-<!-- todo: Remember to put ' back! -->
+<!-- todo: Remember to put required and patterns back! -->
 
 <main>
 	<?php if ($info !== '') {
@@ -60,7 +60,7 @@
 					<input type="password" class="form-control" id="repeat-password" name="repeat-password" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" value="sumbit-new-password" name="sumbit-new-password" type="submit" style="margin: 10px 0;">Submit</button>
+					<button class="btn btn-primary" value="submit-new-password" name="submit-new-password" type="submit" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -69,11 +69,12 @@
 			<form action="settings.php" method="post" class="form-box">
 				<h6 class="form-header-light">Delete Account</h6>
 				<div class="mb-3">
-					<label for="item">Confirm with password:  </label>
+					<label for="item">Confirm With Password:  </label>
 					<input type="password" class="form-control" id="password" name="password" autocomplete="off">
+					<span class="error"><?php echo $err_pass;?></span>
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-danger" value="sumbit" type="submit" name="submit" value="Delete" style="margin: 10px 0;">Submit</button>
+					<button class="btn btn-danger" value="sumbit-removal" type="submit" name="submit-removal" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
