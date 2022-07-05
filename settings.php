@@ -15,6 +15,24 @@
 
 	if (is_post_request()) {
 
+		// Notifications
+		if (isset($_POST['subscribe']) || isset($_POST['unsubscribe'])) {
+			try {
+				if (isset($_POST['subscribe'])) {
+					update_notifications($dbc, 1);
+					update_session_notifications(1);
+				}
+				else {
+					update_notifications($dbc, 0);
+					update_session_notifications(0);
+				}
+				$qparam = http_build_query(array('info' => 'notifications'));
+				header('Location: settings.php?' . $qparam);
+			} catch (GeneralErrorException $e) {
+				$info = "Sorry, something went wrong. Please try again.";
+			}
+		}
+
 		// Change username
 		if (isset($_POST['submit-new-username'])) {
 			try {
@@ -158,6 +176,8 @@
 
 	if (is_get_request()) {
 		if (isset($_GET['info'])) {
+			if ($_GET['info'] === 'notifications')
+				$info = "Done! Notification settings are now updated.";
 			if ($_GET['info'] === 'username_updated')
 				$info = "Success! Your new username is now " . $_GET['username'];
 			if ($_GET['info'] === 'email_updated')

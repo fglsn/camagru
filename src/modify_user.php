@@ -8,6 +8,19 @@
 	class WrongPasswordException extends Exception {};
 	class GeneralErrorException extends Exception {};
 
+	function update_notifications($dbc, $value) {
+		$user = find_user_by_username($dbc, $_SESSION['username']);
+		if (!$user)
+			throw new GeneralErrorException();
+		$sql = 'update users
+		set notifications=:value
+		where user_id=:user_id';
+		$stmt = $dbc->prepare($sql);
+		return $stmt->execute(array('value' => $value,
+									'user_id' => $user['user_id']));
+		
+	}
+
 	function update_username($dbc, $new_username) {
 		try {
 			$sql = 'update users
@@ -75,5 +88,9 @@
 
 	function update_session_email($new_email) {
 		$_SESSION['email'] = $new_email;
+	}
+
+	function update_session_notifications($value) {
+		$_SESSION['notify'] = $value;
 	}
 ?>

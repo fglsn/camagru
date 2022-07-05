@@ -8,6 +8,22 @@
 	<?php if ($info !== '') {
 		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
+		<!-- Notifications -->
+		<div class="form-container">
+			<form action="settings.php" method="post" class="form-box">
+				<h6 class="form-header-light">Notifications Settings</h6>
+				<?php 
+				if (isset($_SESSION['notify']) && $_SESSION['notify'] === 0) {
+					echo '<div class="d-grid gap-2">
+							<button class="btn btn-primary" value="subscribe" name="subscribe" type="submit" style="margin: 10px 0;">Subscribe</button>
+						</div>';
+				} else {
+					echo '<div class="d-grid gap-2">
+							<button class="btn btn-secondary" value="unsubscribe" name="unsubscribe" type="submit" style="margin: 10px 0;">Unsubscribe</button>
+						</div>';
+				}?>
+			</form>
+		</div>
 		<!-- Change username -->
 		<div class="form-container">
 			<form action="settings.php" method="post" class="form-box">

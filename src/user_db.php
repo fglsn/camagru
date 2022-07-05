@@ -1,7 +1,7 @@
 <?php
 
 function find_user_by_username($dbc, $username) {
-	$sql = 'select user_id, username, email, password, active
+	$sql = 'select user_id, username, email, password, notifications, active
 			from users
 			where username=:username';
 	$stmt = $dbc->prepare($sql);
@@ -22,7 +22,6 @@ function find_user_by_activation($dbc, $activation_code) {
 	$sql = 'select user_id, active, activation_code
 			from users
 			where activation_code=:activation_code';
-
 	$stmt = $dbc->prepare($sql);
 	$stmt->execute(array('activation_code' => $activation_code));
 	return $stmt->fetch();
@@ -36,5 +35,4 @@ function find_user_by_email($dbc, $email) {
 	$stmt->execute(array('email' => $email));
 	return $stmt->fetch();
 }
-
 ?>
