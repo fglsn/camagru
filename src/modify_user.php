@@ -1,9 +1,12 @@
 <?php
 
 	require_once (__DIR__ . '/../config/include.php');
-	
+	require_once(__DIR__ . '/user_db.php');
+
 	class UsernameExistsException extends Exception {};
 	class EmailExistsException extends Exception {};
+	class WrongPasswordException extends Exception {};
+	class GeneralErrorException extends Exception {};
 
 	function update_username($dbc, $new_username) {
 		try {
@@ -39,6 +42,25 @@
 			else
 				throw $e;
 		}
+	}
+
+	function verify_current_password($dbc, $password) {
+		$user = find_user_by_id($dbc, $_SESSION['user_id']);
+		if (!$user)
+			throw new GeneralErrorException();
+		if (!password_verify($password, $user['password']))
+			throw new WrongPasswordException();
+	}
+
+	function update_password($dbc, $password) {
+		$options = ['cost' => 12,];
+		$hash = password_hash($password, PASSWORD_BCRYPT, $options);
+		$sql = 'update users
+				set password=:password
+				where user_id=:user_id';
+		$stmt = $dbc->prepare($sql);
+		return $stmt->execute(array('password' => $hash,
+									'user_id' => $_SESSION['user_id']));
 	}
 
 	function update_session_username($new_username) {

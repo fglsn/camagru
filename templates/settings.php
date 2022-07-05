@@ -18,7 +18,7 @@
 					<span class="error"><?php echo $err_username;?></span>
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" value="sumbit-new-username" name="submit-new-username" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit-new-username" name="submit-new-username" type="submit" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -37,7 +37,7 @@
 					<span class="error"><?php echo $err_email;?></span>
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" value="sumbit-new-email" name="submit-new-email" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit-new-email" name="submit-new-email" type="submit" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -48,17 +48,19 @@
 				<div class="mb-3">
 					<label for="item">Old Password: </label>
 					<input type="password" class="form-control" id="old-password" name="old-password" autocomplete="off">
+					<span class="error"><?php echo $err_password;?></span>
 				</div>
 				<div class="mb-3">
 					<label for="item">New Password: </label>
-					<input type="password" class="form-control" id="new-password" name="new-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
+					<input type="password" class="form-control" id="new-password" name="new-password" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
+					<span class="error"><?php echo $err_new_password;?></span>
 				</div>
 				<div class="mb-3">
 					<label for="item">Confirm New Password: </label>
-					<input type="password" class="form-control" id="repeat-password" name="repeat-password" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
+					<input type="password" class="form-control" id="repeat-password" name="repeat-password" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long" autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-primary" value="sumbit" name="submit" type="submit">Submit</button>
+					<button class="btn btn-primary" value="sumbit-new-password" name="sumbit-new-password" type="submit" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -71,12 +73,15 @@
 					<input type="password" class="form-control" id="password" name="password" autocomplete="off">
 				</div>
 				<div class="d-grid gap-2">
-					<button class="btn btn-danger" value="sumbit" type="submit" name="submit" value="Delete">Submit</button>
+					<button class="btn btn-danger" value="sumbit" type="submit" name="submit" value="Delete" style="margin: 10px 0;">Submit</button>
 				</div>
 			</form>
 		</div>
 	</div>
+	<!-- pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"  -->
+	<!-- pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"  -->
 </main>
+
 
 <script type="text/javascript">
 	function myFunction() {

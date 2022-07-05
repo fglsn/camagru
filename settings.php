@@ -6,14 +6,17 @@
 	class SameUsernameException extends Exception {};
 	class OldEmailException extends Exception {};
 	class SameEmailException extends Exception {};
+	class EmptyFieldException extends Exception {};
 
-	$info = $err_username = $err_old_email = $err_email = '';
-	$new_username = $new_email = '';
+	$info = $err_username = $err_old_email = $err_email = $err_password = $err_new_password = '';
+	$new_username = $new_email = $old_email = '';
 
 	require_login('');
 
+	// todo: Send notifications when modification request completed
 	if (is_post_request()) {
-		//Change username
+
+		// Change username
 		if (isset($_POST['submit-new-username'])) {
 			try {
 				$new_username = validate_username($_POST['new-username']);
@@ -41,11 +44,13 @@
 					'err_username' => $err_username,
 					'err_old_email' => $err_old_email,
 					'err_email' => $err_email,
+					'err_password' => $err_password,
+					'err_new_password' => $err_new_password,
 				));
 			}
 		}
 
-		//Change email address
+		// Change email address
 		if (isset($_POST['submit-new-email'])) {
 			try {
 				$old_email = validate_email($_POST['old-email']);
@@ -79,6 +84,42 @@
 					'err_username' => $err_username,
 					'err_old_email' => $err_old_email,
 					'err_email' => $err_email,
+					'err_password' => $err_password,
+					'err_new_password' => $err_new_password,
+				));
+			}
+		}
+
+		// Change password
+		if (isset($_POST['sumbit-new-password'])) {
+			try {
+				if (!$_POST['old-password'])
+					throw new EmptyFieldException();
+				verify_current_password($dbc, $_POST['old-password']);
+				validate_password($_POST['new-password']);
+				validate_confirmation($_POST['new-password'], $_POST['repeat-password']);
+				update_password($dbc, $_POST['new-password']);
+				$qparam = http_build_query(array('info' => 'password_updated'));
+				header('Location: settings.php?' . $qparam);
+			} catch (ValidationException $e) {
+				$err_new_password = $e->getMessage();
+			} catch (WrongPasswordException $e) {
+				$err_password = "Wrong password. Try again.";
+			} catch (EmptyFieldException $e) {
+				$err_password = "Please insert your current password.";
+			} catch (GeneralErrorException $e) {
+				$info = "Sorry, something went wrong. Please try again.";
+			}
+
+			if ($err_password || $err_new_password || $info) {
+				echo get_template('settings.php', array(
+					'title' => 'Profile settings',
+					'info' => $info,
+					'err_username' => $err_username,
+					'err_old_email' => $err_old_email,
+					'err_email' => $err_email,
+					'err_password' => $err_password,
+					'err_new_password' => $err_new_password,
 				));
 			}
 		}
@@ -90,6 +131,8 @@
 				$info = "Success! Your new username is now " . $_GET['username'];
 			if ($_GET['info'] === 'email_updated')
 				$info = "Success! Your new email address is now " . $_GET['email'];
+			if ($_GET['info'] === 'password_updated')
+				$info = "Done! Your password was updated successfully.";
 		}
 		echo get_template('settings.php', array(
 			'title' => 'Profile settings',
@@ -97,6 +140,8 @@
 			'err_username' => $err_username,
 			'err_old_email' => $err_old_email,
 			'err_email' => $err_email,
+			'err_password' => $err_password,
+			'err_new_password' => $err_new_password,
 		));
 	}
 ?>

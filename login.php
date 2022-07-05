@@ -9,7 +9,7 @@
 
 	if (isset($_SESSION['user_id'])) {
 		header('Location: feed.php');
-		exit();
+		exit;
 	}
 
 	if (is_post_request()) {
