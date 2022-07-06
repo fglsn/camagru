@@ -15,8 +15,9 @@
 					<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
 					<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showname()"/>
 					<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
-					<span class="error"><?php echo $error;?></span>
 				</div>
+				<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
+
 			</form>
 			<h4 class="form-header-light">Or</h4>
 		</div>
