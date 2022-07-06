@@ -7,7 +7,6 @@
 	class TooBigFileException extends Exception {};
 	class FileNotAllowedException extends Exception {};
 
-
 	$info = $error = '';
 
 	$allowedTypes = [
