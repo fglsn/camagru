@@ -14,6 +14,4 @@ date_default_timezone_set('Europe/Helsinki');
 $root_url = 'http://localhost:8080/camagru';
 $sender_email = 'no-reply@email.com';
 
-//echo GetTemplate('login.php', array('username' => 'Ilonya'));
-
 ?>
