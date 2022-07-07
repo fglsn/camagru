@@ -92,6 +92,7 @@ main {
 
 .author-username {
 	margin: 0px!important;
+	min-width: 120px;
 }
 
 .post-content {

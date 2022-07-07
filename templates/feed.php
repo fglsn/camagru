@@ -13,7 +13,9 @@
 					foreach ($posts as $post) {
 						$src = '.'.$post['picture_path'];
 						$author = $post['username'];
-						$description = $post['picture_description'] ?>
+						$description = $post['picture_description']
+			?>
+
 						<article class="post-wrapper">
 						<div class="post">
 							<div class="post-header">
@@ -21,7 +23,7 @@
 							</div>
 							<div class="post-content">
 								<div class="post-pic-section">
-									<img alt="picture" class="picture" src=<?php echo $src;?>>
+									<img alt="<?php echo 'Image by @' . $author?>" class="picture" src=<?php echo $src;?>>
 								</div>
 							</div>
 							<div class="post-comment-section">
@@ -43,32 +45,35 @@
 									<span><h6 style="padding: 12px; font-style: bold; margin: 0;">0 likes</h6></span>
 								</section>
 								<section class="author-section">
-									<h6 class="author-username" style="padding: 12px;"><?php echo '@'.$author ?></h6>
+									<h6 class="author-username" style="padding: 12px;"><?php echo $author ?></h6>
 									<p class="post-description"><?php echo $description ?></p>
 								</section>
-								<div class="line" style="flex-grow: 0"></div>
-								<section class="comments">
-									<div class="comment">
-										<h6 class="commentator" style="padding: 12px;">commentator</h6>
-										<p class="comment-text">comment-here comment-here comment-here comment-here comment-here comment-here comment-here </p>
-									</div>
-									<div class="comment">
-										<h6 class="commentator" style="padding: 12px;">commentator</h6>
-										<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
-									</div>
-								</section>
-								<section class="input-box">
-									<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="input-comment" placeholder="Add a comment..." autocomplete="off" type="input-comment" required>
-									<button type="button" class="btn btn-outline-primary btn-sm">Post</button>
-								</section>
+								<?php if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']))
+										echo "<div style='display: none'>"?>
+									<div class="line" style="flex-grow: 0"></div>
+									<section class="comments">
+										<div class="comment">
+											<h6 class="commentator" style="padding: 12px;">commentator</h6>
+											<p class="comment-text">comment-here comment-here comment-here comment-here comment-here comment-here comment-here </p>
+										</div>
+										<div class="comment">
+											<h6 class="commentator" style="padding: 12px;">commentator</h6>
+											<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
+										</div>
+									</section>
+									<section class="input-box">
+										<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="input-comment" placeholder="Add a comment..." autocomplete="off" type="input-comment" required>
+										<button type="button" class="btn btn-outline-primary btn-sm">Post</button>
+									</section>
+								</div>
 							</div>
 						</div>
 					</article> 
 
-	<?php
-		}
-	}
-	?>
+			<?php
+				}
+			}
+			?>
 		</div>
 	</section>
 </main>
