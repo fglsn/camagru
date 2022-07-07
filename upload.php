@@ -57,6 +57,7 @@
 					$filename = uniqid('img_') . '.' . $extension;
 					move_uploaded_file($filepath, __DIR__.$upload_dir.$filename);
 					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id']);
+					unlink($filepath);
 					$qparam = http_build_query(array('info' => 'uploaded'));
 					header('Location: upload.php?' . $qparam);
 				}
