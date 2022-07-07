@@ -107,7 +107,9 @@ main {
 
 .picture {
 	max-width: 600px;
-	object-fit: cover;
+	max-height: 500px;
+	margin: auto;
+	object-fit: contain;
 }
 
 .post-comment-section {
@@ -173,6 +175,9 @@ main {
 	border: none!important;
 }
 
+.pagination {
+	justify-content: space-between;
+}
 /* Messages */
 
 /* The snackbar - position it at the bottom and in the middle of the screen */

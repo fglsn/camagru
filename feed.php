@@ -5,18 +5,15 @@
 
 	if (is_get_request()) {
 
-		if (isset($_GET['page']) && !empty($_GET['page']))
-			$pagenum = $_GET['page'];
+		if (isset($_GET['after_id']) && !empty($_GET['after_id']))
+			$after_id = $_GET['after_id'];
 		else
-			$pagenum = 1;
-		try {
-			$posts = load_posts($dbc, $pagenum);
-			// print "<pre>";
-			// print_r($posts[0]['username']);
-			// print "</pre>";
-		} catch (FailedToLoadPostsException $e) {
-			$info = '404 - Page not found. Please reload the page.';
-		}
+			$after_id = null;
+
+		$posts = load_posts($dbc, $after_id);
+		// print "<pre>";
+		// print_r($posts[0]['username']);
+		// print "</pre>";
 
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'login_success')

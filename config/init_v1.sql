@@ -4,7 +4,7 @@ create database if not exists camagru_db;
 -- Users table --
 create table if not exists camagru_db.users (
 		user_id int auto_increment primary key,
-		username varchar(100) not null,
+		username varchar(10) not null,
 		email varchar(100) not null,
 		password text not null,
 		active tinyint not null default 0,

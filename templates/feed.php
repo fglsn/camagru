@@ -61,9 +61,10 @@
 											<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
 										</div>
 									</section>
+									<!-- make a form -->
 									<section class="input-box">
 										<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="input-comment" placeholder="Add a comment..." autocomplete="off" type="input-comment" required>
-										<button type="button" class="btn btn-outline-primary btn-sm">Post</button>
+										<button type="button" class="btn btn-outline-primary">Post</button>
 									</section>
 								</div>
 							</div>
@@ -74,6 +75,22 @@
 				}
 			}
 			?>
+
+		<ul class="pagination">
+			<!-- make previous -->
+			<li class="page-item"><a class="page-link" href="feed.php<?php 
+				if (count($posts) > 0) {
+					echo '?after_id=' . $posts[count($posts) - 1]['post_id'];
+				} else {
+					echo '';
+				}?>">Previous</a></li>
+				<li class="page-item"><a class="page-link" href="feed.php<?php 
+				if (count($posts) > 0) {
+					echo '?after_id=' . $posts[count($posts) - 1]['post_id'];
+				} else {
+					echo '';
+				}?>">Next</a></li>
+		</ul>
 		</div>
 	</section>
 </main>

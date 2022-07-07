@@ -6,7 +6,7 @@
 		$username = input_data($username);
 		if (empty($username))
 			throw new ValidationException("Username is required");
-		if (!preg_match("/^[a-zA-Z0-9_-]*$/", $username))
+		if (!preg_match("/^[a-zA-Z0-9_\-]*$/", $username))
 			throw new ValidationException("Only alphabets, numbers, '_' & '-' are allowed in username.");
 		if (strlen($username) < 4 || strlen($username) > 9)
 			throw new ValidationException("Invalid length (min 4, max 9 chars).");
@@ -45,7 +45,7 @@
 	function validate_comment($comment) {
 		$comment = input_data($comment);
 		if (!preg_match("/^[a-zA-Z0-9_\-!?. ,@#]*$/", $comment))
-			throw new ValidationException("Some forbidden charachters used.");
+			throw new ValidationException("Forbidden characters used.");
 		if (strlen($comment) > 250)
 			throw new ValidationException("Invalid length (max 250 chars).");
 		return $comment;
