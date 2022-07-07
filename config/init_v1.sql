@@ -41,10 +41,8 @@ create table if not exists camagru_db.posts (
 	picture_path text not null,
 	picture_name varchar(50) not null,
 	created_at timestamp not null default current_timestamp(),
+	webcam tinyint not null default 0
 );
-
--- Create unique indexes to store only unique pictures, handle pdo-exeption errors in update.php --
-create unique index picture_path on camagru_db.users (username);
 
 -- Create migrations to check if db is expected state --
 create table if not exists camagru_db.migrations (
