@@ -8,7 +8,7 @@
 	class TooBigFileException extends Exception {};
 	class FileNotAllowedException extends Exception {};
 
-	$info = $error = '';
+	$info = $error = $description = '';
 
 	$allowedTypes = [
 		'image/png' => 'png',
@@ -52,11 +52,13 @@
 					throw new FileNotAllowedException();
 
 				if (is_uploaded_file($_FILES['file']['tmp_name']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+					if (isset($_POST['description']) && !empty($_POST['description']))
+						$description = validate_comment($_POST['description']);
 					$pos = strripos($filetype, "/");
 					$extension = substr($filetype, $pos + 1);
 					$filename = uniqid('img_') . '.' . $extension;
 					move_uploaded_file($filepath, __DIR__.$upload_dir.$filename);
-					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id']);
+					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id'], $description);
 					unlink($filepath);
 					$qparam = http_build_query(array('info' => 'uploaded'));
 					header('Location: upload.php?' . $qparam);
@@ -68,8 +70,11 @@
 				$error = 'This file is too big. Please try again.';
 			} catch (FileNotAllowedException $e) {
 				$error = 'Only jpeg or png files allowed.';
+			} catch (ValidationException $e) {
+				$error = $e->getMessage();
 			} catch (PDOException $e) {
-				$error = "Failed to load the post. Please, try again.";
+				// $error = "Failed to load the post. Please, try again.";
+				$error = $e->getMessage();
 			}
 		}
 		if ($error)

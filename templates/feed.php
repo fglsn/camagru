@@ -12,7 +12,8 @@
 				if (!empty($posts)) {
 					foreach ($posts as $post) {
 						$src = '.'.$post['picture_path'];
-						$author = $post['username'] ?>
+						$author = $post['username'];
+						$description = $post['picture_description'] ?>
 						<article class="post-wrapper">
 						<div class="post">
 							<div class="post-header">
@@ -43,7 +44,7 @@
 								</section>
 								<section class="author-section">
 									<h6 class="author-username" style="padding: 12px;"><?php echo '@'.$author ?></h6>
-									<p class="post-description">post-description-here post-description-here post-description-here post-description-here </p>
+									<p class="post-description"><?php echo $description ?></p>
 								</section>
 								<div class="line" style="flex-grow: 0"></div>
 								<section class="comments">

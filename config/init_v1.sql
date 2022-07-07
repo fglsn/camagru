@@ -39,7 +39,7 @@ create table if not exists camagru_db.posts (
 	owner_id int not null,
 	-- picture mediumblob not null,
 	picture_path text not null,
-	picture_name varchar(50) not null,
+	picture_description varchar(250) not null,
 	created_at timestamp not null default current_timestamp(),
 	webcam tinyint not null default 0
 );

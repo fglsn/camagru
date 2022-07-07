@@ -42,4 +42,12 @@
 			throw new ValidationException("Password doesn't match.");
 	}
 
+	function validate_comment($comment) {
+		$comment = input_data($comment);
+		if (!preg_match("/^[a-zA-Z0-9_\-!?. ,@#]*$/", $comment))
+			throw new ValidationException("Some forbidden charachters used.");
+		if (strlen($comment) > 100)
+			throw new ValidationException("Invalid length (max 250 chars).");
+		return $comment;
+	}
 ?>

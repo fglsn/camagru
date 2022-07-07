@@ -16,7 +16,7 @@ function load_posts($dbc, $pagenum) {
 		throw new FailedToLoadPostsException();
 	$offset = ($pagenum - 1) * $posts_to_load;
 	$sql = 'select users.username,
-			posts.post_id, posts.owner_id, posts.picture_path
+			posts.post_id, posts.owner_id, posts.picture_path, posts.picture_description
 			from posts join users
 			on posts.owner_id = users.user_id
 			order by post_id desc

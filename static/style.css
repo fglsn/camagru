@@ -326,6 +326,7 @@ main {
 
 .upload-form {
 	display: flex;
+	flex-direction: column;
 }
 
 input[type="file"] {
