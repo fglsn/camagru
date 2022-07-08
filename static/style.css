@@ -371,6 +371,7 @@ input[type="file"] {
 }
 
 #upload-btn {
+	align-self: center;
 	width: 83px;
 	height: 35px;
 	padding: 4px;
@@ -379,11 +380,10 @@ input[type="file"] {
 
 /* Webcam */
 
-.camera {
+#camera {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
 }
 
 .webcam-container {

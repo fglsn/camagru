@@ -20,19 +20,16 @@
 					<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
 				</div>
 			</form>
-			<h4 class="form-header-light">Or share your picture using Webcamera!</h4>
-
-			<form class="container camera" style="max-width: 80%">
+			<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
+			<button class="btn btn-primary" onclick=load_webcam(); style="margin-bottom: 1rem;">Open Webcam</button>
+			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
 				<div class="webcam-container container">
 					<canvas id="canvas" class="container">
-						<video autoplay="true" class="container" id="webcam" onclick=stop(e)>
+						<video autoplay="true" class="container" id="webcam">
 						</video>
 					</canvas>
 				</div>
-				<div class="cam-buttons">
-					<button class="btn btn-success webcam-btn">Take a pic</button>
-					<button class="btn btn-danger webcam-btn" onclick="stop(e)">Stop the stream</button>
-				</div>
+				<button class="btn btn-outline-success webcam-btn">Take a pic</button>
 			</form>
 
 		</div>
@@ -57,54 +54,42 @@
 	myFunction();
 </script>
 
-<!-- <script type="text/javascript">
-	var video = document.querySelector("#webcam");
-
-	if (navigator.mediaDevices.getUserMedia) {
-		navigator.mediaDevices
-		.getUserMedia({ video: true })
-		.then(function (stream) {
-		video.srcObject = stream;
-		})
-		.catch(function (err0r) {
-		console.log("Something went wrong!");
-		});
-	// https://www.kirupa.com/html5/accessing_your_webcam_in_html5.htm
-} -->
-
-</script>
-
 <script type="text/javascript">
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
-	var video = document.getElementById('webcam');
+	function load_webcam(e) {
+		document.getElementById('camera').style.display = "flex";
 
-	// set canvas size = video size when known
-	video.addEventListener('loadedmetadata', function() {
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	});
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		var video = document.getElementById('webcam');
 
-	if (navigator.mediaDevices.getUserMedia) {
-		navigator.mediaDevices
-		.getUserMedia({ video: true })
-		.then(function (stream) {
-		video.srcObject = stream;
-		})
-		.catch(function (err0r) {
-		console.log("Something went wrong!");
+		// set canvas size = video size when known
+		video.addEventListener('loadedmetadata', function() {
+		canvas.width = video.videoWidth;
+		canvas.height = video.videoHeight;
 		});
+
+		if (navigator.mediaDevices.getUserMedia) {
+			navigator.mediaDevices
+			.getUserMedia({ video: true })
+			.then(function (stream) {
+			video.srcObject = stream;
+			})
+			.catch(function (err0r) {
+			console.log("Something went wrong!");
+			});
+		}
+
+		video.addEventListener('play', function() {
+			var $this = this; //cache
+			(function loop() {
+				if (!$this.paused && !$this.ended) {
+					ctx.drawImage($this, 0, 0);
+					setTimeout(loop, 1000 / 80); // drawing at 30fps
+				}
+			} ) ();
+		}, 0);
 	}
 
-	video.addEventListener('play', function() {
-		var $this = this; //cache
-		(function loop() {
-			if (!$this.paused && !$this.ended) {
-				ctx.drawImage($this, 0, 0);
-				setTimeout(loop, 1000 / 80); // drawing at 30fps
-			}
-		})();
-	}, 0);
 </script>
 
 <?php
