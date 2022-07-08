@@ -23,13 +23,16 @@
 			<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
 			<button class="btn btn-primary" onclick=load_webcam(); style="margin-bottom: 1rem;">Open Webcam</button>
 			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
+				<button class="btn btn-outline-danger btn-sm"  id="hide-webcam" style="margin-bottom: 1rem;" onclick=hide_webcam();>Hide</button>
 				<div class="webcam-container container">
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam">
 						</video>
 					</canvas>
 				</div>
-				<button class="btn btn-outline-success webcam-btn">Take a pic</button>
+				<div>
+					<button class="btn btn-outline-success webcam-btn">Take a pic</button>
+				</div>
 			</form>
 
 		</div>
@@ -88,6 +91,10 @@
 				}
 			} ) ();
 		}, 0);
+	}
+
+	function hide_webcam(e) {
+		document.getElementById('hide-webcam').style.display = "none";
 	}
 
 </script>
