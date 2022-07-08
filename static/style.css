@@ -324,7 +324,7 @@ main {
 	text-align: center;
 }
 
-/* File upload */
+/* Upload page */
 
 .upload-form-container {
 	display: flex;
@@ -375,6 +375,38 @@ input[type="file"] {
 	height: 35px;
 	padding: 4px;
 	margin: 10px;
+}
+
+/* Webcam */
+
+.camera {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+}
+
+.webcam-container {
+	display: flex;
+	justify-content: center;
+	padding: 0px 1em 1em 1em;
+	border: green;
+	border-radius: 5px;
+}
+
+#canvas {
+	-moz-transform: scale(-1, 1);
+	-webkit-transform: scale(-1, 1);
+	-o-transform: scale(-1, 1);
+	transform: scale(-1, 1);
+	filter: FlipH;
+}
+
+.webcam-btn {
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%!important;
+	margin: 1em;
 }
 
 /* Login */
