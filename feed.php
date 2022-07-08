@@ -11,8 +11,12 @@
 			$after_id = null;
 
 		$posts = load_posts($dbc, $after_id);
+		$last_id = find_last_id($dbc);
+		$first_id = find_first_id($dbc);
+
+		$lateral_ids = array($last_id, $first_id);
 		// print "<pre>";
-		// print_r($posts[0]['username']);
+		// print_r($lateral_ids);
 		// print "</pre>";
 
 		if (isset($_GET['info'])) {
@@ -22,6 +26,7 @@
 				'title' => 'Feed',
 				'info' => $info,
 				'posts' => $posts,
+				'lateral_ids' => $lateral_ids,
 			));
 		}
 		else {
@@ -29,6 +34,7 @@
 					'title' => 'Feed',
 					'info' => $info,
 					'posts' => $posts,
+					'lateral_ids' => $lateral_ids,
 				));
 		}
 	}

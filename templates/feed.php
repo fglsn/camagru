@@ -2,11 +2,11 @@
 	include(__DIR__ . "/header.php");
 ?>
 
-<main class="main-feed" role="main">
+<main class="main-feed container" role="main">
 
 	<?php if ($info !== '') {
 		echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
-	<section class="feed">
+	<section class="feed container">
 		<div class="post-listing">
 			<?php
 				if (!empty($posts)) {
@@ -60,6 +60,10 @@
 											<h6 class="commentator" style="padding: 12px;">commentator</h6>
 											<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
 										</div>
+										<div class="comment">
+											<h6 class="commentator" style="padding: 12px;">commentator</h6>
+											<p class="comment-text">gegegkljehrgkljhelgrhelkrgherkghekrhglkerhgllerhgiuergyiuerhvlkjfjbvjbvdgfyugeruyeewrufhffjvxbcvbcnvbdjkjveeuhgpiuergypeirughfkjdvkjcvbuuryruruurururu@@!!! </p>
+										</div>
 									</section>
 									<!-- make a form -->
 									<section class="input-box">
@@ -75,22 +79,32 @@
 				}
 			}
 			?>
+				<ul class="pagination">
+					<!-- make previous -->
+					<li class="page-item"><a class="page-link" href="feed.php<?php
+						
+						if (count($posts) > 0) {
+							$num = $posts[count($posts) - 1]['post_id'];
+							if ($num + 10 >= $lateral_ids[0][0] || $num + 10 <= $lateral_ids[1][0])
+								echo '';
+							else
+								echo '?after_id=' . $num + 10;
+						} else {
+							echo '';
+						} ?>">Previous</a></li>
 
-		<ul class="pagination">
-			<!-- make previous -->
-			<li class="page-item"><a class="page-link" href="feed.php<?php 
-				if (count($posts) > 0) {
-					echo '?after_id=' . $posts[count($posts) - 1]['post_id'];
-				} else {
-					echo '';
-				}?>">Previous</a></li>
-				<li class="page-item"><a class="page-link" href="feed.php<?php 
-				if (count($posts) > 0) {
-					echo '?after_id=' . $posts[count($posts) - 1]['post_id'];
-				} else {
-					echo '';
-				}?>">Next</a></li>
-		</ul>
+						<li class="page-item"><a class="page-link" href="feed.php<?php 
+						if (count($posts) > 0) {
+							$num = $posts[count($posts) - 1]['post_id'];
+							if ($num >= $lateral_ids[0][0] || $num <= $lateral_ids[1][0])
+								echo '';
+							else
+								echo '?after_id=' . $num;
+						} else {
+							echo '';
+						}?>">Next</a></li>
+				</ul>
+			</div>
 		</div>
 	</section>
 </main>

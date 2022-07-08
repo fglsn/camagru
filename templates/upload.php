@@ -4,13 +4,13 @@
 <!-- <video id="" width="340" height="240" autoplay></video> -->
 <!-- https://stackoverflow.com/questions/572768/styling-an-input-type-file-button -->
 <!-- https://stackoverflow.com/questions/2189615/how-to-get-file-name-when-user-select-a-file-via-input-type-file -->
-<main>
+<main class="container-fluid">
 	<?php if ($info !== '') {
 			echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
 		<div class="upload-form-container">
 			<h4 class="form-header-light">Upload a picture</h4>
-			<form enctype="multipart/form-data" action="upload.php" method="post">
+			<form enctype="multipart/form-data" action="upload.php" method="post" class="container" style="max-width: 80%">
 				<div class="upload-form">
 					<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
 					<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showname()"/>

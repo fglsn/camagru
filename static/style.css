@@ -63,7 +63,7 @@ main {
 	display: flex;
 	flex-direction: column;
 	padding-top: 32px;
-	max-width: 600px;
+	max-width: 600px!important;
 	margin: 0 auto;
 }
 
@@ -100,14 +100,14 @@ main {
 	justify-content: center;
 }
 
-.post-pic-section {
+/* .post-pic-section {
 	width: 600px;
 	display: flex;
-}
+} */
 
 .picture {
-	max-width: 600px;
-	max-height: 500px;
+	max-width:100%;
+	max-height:100%;
 	margin: auto;
 	object-fit: contain;
 }
@@ -161,7 +161,15 @@ main {
 
 .comment-text {
 	color: #666666;
+	overflow-y: scroll;
 	margin: 0 12px 0 0;
+	-ms-overflow-style: none;	/* IE and Edge */
+	scrollbar-width: none;		/* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.comment-text::-webkit-scrollbar {
+	display: none;
 }
 
 .input-box {
@@ -176,7 +184,7 @@ main {
 }
 
 .pagination {
-	justify-content: space-between;
+	justify-content: center;
 }
 /* Messages */
 
@@ -343,11 +351,18 @@ input[type="file"] {
 	border: 1px solid #ccc;
 	cursor: pointer;
 	padding: 5px 10px;
-	width: 500px;
 	margin: 10px 0px 10px 10px;
 	border-radius: 0.375rem;
 	font-weight: 400;
 	height: 35px;
+	overflow-x: scroll;
+	-ms-overflow-style: none;	/* IE and Edge */
+	scrollbar-width: none;		/* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.custom-file-upload::-webkit-scrollbar {
+	display: none;
 }
 
 #file-selected {

@@ -22,4 +22,18 @@ function load_posts($dbc, $after_id) {
 	// throw new FailedToLoadPostException();
 }
 
+function find_last_id($dbc) {
+	$sql = 'select max(post_id) from posts;';
+	$stmt = $dbc->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch();
+}
+
+function find_first_id($dbc) {
+	$sql = 'select min(post_id) from posts;';
+	$stmt = $dbc->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch();
+}
+
 ?>
