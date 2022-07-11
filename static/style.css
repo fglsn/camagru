@@ -326,6 +326,17 @@ main {
 
 /* Upload page */
 
+.sticker-container {
+	display: flex;
+	flex-direction: row;
+	overflow-x: scroll;
+}
+
+
+.sticker {
+	margin: 10px;
+}
+
 .upload-form-container {
 	display: flex;
 	flex-direction: column;
@@ -336,6 +347,7 @@ main {
 	box-shadow: 3px 3px 8px #e6e6e6;
 	margin: 1.5rem auto;
 	border: 1px solid #dddddd80;
+	padding: 1.5rem;
 }
 
 .upload-form {

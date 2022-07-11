@@ -4,39 +4,57 @@
 
 <!-- https://stackoverflow.com/questions/572768/styling-an-input-type-file-button -->
 <!-- https://stackoverflow.com/questions/2189615/how-to-get-file-name-when-user-select-a-file-via-input-type-file -->
+<!-- https://stackoverflow.com/questions/11642926/stop-close-webcam-stream-which-is-opened-by-navigator-mediadevices-getusermedia -->
+
 
 <main class="container-fluid">
 	<?php if ($info !== '') {
 			echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
 		<div class="upload-form-container">
-			<h4 class="form-header-light">Upload a picture</h4>
-			<form enctype="multipart/form-data" action="upload.php" method="post" class="container" style="max-width: 80%">
-				<div class="upload-form">
-					<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
-					<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showFilename()"/>
-					<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
-					<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
-					<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
+			<div class="stickers-wrapper container">
+				<h4 class="form-header-light">Choose a sticker</h4>
+				<div class="sticker-container">
+					<img class="sticker img-thumbnail" id="stick1" src="./static/stickers/1.png" alt="">
+					<img class="sticker img-thumbnail" id="stick2" src="./static/stickers/2.png" alt="">
+					<img class="sticker img-thumbnail" id="stick3" src="./static/stickers/3.png" alt="">
+					<img class="sticker img-thumbnail" id="stick4" src="./static/stickers/4.png" alt="">
+					<img class="sticker img-thumbnail" id="stick5" src="./static/stickers/5.png" alt="">
+					<img class="sticker img-thumbnail" id="stick6" src="./static/stickers/6.png" alt="">
+					<img class="sticker img-thumbnail" id="stick7" src="./static/stickers/7.png" alt="">
+					<img class="sticker img-thumbnail" id="stick8" src="./static/stickers/8.png" alt="">
 				</div>
-			</form>
-			
-			<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
+			</div>
+
+			<div id="upload-pic" style="min-width: 80%">
+				<h4 class="form-header-light">Upload a picture</h4>
+				<form enctype="multipart/form-data" action="upload.php" method="post" class="container">
+					<div class="upload-form">
+						<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
+						<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showFilename()"/>
+						<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
+						<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
+						<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
+					</div>
+				</form>
+				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
+			</div>
 
 			<button class="btn btn-primary" id="toggle" style="margin-bottom: 1rem;">Open Webcam</button>
+			<div id="snap-btn" style="display:none;">
+				<button class="btn btn-primary webcam-btn" id="snap">Take a pic</button>
+				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">Close</button>
+			</div>
 			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
 				<div class="webcam-container container">
-					<canvas id="canvas" class="container"><video autoplay="true" class="container" id="webcam"></video></canvas>
+					<canvas id="canvas" class="container">
+						<video autoplay="true" class="container" id="webcam"></video>
+					</canvas>
 				</div>
 			</form>
-			<div id="snap-btn" style="display:none;">
-				<button class="btn btn-success webcam-btn" id="snap">Take a pic</button>
-				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-						<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-					</svg>
-				</button>
+			<div id="save-redo" style="display:none;">
+					<button class="btn btn-success webcam-btn" id="save-shot">Save</button>
+					<button class="btn btn-danger webcam-btn" id="redo-shot">Redo</button>
 			</div>
 		</div>
 	</div>
@@ -62,12 +80,15 @@
 
 <script type="text/javascript">
 
-
+	const uploadDiv = document.getElementById("upload-pic");
 	const webcamPreview = document.getElementById("camera");
 	const snapButtons = document.getElementById("snap-btn");
 	const video = document.getElementById("webcam");
 	const open = document.getElementById("toggle");
 	const hide = document.getElementById("hide-webcam");
+	const saveRedoButtons = document.getElementById("save-redo");
+	const save = document.getElementById("save-shot");
+	const redo = document.getElementById("redo-shot");
 
 	// Open webcamera preview and its buttons
 	open.onclick = function () {
@@ -76,8 +97,10 @@
 			snapButtons.style.display = "none";
 		} else {
 			load_webcam();
+			open.style.display = "none";
 			webcamPreview.style.display = "flex";
 			snapButtons.style.display = "block";
+			uploadDiv.style.display = "none";
 		}
 	};
 
@@ -89,9 +112,11 @@
 			track.stop();
 		});
 		video.srcObject = null;
-
+		open.style.display = "block";
+		uploadDiv.style.display = "block";
 		webcamPreview.style.display = "none";
 		snapButtons.style.display = "none";
+		saveRedoButtons.style.display = "none";
 	};
 
 
@@ -137,6 +162,7 @@
 			ctx.scale(-1, 1);
 			ctx.drawImage(video, 0, 0);
 			let image_data_url = canvas.toDataURL('image/jpeg');
+			saveRedoButtons.style.display = "block";
 			// data url of the image
 			console.log(image_data_url);
 		});
