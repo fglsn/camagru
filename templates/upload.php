@@ -20,10 +20,12 @@
 					<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
 				</div>
 			</form>
+			
 			<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
-			<button class="btn btn-primary" onclick=load_webcam(); style="margin-bottom: 1rem;">Open Webcam</button>
+
+			<button class="btn btn-primary" onclick="load_webcam();" style="margin-bottom: 1rem;">Open Webcam</button>
 			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
-				<button class="btn btn-outline-danger btn-sm"  id="hide-webcam" style="margin-bottom: 1rem;" onclick=hide_webcam();>Hide</button>
+				<button class="btn btn-outline-danger btn-sm"  id="hide-webcam" style="margin-bottom: 1rem;" onclick="hide_webcam();">Hide</button>
 				<div class="webcam-container container">
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam">
@@ -31,10 +33,9 @@
 					</canvas>
 				</div>
 				<div>
-					<button class="btn btn-outline-success webcam-btn">Take a pic</button>
+					<button class="btn btn-outline-success webcam-btn" onclick="hello();">Take a pic</button>
 				</div>
 			</form>
-
 		</div>
 	</div>
 </main>
@@ -58,7 +59,11 @@
 </script>
 
 <script type="text/javascript">
+	function hello() {
+		console.log("Hello");
+	}
 	function load_webcam(e) {
+		console.log("Hello again");
 		document.getElementById('camera').style.display = "flex";
 
 		var canvas = document.getElementById('canvas');
@@ -67,19 +72,19 @@
 
 		// set canvas size = video size when known
 		video.addEventListener('loadedmetadata', function() {
-		canvas.width = video.videoWidth;
-		canvas.height = video.videoHeight;
+			canvas.width = video.videoWidth;
+			canvas.height = video.videoHeight;
 		});
 
 		if (navigator.mediaDevices.getUserMedia) {
 			navigator.mediaDevices
-			.getUserMedia({ video: true })
-			.then(function (stream) {
-			video.srcObject = stream;
-			})
-			.catch(function (err0r) {
-			console.log("Something went wrong!");
-			});
+				.getUserMedia({ video: true })
+				.then(function (stream) {
+					video.srcObject = stream;
+				})
+				.catch(function (error) {
+					console.log("Something went wrong!");
+				});
 		}
 
 		video.addEventListener('play', function() {
@@ -93,9 +98,9 @@
 		}, 0);
 	}
 
-	function hide_webcam(e) {
-		document.getElementById('hide-webcam').style.display = "none";
-	}
+	// function hide_webcam(e) {
+	// 	document.getElementById('hide-webcam').style.display = "none";
+	// }
 
 </script>
 
