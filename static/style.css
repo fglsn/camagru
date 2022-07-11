@@ -335,6 +335,11 @@ main {
 
 .sticker {
 	margin: 10px;
+	opacity: 1;
+}
+
+.sticker:hover {
+	opacity: 0.7;
 }
 
 .upload-form-container {

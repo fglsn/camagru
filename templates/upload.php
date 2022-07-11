@@ -15,14 +15,14 @@
 			<div class="stickers-wrapper container">
 				<h4 class="form-header-light">Choose a sticker</h4>
 				<div class="sticker-container">
-					<img class="sticker img-thumbnail" id="stick1" src="./static/stickers/1.png" alt="">
-					<img class="sticker img-thumbnail" id="stick2" src="./static/stickers/2.png" alt="">
-					<img class="sticker img-thumbnail" id="stick3" src="./static/stickers/3.png" alt="">
-					<img class="sticker img-thumbnail" id="stick4" src="./static/stickers/4.png" alt="">
-					<img class="sticker img-thumbnail" id="stick5" src="./static/stickers/5.png" alt="">
-					<img class="sticker img-thumbnail" id="stick6" src="./static/stickers/6.png" alt="">
-					<img class="sticker img-thumbnail" id="stick7" src="./static/stickers/7.png" alt="">
-					<img class="sticker img-thumbnail" id="stick8" src="./static/stickers/8.png" alt="">
+					<img class="sticker img-thumbnail" id="stick1" onclick="changeOpacity('stick1')" src="./static/stickers/1.png" alt="">
+					<img class="sticker img-thumbnail" id="stick2" onclick="changeOpacity('stick2')" src="./static/stickers/2.png" alt="">
+					<img class="sticker img-thumbnail" id="stick3" onclick="changeOpacity('stick3')" src="./static/stickers/3.png" alt="">
+					<img class="sticker img-thumbnail" id="stick4" onclick="changeOpacity('stick4')" src="./static/stickers/4.png" alt="">
+					<img class="sticker img-thumbnail" id="stick5" onclick="changeOpacity('stick5')" src="./static/stickers/5.png" alt="">
+					<img class="sticker img-thumbnail" id="stick6" onclick="changeOpacity('stick6')" src="./static/stickers/6.png" alt="">
+					<img class="sticker img-thumbnail" id="stick7" onclick="changeOpacity('stick7')" src="./static/stickers/7.png" alt="">
+					<img class="sticker img-thumbnail" id="stick8" onclick="changeOpacity('stick8')" src="./static/stickers/8.png" alt="">
 				</div>
 			</div>
 
@@ -61,21 +61,35 @@
 </main>
 
 <script type="text/javascript">
-	function showFilename() {
-		var name = document.getElementById('file-upload');
-		document.getElementById("file-selected").innerHTML = name.files.item(0).name;
-	};
-</script>
 
-<script type="text/javascript">
-	function myFunction() {
-		if (document.getElementById("snackbar")) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
-		}
+	function changeOpacity(stickId) {
+		let stick = document.getElementById(stickId);
+		if (stick.style.opacity == .5) 
+			stick.style.opacity = 1;
+		else
+			stick.style.opacity = .5;
 	}
-	myFunction();
+
+	let s1 = document.getElementById("stick1");
+	let s2 = document.getElementById("stick2");
+	let s3 = document.getElementById("stick3");
+	let s4 = document.getElementById("stick4");
+	let s5 = document.getElementById("stick5");
+	let s6 = document.getElementById("stick6");
+	let s7 = document.getElementById("stick7");
+	let s8 = document.getElementById("stick8");
+
+	const paths = new Array(
+					"./static/stickers/1.png",
+					"./static/stickers/2.png",
+					"./static/stickers/3.png",
+					"./static/stickers/4.png",
+					"./static/stickers/5.png",
+					"./static/stickers/6.png",
+					"./static/stickers/7.png",
+					"./static/stickers/8.png",
+				);
+
 </script>
 
 <script type="text/javascript">
@@ -167,6 +181,24 @@
 			console.log(image_data_url);
 		});
 
+</script>
+
+<script type="text/javascript">
+	function showFilename() {
+		var name = document.getElementById('file-upload');
+		document.getElementById("file-selected").innerHTML = name.files.item(0).name;
+	};
+</script>
+
+<script type="text/javascript">
+	function myFunction() {
+		if (document.getElementById("snackbar")) {
+			var x = document.getElementById("snackbar");
+			x.className = "show";
+			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
+		}
+	}
+	myFunction();
 </script>
 
 <?php
