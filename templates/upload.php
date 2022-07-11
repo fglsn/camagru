@@ -25,16 +25,18 @@
 
 			<button class="btn btn-primary" id="toggle" style="margin-bottom: 1rem;">Open Webcam</button>
 			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
-				<button class="btn btn-outline-danger btn-sm"  id="hide-webcam" style="margin-bottom: 1rem;" onclick="hide_webcam();">Hide</button>
 				<div class="webcam-container container">
-					<canvas id="canvas" class="container">
-						<video autoplay="true" class="container" id="webcam">
-						</video>
-					</canvas>
+					<canvas id="canvas" class="container"><video autoplay="true" class="container" id="webcam"></video></canvas>
 				</div>
 			</form>
-			<div>
-				<button class="btn btn-outline-success webcam-btn" id="takepic" style="display:none;">Take a pic</button>
+			<div id="snap-btn" style="display:none;">
+				<button class="btn btn-success webcam-btn" id="snap">Take a pic</button>
+				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+						<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+						<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+					</svg>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -60,27 +62,43 @@
 
 <script type="text/javascript">
 
-	const targetDiv = document.getElementById("camera");
-	const btn = document.getElementById("toggle");
-	const takepic = document.getElementById("takepic");
 
-	btn.onclick = function () {
-		if (targetDiv.style.display !== "none" && takepic.style.display !== "none" ) {
-			targetDiv.style.display = "none";
-			takepic.style.display = "none";
+	const webcamPreview = document.getElementById("camera");
+	const snapButtons = document.getElementById("snap-btn");
+	const video = document.getElementById("webcam");
+	const open = document.getElementById("toggle");
+	const hide = document.getElementById("hide-webcam");
+
+	// Open webcamera preview and its buttons
+	open.onclick = function () {
+		if (webcamPreview.style.display !== "none" && snapButtons.style.display !== "none" ) {
+			webcamPreview.style.display = "none";
+			snapButtons.style.display = "none";
 		} else {
-			targetDiv.style.display = "flex";
 			load_webcam();
-			takepic.style.display = "block";
+			webcamPreview.style.display = "flex";
+			snapButtons.style.display = "block";
 		}
 	};
 
+	// Stop streaming from wabcamera, hide preview and buttons
+	hide.onclick = function () {
+		stream = video.srcObject;
+		tracks = stream.getTracks();
+		tracks.forEach(function(track) {
+			track.stop();
+		});
+		video.srcObject = null;
+
+		webcamPreview.style.display = "none";
+		snapButtons.style.display = "none";
+	};
+
+
 	function load_webcam(e) {
-		// document.getElementById('camera').style.display = "flex";
 
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
-		var video = document.getElementById('webcam');
 
 		// set canvas size = video size when known
 		video.addEventListener('loadedmetadata', function() {
@@ -100,7 +118,7 @@
 		}
 
 		video.addEventListener('play', function() {
-			var $this = this; //cache
+			var $this = this;
 			(function loop() {
 				if (!$this.closed) {
 					ctx.drawImage($this, 0, 0);
@@ -110,11 +128,18 @@
 		}, 0);
 	}
 
-	// function hide_webcam(e) {
-	// 	document.getElementById('hide-webcam').style.display = "none";
-	// }
+	// Take snapshot
+	let click_button = document.querySelector("#snap");
 
-	
+	click_button.addEventListener('click', function() {
+			var video = document.getElementById('webcam');
+			var ctx = canvas.getContext('2d');
+			ctx.scale(-1, 1);
+			ctx.drawImage(video, 0, 0);
+			let image_data_url = canvas.toDataURL('image/jpeg');
+			// data url of the image
+			console.log(image_data_url);
+		});
 
 </script>
 

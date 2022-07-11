@@ -403,9 +403,6 @@ input[type="file"] {
 }
 
 .webcam-btn {
-	width: 4rem;
-	height: 4rem;
-	border-radius: 50%!important;
 	margin: 1em;
 }
 
