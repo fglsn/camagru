@@ -14,7 +14,7 @@
 			<form enctype="multipart/form-data" action="upload.php" method="post" class="container" style="max-width: 80%">
 				<div class="upload-form">
 					<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
-					<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showname()"/>
+					<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showFilename()"/>
 					<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
 					<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
 					<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
@@ -23,7 +23,7 @@
 			
 			<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
 
-			<button class="btn btn-primary" onclick="load_webcam();" style="margin-bottom: 1rem;">Open Webcam</button>
+			<button class="btn btn-primary" id="toggle" style="margin-bottom: 1rem;">Open Webcam</button>
 			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
 				<button class="btn btn-outline-danger btn-sm"  id="hide-webcam" style="margin-bottom: 1rem;" onclick="hide_webcam();">Hide</button>
 				<div class="webcam-container container">
@@ -32,16 +32,16 @@
 						</video>
 					</canvas>
 				</div>
-				<div>
-					<button class="btn btn-outline-success webcam-btn" onclick="hello();">Take a pic</button>
-				</div>
 			</form>
+			<div>
+				<button class="btn btn-outline-success webcam-btn" id="takepic" style="display:none;">Take a pic</button>
+			</div>
 		</div>
 	</div>
 </main>
 
 <script type="text/javascript">
-	function showname() {
+	function showFilename() {
 		var name = document.getElementById('file-upload');
 		document.getElementById("file-selected").innerHTML = name.files.item(0).name;
 	};
@@ -59,12 +59,24 @@
 </script>
 
 <script type="text/javascript">
-	function hello() {
-		console.log("Hello");
-	}
+
+	const targetDiv = document.getElementById("camera");
+	const btn = document.getElementById("toggle");
+	const takepic = document.getElementById("takepic");
+
+	btn.onclick = function () {
+		if (targetDiv.style.display !== "none" && takepic.style.display !== "none" ) {
+			targetDiv.style.display = "none";
+			takepic.style.display = "none";
+		} else {
+			targetDiv.style.display = "flex";
+			load_webcam();
+			takepic.style.display = "block";
+		}
+	};
+
 	function load_webcam(e) {
-		console.log("Hello again");
-		document.getElementById('camera').style.display = "flex";
+		// document.getElementById('camera').style.display = "flex";
 
 		var canvas = document.getElementById('canvas');
 		var ctx = canvas.getContext('2d');
@@ -90,7 +102,7 @@
 		video.addEventListener('play', function() {
 			var $this = this; //cache
 			(function loop() {
-				if (!$this.paused && !$this.ended) {
+				if (!$this.closed) {
 					ctx.drawImage($this, 0, 0);
 					setTimeout(loop, 1000 / 80); // drawing at 30fps
 				}
@@ -101,6 +113,8 @@
 	// function hide_webcam(e) {
 	// 	document.getElementById('hide-webcam').style.display = "none";
 	// }
+
+	
 
 </script>
 
