@@ -15,14 +15,14 @@
 			<div class="stickers-wrapper container">
 				<h4 class="form-header-light">Choose a sticker</h4>
 				<div class="sticker-container">
-					<img class="sticker img-thumbnail" id="stick1" onclick="changeOpacity('stick1')" src="./static/stickers/1.png" alt="">
-					<img class="sticker img-thumbnail" id="stick2" onclick="changeOpacity('stick2')" src="./static/stickers/2.png" alt="">
-					<img class="sticker img-thumbnail" id="stick3" onclick="changeOpacity('stick3')" src="./static/stickers/3.png" alt="">
-					<img class="sticker img-thumbnail" id="stick4" onclick="changeOpacity('stick4')" src="./static/stickers/4.png" alt="">
-					<img class="sticker img-thumbnail" id="stick5" onclick="changeOpacity('stick5')" src="./static/stickers/5.png" alt="">
-					<img class="sticker img-thumbnail" id="stick6" onclick="changeOpacity('stick6')" src="./static/stickers/6.png" alt="">
-					<img class="sticker img-thumbnail" id="stick7" onclick="changeOpacity('stick7')" src="./static/stickers/7.png" alt="">
-					<img class="sticker img-thumbnail" id="stick8" onclick="changeOpacity('stick8')" src="./static/stickers/8.png" alt="">
+					<img class="sticker img-thumbnail" id="stick1" onclick="selectSticker('stick1')" src="./static/stickers/1.png" alt="">
+					<img class="sticker img-thumbnail" id="stick2" onclick="selectSticker('stick2')" src="./static/stickers/2.png" alt="">
+					<img class="sticker img-thumbnail" id="stick3" onclick="selectSticker('stick3')" src="./static/stickers/3.png" alt="">
+					<img class="sticker img-thumbnail" id="stick4" onclick="selectSticker('stick4')" src="./static/stickers/4.png" alt="">
+					<img class="sticker img-thumbnail" id="stick5" onclick="selectSticker('stick5')" src="./static/stickers/5.png" alt="">
+					<img class="sticker img-thumbnail" id="stick6" onclick="selectSticker('stick6')" src="./static/stickers/6.png" alt="">
+					<img class="sticker img-thumbnail" id="stick7" onclick="selectSticker('stick7')" src="./static/stickers/7.png" alt="">
+					<img class="sticker img-thumbnail" id="stick8" onclick="selectSticker('stick8')" src="./static/stickers/8.png" alt="">
 				</div>
 			</div>
 
@@ -45,50 +45,76 @@
 				<button class="btn btn-primary webcam-btn" id="snap">Take a pic</button>
 				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">Close</button>
 			</div>
-			<form class="container" style="display:none;" id="camera" style="max-width: 80%">
+			<form class="container" id="camera" name="camera" action="snapshot.php" method="post" style="display:none; max-width: 80%">
 				<div class="webcam-container container">
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam"></video>
 					</canvas>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick1-webcam" name="stick1"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick2-webcam" name="stick2"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick3-webcam" name="stick3"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick4-webcam" name="stick4"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick5-webcam" name="stick5"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick6-webcam" name="stick6"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick7-webcam" name="stick7"></input>
+					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick8-webcam" name="stick8"></input>
+					<input type="text" style="display: none;" id="picture-url" name="pic-url" readonly></input>
+				</div>
+				<div id="save-redo" style="display:none;">
+					<button class="btn btn-success webcam-btn" type="submit" name="submit" value="submit" id="save-shot">Save</button>
+					<button class="btn btn-danger webcam-btn" type="button" onclick="redoCallback()" id="redo-shot">Redo</button>
 				</div>
 			</form>
-			<div id="save-redo" style="display:none;">
-					<button class="btn btn-success webcam-btn" id="save-shot">Save</button>
-					<button class="btn btn-danger webcam-btn" id="redo-shot">Redo</button>
-			</div>
+
 		</div>
 	</div>
 </main>
 
 <script type="text/javascript">
 
-	function changeOpacity(stickId) {
-		let stick = document.getElementById(stickId);
-		if (stick.style.opacity == .5) 
-			stick.style.opacity = 1;
-		else
-			stick.style.opacity = .5;
+	function redoCallback(e) {
+		// console.log("BEB!");
+		load_webcam(e);
 	}
 
-	let s1 = document.getElementById("stick1");
-	let s2 = document.getElementById("stick2");
-	let s3 = document.getElementById("stick3");
-	let s4 = document.getElementById("stick4");
-	let s5 = document.getElementById("stick5");
-	let s6 = document.getElementById("stick6");
-	let s7 = document.getElementById("stick7");
-	let s8 = document.getElementById("stick8");
+	function selectSticker(stickerId) {
+		let stickerInput = document.getElementById(stickerId + "-webcam");
+		if (checkboxControl() || (!checkboxControl() && stickerInput.checked === true)) {
+			changeOpacity(stickerId);
+			stickerInput.checked = !stickerInput.checked;
+			// console.log(stickerInput.checked);
+		}
+		else if (!checkboxControl()) {
+			alert("Max 4 stickers");
+		}
+	}
 
-	const paths = new Array(
-					"./static/stickers/1.png",
-					"./static/stickers/2.png",
-					"./static/stickers/3.png",
-					"./static/stickers/4.png",
-					"./static/stickers/5.png",
-					"./static/stickers/6.png",
-					"./static/stickers/7.png",
-					"./static/stickers/8.png",
-				);
+	function checkboxControl() {
+		var inputElems = document.getElementsByClassName("webcam-checkbox"),
+		count = 0;
+		for (var i = 0; i < inputElems.length; i++) {
+			if (inputElems[i].type === "checkbox" && inputElems[i].checked === true)
+				count++;
+		}
+		if (count > 3) {
+			return false;
+		}
+		return true;
+	}
+
+	function changeOpacity(stickId) {
+		let stick = document.getElementById(stickId);
+		stick.classList.toggle('selected');
+	}
+
+	// let s1 = document.getElementById("stick1");
+	// let s2 = document.getElementById("stick2");
+	// let s3 = document.getElementById("stick3");
+	// let s4 = document.getElementById("stick4");
+	// let s5 = document.getElementById("stick5");
+	// let s6 = document.getElementById("stick6");
+	// let s7 = document.getElementById("stick7");
+	// let s8 = document.getElementById("stick8");
 
 </script>
 
@@ -103,6 +129,7 @@
 	const saveRedoButtons = document.getElementById("save-redo");
 	const save = document.getElementById("save-shot");
 	const redo = document.getElementById("redo-shot");
+	const pictureUrl = document.getElementById("picture-url");
 
 	// Open webcamera preview and its buttons
 	open.onclick = function () {
@@ -161,7 +188,7 @@
 			(function loop() {
 				if (!$this.closed) {
 					ctx.drawImage($this, 0, 0);
-					setTimeout(loop, 1000 / 80); // drawing at 30fps
+					setTimeout(loop, 1000 / 80); //fps
 				}
 			} ) ();
 		}, 0);
@@ -178,7 +205,8 @@
 			let image_data_url = canvas.toDataURL('image/jpeg');
 			saveRedoButtons.style.display = "block";
 			// data url of the image
-			console.log(image_data_url);
+			// console.log(image_data_url);
+			pictureUrl.value = image_data_url;
 		});
 
 </script>
