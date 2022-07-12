@@ -332,10 +332,12 @@ main {
 	overflow-x: scroll;
 }
 
+.selected.sticker {
+	opacity: 0.5;
+}
 
 .sticker {
 	margin: 10px;
-	opacity: 1;
 }
 
 .sticker:hover {

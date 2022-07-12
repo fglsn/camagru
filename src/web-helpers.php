@@ -13,7 +13,7 @@
 	}
 
 	function require_login($path): void {
-		if (!is_user_logged_in()) {
+		if (!is_user_logged_in() && $path === '') {
 			header('Location: login.php');
 			exit;
 		} 

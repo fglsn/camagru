@@ -8,6 +8,8 @@
 	class TooBigFileException extends Exception {};
 	class FileNotAllowedException extends Exception {};
 
+	require_login('');
+
 	$info = $error = $description = '';
 
 	$allowedTypes = [
