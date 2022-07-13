@@ -27,8 +27,11 @@
 			</div>
 
 			<button class="btn btn-primary" id="toggle" style="margin: 1rem;">Open Webcam</button>
-			<div id="snap-btn" style="display:none;">
-				<button class="btn btn-primary webcam-btn" id="snap" disabled>Take a pic</button>
+			<div id="snap-btn" style="display:none; align-items: flex-start;">
+				<div>
+					<button class="btn btn-primary webcam-btn" id="snap" disabled title="Select some sticker/s and take a shot.">Take a pic</button>
+					<p id="snap-btn-text">Select some sticker(s) first.</p>
+				</div>
 				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">Close</button>
 			</div>
 			<form class="container" id="camera" name="camera" action="snapshot.php" method="post" style="display:none; max-width: 80%">
@@ -120,10 +123,19 @@
 
 	function enableSnapButton() {
 		let snapButton = document.getElementById("snap");
-		if (countCheckboxes() > 0)
+		let snapButtonText = document.getElementById("snap-btn-text");
+		let saveButton = document.getElementById("save-shot");
+
+		if (countCheckboxes() > 0) {
 			snapButton.disabled = false;
-		else 
+			saveButton.disabled = false;
+			snapButtonText.style.visibility = "hidden";
+		}
+		else {
 			snapButton.disabled = true;
+			saveButton.disabled = true;
+			snapButtonText.style.visibility = "visible";
+		}
 	}
 
 </script>
@@ -150,7 +162,7 @@
 			load_webcam();
 			open.style.display = "none";
 			webcamPreview.style.display = "flex";
-			snapButtons.style.display = "block";
+			snapButtons.style.display = "flex";
 			uploadDiv.style.display = "none";
 		}
 	};
@@ -205,16 +217,16 @@
 	}
 
 	// Take snapshot
-	let click_button = document.querySelector("#snap");
+	let shotButton = document.querySelector("#snap");
 
-	click_button.addEventListener('click', function() {
+	shotButton.addEventListener('click', function() {
 			var video = document.getElementById('webcam');
 			var ctx = canvas.getContext('2d');
 			ctx.scale(-1, 1);
 			ctx.drawImage(video, 0, 0);
-			let image_data_url = canvas.toDataURL('image/jpeg');
+			let imageDataUrl = canvas.toDataURL('image/jpeg');
 			saveRedoButtons.style.display = "block";
-			pictureUrl.value = image_data_url;
+			pictureUrl.value = imageDataUrl;
 		});
 	
 	// Redo picture

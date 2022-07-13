@@ -422,9 +422,15 @@ input[type="file"] {
 }
 
 .webcam-btn {
-	margin: 1em;
+	margin: 0.75em;
 }
 
+#snap-btn-text {
+	font-size: 8px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
 /* Login */
 
 .separator {
