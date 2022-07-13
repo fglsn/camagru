@@ -14,7 +14,8 @@
 
 	function require_login($path): void {
 		if (!is_user_logged_in() && $path === '') {
-			header('Location: login.php');
+			$qparam = http_build_query(array('info' => 'login_required'));
+			header('Location: login.php?' . $qparam);
 			exit;
 		} 
 		if (isset($path)) {

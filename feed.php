@@ -1,6 +1,7 @@
 <?php
 	require_once('./config/include.php');
 	require_once('./src/post_load.php');
+
 	$info = $posts = '';
 
 	if (is_get_request()) {

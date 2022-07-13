@@ -71,6 +71,8 @@
 				$info = 'Logged out!';
 			else if ($_GET['info'] === 'reset_success')
 				$info = 'New password was updated succesfully!';
+			else if ($_GET['info'] === 'login_required')
+				$info = 'Please login to visit that page.';
 		}
 		echo get_template('login.php', array(
 			'title' => 'Log in',
