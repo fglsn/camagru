@@ -11,7 +11,7 @@
 
 	require_login('');
 
-	$info = $error = $description = '';
+	$info = $error = $thumbnails = $description = '';
 
 	$allowedTypes = [
 		'image/png' => 'png',
@@ -19,8 +19,6 @@
 	];
 
 	$upload_dir = '/uploads/';
-	$sticker_paths = array();
-	$sticker_dir = __DIR__ . '/static/stickers/';
 
 	const MAX_SIZE  = 5 * 1024 * 1024; //  5MB
 
@@ -38,7 +36,6 @@
 	if (is_post_request()) {
 		if (isset($_POST['upload'])) {
 			try {
-
 				if (!isset($_FILES['file']))
 					throw new NoFileProvidedException();
 
@@ -57,32 +54,27 @@
 					throw new FileNotAllowedException();
 
 				if (is_uploaded_file($_FILES['file']['tmp_name']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+
 					if (isset($_POST['description']) && !empty($_POST['description']))
 						$description = validate_comment($_POST['description']);
-					$pos = strripos($filetype, "/");
-					$extension = substr($filetype, $pos + 1);
+
+					$extension = substr($filetype, strripos($filetype, "/") + 1);
 					$filename = uniqid('img_') . '.' . $extension;
 
+					$sticker_ids = array();
 					for ($i = 1; $i < 9; $i++) {
 						if (isset($_POST['stick'.$i]) && $_POST['stick'.$i] === 'on')
-							array_push($sticker_paths, $sticker_dir . $i . '.png');
+							array_push($sticker_ids, $i);
 					}
-					move_uploaded_file($filepath, __DIR__.$upload_dir.$filename);
-					$image = imagecreatefromjpeg(__DIR__.$upload_dir.$filename);
-					$image = imagescale($image, 680);
-					$sticker_count = count($sticker_paths);
+
+					move_uploaded_file($filepath, __DIR__ . $upload_dir . $filename);
+
+					$sticker_count = count($sticker_ids);
 					if ($sticker_count > 0) {
-						for ($i = 0; $i < $sticker_count; $i++) {
-							$sticker = imagecreatefrompng($sticker_paths[$i]);
-							$marge_right = 540 - ($i * 170);
-							$marge_bottom = 0;
-							$sx = imagesx($sticker);
-							$sy = imagesy($sticker);
-							imagecopy($image, $sticker, imagesx($image) - $sx - $marge_right, imagesy($image) - $sy - $marge_bottom, 0, 0, imagesx($sticker), imagesy($sticker));
-						}
-						header('Content-type: image/png');
-						imagepng($image, __DIR__.$upload_dir.$filename, 0);
-						imagedestroy($image);
+						$image = imagecreatefromjpeg(__DIR__ . $upload_dir . $filename);
+						$image = imagescale($image, 680);
+						add_stickers($image, $sticker_ids);
+						imagepng($image, __DIR__ . $upload_dir . $filename, 0);
 					}
 					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id'], $description);
 					unlink($filepath);
@@ -108,11 +100,13 @@
 				'title' => 'New post',
 				'info' => $info,
 				'error' => $error,
+				'thumbnails' => $thumbnails,
 			));
 		
 	}
 
 	if (is_get_request()) {
+		$thumbnails = load_thumbnails($dbc, $_SESSION['user_id']);
 		if (isset($_GET['info']) && $_GET['info'] === 'uploaded') {
 			$info = "Uploaded successfully!";
 		}
@@ -120,6 +114,7 @@
 			'title' => 'New post',
 			'info' => $info,
 			'error' => $error,
+			'thumbnails' => $thumbnails,
 		));
 	}
 ?>
