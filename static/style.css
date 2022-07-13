@@ -326,17 +326,33 @@ main {
 
 /* Upload page */
 
+.upload-main {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
 .sticker-container {
 	display: flex;
 	flex-direction: row;
 	overflow-x: scroll;
 }
 
+.thumbnails-container {
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	max-height: 610px;
+	max-width: 256px;
+	padding: 3px;
+	margin: 15px;
+}
+
 .selected.sticker {
 	opacity: 0.5;
 }
 
-.sticker {
+.sticker, .pic-thumbnail {
 	margin: 10px;
 }
 
@@ -352,7 +368,7 @@ main {
 	border-radius: 10px;
 	background-color: #f8f9fa;
 	box-shadow: 3px 3px 8px #e6e6e6;
-	margin: 1.5rem auto;
+	margin: 1.5rem;
 	border: 1px solid #dddddd80;
 	padding: 1.5rem;
 }
@@ -423,6 +439,7 @@ input[type="file"] {
 
 .webcam-btn {
 	margin: 0.75em;
+	min-width: 100px;
 }
 
 #snap-btn-text {

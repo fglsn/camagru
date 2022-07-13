@@ -7,7 +7,7 @@
 <!-- https://stackoverflow.com/questions/11642926/stop-close-webcam-stream-which-is-opened-by-navigator-mediadevices-getusermedia -->
 
 
-<main class="container-fluid">
+<main class="container-fluid upload-main">
 	<?php if ($info !== '') {
 			echo '<span class="info-log" id="snackbar" style="display:block">' . $info . '</span>'; }?>
 	<div class="form-wrapper">
@@ -50,7 +50,7 @@
 					<input type="text" id="picture-url" name="pic-url" hidden readonly></input>
 				</div>
 				<div id="save-redo" style="display:none;">
-					<button class="btn btn-success webcam-btn" type="submit" name="submit" value="submit" id="save-shot">Save</button>
+					<button class="btn btn-success webcam-btn" type="submit" name="submit" value="submit" id="save-shot">Post</button>
 					<button class="btn btn-danger webcam-btn" type="button" onclick="redoCallback()" id="redo-shot">Redo</button>
 				</div>
 			</form>
@@ -77,6 +77,19 @@
 				</form>
 			</div>
 
+		</div>
+	</div>
+	<div class="form-wrapper thumbnails">
+		<div class="form-container">
+			<div class="thumbnails-container">
+				<?php
+					if (!empty($thumbnails)) {
+						foreach ($thumbnails as $pic) {
+							$src = '.'.$pic['picture_path'];
+				?>
+				<img class="img-thumbnail pic-thumbnail" src=<?php echo $src;?>>
+				<?php }}; ?>
+			</div>
 		</div>
 	</div>
 </main>
