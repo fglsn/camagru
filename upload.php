@@ -3,6 +3,7 @@
 	require_once('./src/user_create_activate.php');
 	require_once('./src/validations.php');
 	require_once('./src/post_create.php');
+	require_once('./src/webcam.php');
 
 	class NoFileProvidedException extends Exception {};
 	class TooBigFileException extends Exception {};
@@ -18,6 +19,8 @@
 	];
 
 	$upload_dir = '/uploads/';
+	$sticker_paths = array();
+	$sticker_dir = __DIR__ . '/static/stickers/';
 
 	const MAX_SIZE  = 5 * 1024 * 1024; //  5MB
 
@@ -59,7 +62,28 @@
 					$pos = strripos($filetype, "/");
 					$extension = substr($filetype, $pos + 1);
 					$filename = uniqid('img_') . '.' . $extension;
+
+					for ($i = 1; $i < 9; $i++) {
+						if (isset($_POST['stick'.$i]) && $_POST['stick'.$i] === 'on')
+							array_push($sticker_paths, $sticker_dir . $i . '.png');
+					}
 					move_uploaded_file($filepath, __DIR__.$upload_dir.$filename);
+					$image = imagecreatefromjpeg(__DIR__.$upload_dir.$filename);
+					$image = imagescale($image, 680);
+					$sticker_count = count($sticker_paths);
+					if ($sticker_count > 0) {
+						for ($i = 0; $i < $sticker_count; $i++) {
+							$sticker = imagecreatefrompng($sticker_paths[$i]);
+							$marge_right = 540 - ($i * 170);
+							$marge_bottom = 0;
+							$sx = imagesx($sticker);
+							$sy = imagesy($sticker);
+							imagecopy($image, $sticker, imagesx($image) - $sx - $marge_right, imagesy($image) - $sy - $marge_bottom, 0, 0, imagesx($sticker), imagesy($sticker));
+						}
+						header('Content-type: image/png');
+						imagepng($image, __DIR__.$upload_dir.$filename, 0);
+						imagedestroy($image);
+					}
 					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id'], $description);
 					unlink($filepath);
 					$qparam = http_build_query(array('info' => 'uploaded'));

@@ -1,10 +1,10 @@
 <?php
 
-	function prepare_image($picture_url, $upload_dir) {
+	function prepare_image($picture_url, $filepath) {
 
 		$img = base64_decode(preg_replace("/data:image\/jpeg;base64,/", '', $picture_url));
-		$filename = 'webcam_' . uniqid() . '.jpeg';
-		$filepath = $upload_dir . $filename;
+		// $filename = 'webcam_' . uniqid() . '.jpeg';
+		// $filepath = $upload_dir . $filename;
 
 		file_put_contents($filepath, $img);
 
@@ -14,7 +14,6 @@
 		header('Content-type: image/jpeg');
 		imagejpeg($image, $filepath, 100);
 		return ($image);
-
 	}
 
 ?>

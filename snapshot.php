@@ -8,12 +8,11 @@
 	$info = $error = '';
 	$sticker_dir = __DIR__ . '/static/stickers/';
 	$sticker_paths = array();
-	$original_dir = __DIR__ . '/uploads/webcam/';
 	$upload_dir = __DIR__ . '/uploads/';
 
 	if(isset($_POST['submit'])) {
 		$picture_url = $_POST['pic-url'];
-		//Save all selected to array
+		//Save all selected stickers to array
 		for ($i = 1; $i < 9; $i++) {
 			if (isset($_POST['stick'.$i]) && $_POST['stick'.$i] === 'on')
 				array_push($sticker_paths, $sticker_dir . $i . '.png');
@@ -22,10 +21,9 @@
 		$sticker_count = count($sticker_paths);
 		// If at least one sticker selected, combine images
 		if ($sticker_count > 0 && isset($picture_url) && !empty($picture_url)) {
-			$original = prepare_image($picture_url, $original_dir);
 			$filename = 'webcam_' . uniqid() . '.png';
 			$filepath = $upload_dir . $filename;
-
+			$original = prepare_image($picture_url, $filepath);
 			for ($i = 0; $i < $sticker_count; $i++) {
 				$sticker = imagecreatefrompng($sticker_paths[$i]);
 				$marge_right = 520 - ($i * 170);
@@ -47,7 +45,6 @@
 				'error' => $error,
 			));
 		}
-
 
 		// echo '<pre>';
 		// var_dump($sticker_paths);
