@@ -26,23 +26,9 @@
 				</div>
 			</div>
 
-			<div id="upload-pic" style="min-width: 80%">
-				<h4 class="form-header-light">Upload a picture</h4>
-				<form enctype="multipart/form-data" action="upload.php" method="post" class="container">
-					<div class="upload-form">
-						<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
-						<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showFilename()"/>
-						<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
-						<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
-						<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
-					</div>
-				</form>
-				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
-			</div>
-
-			<button class="btn btn-primary" id="toggle" style="margin-bottom: 1rem;">Open Webcam</button>
+			<button class="btn btn-primary" id="toggle" style="margin: 1rem;">Open Webcam</button>
 			<div id="snap-btn" style="display:none;">
-				<button class="btn btn-primary webcam-btn" id="snap">Take a pic</button>
+				<button class="btn btn-primary webcam-btn" id="snap" disabled>Take a pic</button>
 				<button class="btn btn-danger webcam-btn"  id="hide-webcam" style="margin-bottom: 1rem;">Close</button>
 			</div>
 			<form class="container" id="camera" name="camera" action="snapshot.php" method="post" style="display:none; max-width: 80%">
@@ -50,15 +36,15 @@
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam"></video>
 					</canvas>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick1-webcam" name="stick1"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick2-webcam" name="stick2"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick3-webcam" name="stick3"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick4-webcam" name="stick4"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick5-webcam" name="stick5"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick6-webcam" name="stick6"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick7-webcam" name="stick7"></input>
-					<input type="checkbox" class="webcam-checkbox" style="display: none;" id="stick8-webcam" name="stick8"></input>
-					<input type="text" style="display: none;" id="picture-url" name="pic-url" readonly></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick1-webcam" name="stick1"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick2-webcam" name="stick2"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick3-webcam" name="stick3"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick4-webcam" name="stick4"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick5-webcam" name="stick5"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick6-webcam" name="stick6"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick7-webcam" name="stick7"></input>
+					<input type="checkbox" class="webcam-checkbox" hidden id="stick8-webcam" name="stick8"></input>
+					<input type="text" id="picture-url" name="pic-url" hidden readonly></input>
 				</div>
 				<div id="save-redo" style="display:none;">
 					<button class="btn btn-success webcam-btn" type="submit" name="submit" value="submit" id="save-shot">Save</button>
@@ -66,40 +52,65 @@
 				</div>
 			</form>
 
+			<div id="upload-pic" style="min-width: 80%">
+				<div class="separator"><div class="line"></div><div class="or">OR</div><div class="line"></div></div>
+				<h4 class="form-header-light">Upload a picture</h4>
+				<form enctype="multipart/form-data" action="upload.php" method="post" class="container">
+					<div class="upload-form">
+						<label for="file-upload" class="custom-file-upload">File: <span id="file-selected"></span></label>
+						<input type="file" accept="image/png, image/jpeg" id="file-upload" name="file" onchange="showFilename()"/>
+						<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
+						<span class="error" style="padding-left: 10px;"><?php echo $error;?></span>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick1-upload" name="stick1"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick2-upload" name="stick2"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick3-upload" name="stick3"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick4-upload" name="stick4"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick5-upload" name="stick5"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick6-upload" name="stick6"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick7-upload" name="stick7"></input>
+						<input type="checkbox" class="webcam-checkbox" hidden id="stick8-upload" name="stick8"></input>
+						<button class="btn btn-primary" id="upload-btn" type="submit" name="upload">Upload</button>
+					</div>
+				</form>
+			</div>
+
 		</div>
 	</div>
 </main>
 
 <script type="text/javascript">
 
-	function redoCallback(e) {
-		// console.log("BEB!");
-		load_webcam(e);
-	}
-
 	function selectSticker(stickerId) {
+		let stickerInputUpload = document.getElementById(stickerId + "-upload");
 		let stickerInput = document.getElementById(stickerId + "-webcam");
+
 		if (checkboxControl() || (!checkboxControl() && stickerInput.checked === true)) {
 			changeOpacity(stickerId);
 			stickerInput.checked = !stickerInput.checked;
-			// console.log(stickerInput.checked);
+			// console.log("1: " + stickerInput.checked);
+		} if (checkboxControl() || (!checkboxControl() && stickerInputUpload.checked === true)) {
+			stickerInputUpload.checked = !stickerInputUpload.checked;
+			// console.log("2: " + stickerInput.checked);
 		}
 		else if (!checkboxControl()) {
 			alert("Max 4 stickers");
 		}
+		enableSnapButton();
 	}
 
-	function checkboxControl() {
-		var inputElems = document.getElementsByClassName("webcam-checkbox"),
+	function countCheckboxes () {
+		let inputElems = document.getElementsByClassName("webcam-checkbox"),
 		count = 0;
 		for (var i = 0; i < inputElems.length; i++) {
 			if (inputElems[i].type === "checkbox" && inputElems[i].checked === true)
 				count++;
 		}
-		if (count > 3) {
-			return false;
-		}
-		return true;
+		return (count);
+	}
+
+	function checkboxControl() {
+		count = countCheckboxes();
+		return (count < 8);
 	}
 
 	function changeOpacity(stickId) {
@@ -107,14 +118,13 @@
 		stick.classList.toggle('selected');
 	}
 
-	// let s1 = document.getElementById("stick1");
-	// let s2 = document.getElementById("stick2");
-	// let s3 = document.getElementById("stick3");
-	// let s4 = document.getElementById("stick4");
-	// let s5 = document.getElementById("stick5");
-	// let s6 = document.getElementById("stick6");
-	// let s7 = document.getElementById("stick7");
-	// let s8 = document.getElementById("stick8");
+	function enableSnapButton() {
+		let snapButton = document.getElementById("snap");
+		if (countCheckboxes() > 0)
+			snapButton.disabled = false;
+		else 
+			snapButton.disabled = true;
+	}
 
 </script>
 
@@ -145,7 +155,7 @@
 		}
 	};
 
-	// Stop streaming from wabcamera, hide preview and buttons
+	// Stop streaming from webcamera, hide preview and buttons
 	hide.onclick = function () {
 		stream = video.srcObject;
 		tracks = stream.getTracks();
@@ -204,10 +214,13 @@
 			ctx.drawImage(video, 0, 0);
 			let image_data_url = canvas.toDataURL('image/jpeg');
 			saveRedoButtons.style.display = "block";
-			// data url of the image
-			// console.log(image_data_url);
 			pictureUrl.value = image_data_url;
 		});
+	
+	// Redo picture
+	function redoCallback(e) {
+		load_webcam(e);
+	}
 
 </script>
 
