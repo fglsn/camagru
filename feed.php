@@ -1,8 +1,10 @@
 <?php
 	require_once('./config/include.php');
 	require_once('./src/post_load.php');
+	require_once('./src/validations.php');
 
-	$info = $posts = '';
+
+	$info = $error = $posts = '';
 
 	if (is_get_request()) {
 
@@ -23,10 +25,16 @@
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'login_success')
 				$info = 'Logged in successfully!';
+			if ($_GET['info'] === 'comment_failed') {
+				if (isset($_GET['error']))
+					$error = $_GET['error'];
+			}
 			echo get_template('feed.php', array(
 				'title' => 'Feed',
 				'info' => $info,
+				'error' => $error,
 				'posts' => $posts,
+				'after_id' => $after_id,
 				'lateral_ids' => $lateral_ids,
 			));
 		}
@@ -34,9 +42,35 @@
 			echo get_template('feed.php', array(
 					'title' => 'Feed',
 					'info' => $info,
+					'error' => $error,
 					'posts' => $posts,
+					'after_id' => $after_id,
 					'lateral_ids' => $lateral_ids,
 				));
+		}
+	}
+
+	if (is_post_request()) {
+		if (isset($_POST['submit'])) {
+			try {
+				if (isset($_POST['comment']) && !empty($_POST['comment'])) {
+					if (isset($_POST['after_id']) && !empty($_POST['after_id']))
+						$after_id = $_POST['after_id'];
+					$comment = validate_comment($_POST['comment']);
+					$qparam = http_build_query(array('info' => 'comment_posted'));
+					header('Location: feed.php?' . $qparam);
+				}
+				// else {
+				// 	echo "ZHOPA!";
+				// }
+			} catch (ValidationException $e) {
+				$error = $e->getMessage();
+			}
+			if ($error) {
+
+				$qparam = http_build_query(array('info' => 'comment_failed', 'error' => $error, 'after_id' => $after_id));
+				header('Location: feed.php?' . $qparam);
+			}
 		}
 	}
 ?>

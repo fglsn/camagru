@@ -66,9 +66,17 @@
 										</div>
 									</section>
 									<!-- make a form -->
-									<section class="input-box">
-										<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="input-comment" placeholder="Add a comment..." autocomplete="off" type="input-comment" required>
-										<button type="button" class="btn btn-outline-primary">Post</button>
+									<section >
+										<form action="feed.php" method="post" class="input-box">
+											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off" required>
+											<button type="submit" name="submit" value="submit" class="btn btn-outline-primary">Post</button>
+											<input type="hidden" readonly value="<?php echo $after_id ?>" name="after_id"/>
+										</form>
+										<?php 
+											if (isset($error) && !empty($error)) {
+												echo '<div style="margin: 15px;"><span class="error">' . $error . '</span></div>'; 
+											}
+										?>
 									</section>
 								</div>
 							</div>
