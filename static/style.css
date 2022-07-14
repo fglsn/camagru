@@ -266,7 +266,7 @@ main {
 
 .form-wrapper {
 	min-height: 100%;
-	margin: 1erm 0;
+	margin: 1rem 0;
 }
 
 .form-container {
@@ -332,28 +332,59 @@ main {
 	justify-content: center;
 }
 
+.thumbnails-container {
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	max-height: 626px;
+	max-width: 251px;
+	margin: 5px;
+}
+
+.img-thumbnail-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-content: space-between;
+}
+
+.img-thumbnail-wrapper .delete {
+	position: absolute;
+	top: 14px;
+	right: 25px;
+	z-index: 100;
+	color: rgb(255, 255, 255);
+	height: 26px;
+	width: 26px;
+	padding: 0;
+	background-color: #ffffff6b;
+}
+
+.delete {
+	background: none;
+	border-radius: 25px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0.514);
+}
+
+.pic-thumbnail {
+	margin: 5px;
+	max-width: 91%!important;
+}
 .sticker-container {
 	display: flex;
 	flex-direction: row;
 	overflow-x: scroll;
 }
 
-.thumbnails-container {
-	display: flex;
-	flex-direction: column;
-	overflow-y: scroll;
-	max-height: 610px;
-	max-width: 256px;
-	padding: 3px;
-	margin: 15px;
-}
-
 .selected.sticker {
 	opacity: 0.5;
 }
 
-.sticker, .pic-thumbnail {
+.sticker {
 	margin: 10px;
+	max-width: 9%;
 }
 
 .sticker:hover {
@@ -394,6 +425,8 @@ input[type="file"] {
 	-ms-overflow-style: none;	/* IE and Edge */
 	scrollbar-width: none;		/* Firefox */
 }
+
+
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .custom-file-upload::-webkit-scrollbar {

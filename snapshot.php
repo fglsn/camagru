@@ -6,7 +6,7 @@
 
 	require_login('');
 
-	$info = $error = '';
+	$info = $error = $description = '';
 	$sticker_paths = array();
 	$sticker_ids = array();
 	$upload_dir = __DIR__ . '/uploads/';
@@ -16,6 +16,8 @@
 	if (is_post_request()) {
 		if(isset($_POST['submit'])) {
 			$picture_url = $_POST['pic-url'];
+			if (isset($_POST['description']) && !empty($_POST['description']))
+				$description = validate_comment($_POST['description']);
 			//Save all selected stickers to array
 			for ($i = 1; $i < 9; $i++) {
 				if (isset($_POST['stick'.$i]) && $_POST['stick'.$i] === 'on')
@@ -28,9 +30,10 @@
 				$filename = uniqid('webcam_') . '.png';
 				$filepath = $upload_dir . $filename;
 				$original = prepare_image($picture_url, $filepath);
+				$original = imagescale($original, 680);
 				add_stickers($original, $sticker_ids);
 				imagepng($original, $filepath, 0);
-				create_post($dbc, $uploads, $filename, $_SESSION['user_id'], '', 1);
+				create_post($dbc, $uploads, $filename, $_SESSION['user_id'], $description, 1);
 				$qparam = http_build_query(array('info' => 'uploaded'));
 				header('Location: upload.php?' . $qparam);
 			}
