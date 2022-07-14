@@ -58,7 +58,7 @@
 										<?php foreach ($comments as $comment) {
 												if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
 													echo '<div class="comment">
-															<h6 class="commentator" style="padding: 12px;">' . $comment['commentator'] . '</h6>
+															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
 														</div>';
 												}
@@ -68,7 +68,7 @@
 									<div class="line" style="flex-grow: 0"></div>
 									<section >
 										<form action="feed.php" method="post" class="input-box">
-											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off" required>
+											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
 											<button type="submit" name="submit" value="submit" class="btn btn-outline-primary" onclick="window.location=<?php echo '#' . $id; ?>">Post</button>
 											<input type="hidden" readonly value="<?php echo $after_id ?>" name="after_id"/>
 											<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
@@ -129,7 +129,15 @@
 		}
 	}
 	myFunction();
+
+<?php
+	if (isset($post_id) && !empty($post_id)) {
+		echo 'const post = document.getElementById("' . $post_id . '"); post.scrollIntoView();'; 
+	}
+?>
 </script>
+
+
 
 <?php
 	include(__DIR__ . "/footer.php");
