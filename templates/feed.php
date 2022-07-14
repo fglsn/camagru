@@ -2,6 +2,8 @@
 	include(__DIR__ . "/header.php");
 ?>
 
+<!-- todo: remember to pur require back to comment field! -->
+
 <main class="main-feed container" role="main">
 
 	<?php if ($info !== '') {
@@ -13,17 +15,18 @@
 					foreach ($posts as $post) {
 						$src = '.'.$post['picture_path'];
 						$author = $post['username'];
-						$description = $post['picture_description']
+						$description = $post['picture_description'];
+						$id = $post['post_id'];
 			?>
 
-						<article class="post-wrapper">
+						<article class="post-wrapper" id="<?php echo $id;?>" >
 						<div class="post">
 							<div class="post-header">
 								<h6 class="author-username"><?php echo '@'.$author;?></h6>
 							</div>
 							<div class="post-content">
 								<div class="post-pic-section">
-									<img alt="<?php echo 'Image by @' . $author?>" class="picture" src=<?php echo $src;?>>
+									<img alt="<?php echo 'Image by @' . $author?>" class="picture" name="<?php echo $post_id;?>" src="<?php echo $src;?>">
 								</div>
 							</div>
 							<div class="post-comment-section">
@@ -45,36 +48,36 @@
 									<span><h6 style="padding: 12px; font-style: bold; margin: 0;">0 likes</h6></span>
 								</section>
 								<section class="author-section">
-									<h6 class="author-username" style="padding: 12px;"><?php echo $author ?></h6>
+									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
 									<p class="post-description"><?php echo $description ?></p>
 								</section>
 								<?php if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']))
 										echo "<div style='display: none'>"?>
-									<div class="line" style="flex-grow: 0"></div>
+									<!-- <div class="line" style="flex-grow: 0"></div> -->
 									<section class="comments">
-										<div class="comment">
-											<h6 class="commentator" style="padding: 12px;">commentator</h6>
-											<p class="comment-text">comment-here comment-here comment-here comment-here comment-here comment-here comment-here </p>
-										</div>
-										<div class="comment">
-											<h6 class="commentator" style="padding: 12px;">commentator</h6>
-											<p class="comment-text">test longer comment test longer comment test longer comment test longer comment lalalala test longer test longer comment  test longer comment  </p>
-										</div>
-										<div class="comment">
-											<h6 class="commentator" style="padding: 12px;">commentator</h6>
-											<p class="comment-text">gegegkljehrgkljhelgrhelkrgherkghekrhglkerhgllerhgiuergyiuerhvlkjfjbvjbvdgfyugeruyeewrufhffjvxbcvbcnvbdjkjveeuhgpiuergypeirughfkjdvkjcvbuuryruruurururu@@!!! </p>
-										</div>
+										<?php foreach ($comments as $comment) {
+												if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
+													echo '<div class="comment">
+															<h6 class="commentator" style="padding: 12px;">' . $comment['commentator'] . '</h6>
+															<p class="comment-text">' . $comment['comment'] . '</p>
+														</div>';
+												}
+											}
+										?>
 									</section>
-									<!-- make a form -->
+									<div class="line" style="flex-grow: 0"></div>
 									<section >
 										<form action="feed.php" method="post" class="input-box">
 											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off" required>
-											<button type="submit" name="submit" value="submit" class="btn btn-outline-primary">Post</button>
+											<button type="submit" name="submit" value="submit" class="btn btn-outline-primary" onclick="window.location=<?php echo '#' . $id; ?>">Post</button>
 											<input type="hidden" readonly value="<?php echo $after_id ?>" name="after_id"/>
+											<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
+											<input type="hidden" readonly value="<?php echo $author ?>" name="author"/>
 										</form>
 										<?php 
 											if (isset($error) && !empty($error)) {
-												echo '<div style="margin: 15px;"><span class="error">' . $error . '</span></div>'; 
+												if ($post_id == $id)
+													echo '<div style="margin: 15px;"><span class="error">' . $error . '</span></div>'; 
 											}
 										?>
 									</section>

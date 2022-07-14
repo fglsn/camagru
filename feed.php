@@ -2,9 +2,10 @@
 	require_once('./config/include.php');
 	require_once('./src/post_load.php');
 	require_once('./src/validations.php');
+	require_once('./src/comments.php');
 
 
-	$info = $error = $posts = '';
+	$info = $error = $posts = $post_id = $author = '';
 
 	if (is_get_request()) {
 
@@ -14,13 +15,18 @@
 			$after_id = null;
 
 		$posts = load_posts($dbc, $after_id);
+
 		$last_id = find_last_id($dbc);
 		$first_id = find_first_id($dbc);
 
 		$lateral_ids = array($last_id, $first_id);
+		$comments = load_comments($dbc, $posts);
 		// print "<pre>";
-		// print_r($lateral_ids);
+		// print_r($comments);
 		// print "</pre>";
+
+		if (isset($_GET['post_id']) && is_numeric($_GET['post_id']))
+			$post_id = $_GET['post_id'];
 
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'login_success')
@@ -34,6 +40,8 @@
 				'info' => $info,
 				'error' => $error,
 				'posts' => $posts,
+				'comments' => $comments,
+				'post_id' => $post_id,
 				'after_id' => $after_id,
 				'lateral_ids' => $lateral_ids,
 			));
@@ -44,6 +52,8 @@
 					'info' => $info,
 					'error' => $error,
 					'posts' => $posts,
+					'comments' => $comments,
+					'post_id' => $post_id,
 					'after_id' => $after_id,
 					'lateral_ids' => $lateral_ids,
 				));
@@ -56,19 +66,25 @@
 				if (isset($_POST['comment']) && !empty($_POST['comment'])) {
 					if (isset($_POST['after_id']) && !empty($_POST['after_id']))
 						$after_id = $_POST['after_id'];
+					if (isset($_POST['post_id']) && !empty($_POST['post_id']))
+						$post_id = $_POST['post_id'];
+					if (isset($_POST['author']) && !empty($_POST['author']))
+						$author = $_POST['author'];
 					$comment = validate_comment($_POST['comment']);
-					$qparam = http_build_query(array('info' => 'comment_posted'));
+					post_comment($dbc, $post_id, $author, $comment, $_SESSION['username']);
+					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
 					header('Location: feed.php?' . $qparam);
 				}
-				// else {
-				// 	echo "ZHOPA!";
-				// }
+				else {
+					if (isset($_POST['post_id']) && !empty($_POST['post_id']))
+						$post_id = $_POST['post_id'];
+					$error = 'Empty comment.';
+				}
 			} catch (ValidationException $e) {
 				$error = $e->getMessage();
 			}
 			if ($error) {
-
-				$qparam = http_build_query(array('info' => 'comment_failed', 'error' => $error, 'after_id' => $after_id));
+				$qparam = http_build_query(array('info' => 'comment_failed', 'error' => $error, 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
 				header('Location: feed.php?' . $qparam);
 			}
 		}

@@ -44,6 +44,16 @@ create table if not exists camagru_db.posts (
 	webcam tinyint not null default 0
 );
 
+-- Comment table --
+create table if not exists camagru_db.comments (
+	comment_id int(11) unsigned auto_increment primary key,
+	post_id int not null,
+	post_owner varchar(10) not null,
+	comment varchar(250) not null,
+	commentator varchar(10) not null,
+	created_at timestamp not null default current_timestamp()
+);
+
 -- Create migrations to check if db is expected state --
 create table if not exists camagru_db.migrations (
 	mid int primary key
