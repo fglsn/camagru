@@ -253,7 +253,6 @@
 		load_webcam(e);
 	}
 
-	showFilename();
 	snackbarPopup();
 
 </script>

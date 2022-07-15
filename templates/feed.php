@@ -19,7 +19,7 @@
 						$id = $post['post_id'];
 			?>
 
-						<article class="post-wrapper" >
+					<article class="post-wrapper" >
 						<div class="post">
 							<div class="post-header">
 								<h6 class="author-username"><?php echo '@'.$author;?></h6>
@@ -51,39 +51,37 @@
 									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
 									<p class="post-description"><?php echo $description ?></p>
 								</section>
-								<?php if (!is_user_logged_in())
+									<?php if (!is_user_logged_in())
 										echo "<div style='display: none'>"?>
-									<div class="line" style="flex-grow: 0"></div>
-									<section class="comments">
-										<?php if (!empty($comments)) {
-												foreach ($comments as $comment) {
-													if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
-														echo '<div class="comment">
-																<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
-																<p class="comment-text">' . $comment['comment'] . '</p>
-															</div>';
-													}
+								<div class="line" style="flex-grow: 0"></div>
+								<section class="comments">
+									<?php if (!empty($comments)) {
+											foreach ($comments as $comment) {
+												if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
+													echo '<div class="comment">
+															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
+															<p class="comment-text">' . $comment['comment'] . '</p>
+														</div>';
 												}
 											}
-										?>
-									</section>
-									<!-- <div class="line" style="flex-grow: 0"></div> -->
-									<section >
-										<form action="feed.php" method="post" class="input-box">
-											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
-											<button type="submit" name="submit" value="submit" class="btn btn-outline-primary" onclick="window.location=<?php echo '#' . $id; ?>">Post</button>
-											<input type="hidden" readonly value="<?php echo $after_id ?>" name="after_id"/>
-											<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
-											<input type="hidden" readonly value="<?php echo $author ?>" name="author"/>
-										</form>
-										<?php 
-											if (isset($error) && !empty($error)) {
-												if ($post_id == $id)
-													echo '<div style="margin: 15px;"><span class="error">' . $error . '</span></div>'; 
-											}
-										?>
-									</section>
-								</div>
+										}
+									?>
+								</section>
+								<section>
+									<form action="feed.php" method="post" class="input-box">
+										<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
+										<button type="submit" name="submit" value="submit" class="btn btn-outline-primary">Post</button>
+										<input type="hidden" readonly value="<?php if (isset($after_id)) echo $after_id ?>" name="after_id"/>
+										<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
+										<input type="hidden" readonly value="<?php echo $author ?>" name="author"/>
+									</form>
+									<?php 
+										if (isset($error) && !empty($error)) {
+											if ($post_id == $id)
+												echo '<div style="margin: 15px;"><span class="error">' . $error . '</span></div>'; 
+										}
+									?>
+								</section>
 							</div>
 						</div>
 					</article> 
@@ -115,7 +113,6 @@
 								echo '?after_id=' . $num;
 						} else { echo ''; }?>">Next</a></li>
 				</ul>
-			</div>
 		</div>
 	</section>
 </main>

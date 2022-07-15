@@ -44,7 +44,7 @@ function  find_username_by_id($dbc, $user_id) {
 }
 
 function check_notifications_status($dbc, $username) {
-	$sql = 'select notifications from users
+	$sql = 'select email, notifications from users
 			where username = :username';
 	$stmt = $dbc->prepare($sql);
 	$stmt->execute(array('username' => $username));

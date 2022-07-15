@@ -27,4 +27,14 @@
 			return $stmt->fetchAll();
 		}
 	}
+
+	function send_notification($email, $commentator, $subject, $qparam): void {
+		$message = <<<MESSAGE
+				Your post just recieved new comment from the user @$commentator.
+				You can check it out here: http://localhost:8080/camagru/feed.php?$qparam'
+				MESSAGE;
+		$sender_email = 'no-reply@camagru.com';
+		$header = "From:" . $sender_email;
+		mail($email, $subject, $message, $header);
+	}
 ?>	

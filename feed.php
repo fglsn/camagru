@@ -4,7 +4,6 @@
 	require_once('./src/validations.php');
 	require_once('./src/comments.php');
 
-
 	$info = $error = $posts = $post_id = $author = $comments = '';
 
 	if (is_get_request()) {
@@ -72,10 +71,17 @@
 					if (isset($_POST['author']) && !empty($_POST['author']))
 						$author = $_POST['author'];
 					$comment = validate_comment($_POST['comment']);
+
 					post_comment($dbc, $post_id, $author, $comment, $_SESSION['username']);
-					if (check_notifications_status($dbc, $author)['notifications'] == 1)
-						// send_notification_email($dbc, $author, $_SESSION['username'], 'new_comment');
-					$qparam = http_build_query(array('info' => 'comment-posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
+
+					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
+
+					$notification_details = check_notifications_status($dbc, $author);
+					if ($notification_details['notifications'] == 1) {
+						$email = $notification_details['email'];
+						send_notification($email, $_SESSION['username'], 'New comment', $qparam);
+					}
+
 					header('Location: feed.php?' . $qparam);
 				}
 				else {
