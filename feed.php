@@ -73,7 +73,9 @@
 						$author = $_POST['author'];
 					$comment = validate_comment($_POST['comment']);
 					post_comment($dbc, $post_id, $author, $comment, $_SESSION['username']);
-					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
+					if (check_notifications_status($dbc, $author)['notifications'] == 1)
+						// send_notification_email($dbc, $author, $_SESSION['username'], 'new_comment');
+					$qparam = http_build_query(array('info' => 'comment-posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
 					header('Location: feed.php?' . $qparam);
 				}
 				else {

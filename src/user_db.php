@@ -42,4 +42,13 @@ function  find_username_by_id($dbc, $user_id) {
 	$stmt->execute(array('user_id' => $user_id));
 	return $stmt->fetch();
 }
+
+function check_notifications_status($dbc, $username) {
+	$sql = 'select notifications from users
+			where username = :username';
+	$stmt = $dbc->prepare($sql);
+	$stmt->execute(array('username' => $username));
+	return $stmt->fetch();
+}
+
 ?>
