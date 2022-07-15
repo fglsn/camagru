@@ -11,6 +11,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+	<script type="text/javascript" src="/camagru/static/frontend_actions.js"></script>
 	<title><?= $title ?? 'Camagru' ?></title>
 </head>
 

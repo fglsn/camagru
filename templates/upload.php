@@ -111,10 +111,8 @@
 		if (checkboxControl() || (!checkboxControl() && stickerInput.checked === true)) {
 			changeOpacity(stickerId);
 			stickerInput.checked = !stickerInput.checked;
-			// console.log("1: " + stickerInput.checked);
 		} if (checkboxControl() || (!checkboxControl() && stickerInputUpload.checked === true)) {
 			stickerInputUpload.checked = !stickerInputUpload.checked;
-			// console.log("2: " + stickerInput.checked);
 		}
 		else if (!checkboxControl()) {
 			alert("Max 4 stickers");
@@ -255,24 +253,9 @@
 		load_webcam(e);
 	}
 
-</script>
+	showFilename();
+	snackbarPopup();
 
-<script type="text/javascript">
-	function showFilename() {
-		var name = document.getElementById('file-upload');
-		document.getElementById("file-selected").innerHTML = name.files.item(0).name;
-	};
-</script>
-
-<script type="text/javascript">
-	function myFunction() {
-		if (document.getElementById("snackbar")) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
-		}
-	}
-	myFunction();
 </script>
 
 <?php

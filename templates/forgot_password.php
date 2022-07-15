@@ -41,14 +41,7 @@
 </main>
 
 <script type="text/javascript">
-	function myFunction() {
-		if (document.getElementById("snackbar")) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
-		}
-	}
-	myFunction();
+	snackbarPopup();
 </script>
 
 <?php

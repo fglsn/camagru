@@ -19,13 +19,13 @@
 						$id = $post['post_id'];
 			?>
 
-						<article class="post-wrapper" id="<?php echo $id;?>" >
+						<article class="post-wrapper" >
 						<div class="post">
 							<div class="post-header">
 								<h6 class="author-username"><?php echo '@'.$author;?></h6>
 							</div>
 							<div class="post-content">
-								<div class="post-pic-section">
+								<div class="post-pic-section" id="<?php echo $id;?>">
 									<img alt="<?php echo 'Image by @' . $author?>" class="picture" name="<?php echo $post_id;?>" src="<?php echo $src;?>">
 								</div>
 							</div>
@@ -121,14 +121,7 @@
 </main>
 
 <script type="text/javascript">
-	function myFunction() {
-		if (document.getElementById("snackbar")) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 2500);
-		}
-	}
-	myFunction();
+	snackbarPopup();
 
 <?php
 	if (isset($post_id) && !empty($post_id)) {
