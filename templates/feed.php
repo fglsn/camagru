@@ -51,21 +51,23 @@
 									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
 									<p class="post-description"><?php echo $description ?></p>
 								</section>
-								<?php if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id']))
+								<?php if (!is_user_logged_in())
 										echo "<div style='display: none'>"?>
-									<!-- <div class="line" style="flex-grow: 0"></div> -->
+									<div class="line" style="flex-grow: 0"></div>
 									<section class="comments">
-										<?php foreach ($comments as $comment) {
-												if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
-													echo '<div class="comment">
-															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
-															<p class="comment-text">' . $comment['comment'] . '</p>
-														</div>';
+										<?php if (!empty($comments)) {
+												foreach ($comments as $comment) {
+													if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
+														echo '<div class="comment">
+																<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
+																<p class="comment-text">' . $comment['comment'] . '</p>
+															</div>';
+													}
 												}
 											}
 										?>
 									</section>
-									<div class="line" style="flex-grow: 0"></div>
+									<!-- <div class="line" style="flex-grow: 0"></div> -->
 									<section >
 										<form action="feed.php" method="post" class="input-box">
 											<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
@@ -111,9 +113,7 @@
 								echo '';
 							else
 								echo '?after_id=' . $num;
-						} else {
-							echo '';
-						}?>">Next</a></li>
+						} else { echo ''; }?>">Next</a></li>
 				</ul>
 			</div>
 		</div>

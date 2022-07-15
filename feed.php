@@ -5,7 +5,7 @@
 	require_once('./src/comments.php');
 
 
-	$info = $error = $posts = $post_id = $author = '';
+	$info = $error = $posts = $post_id = $author = $comments = '';
 
 	if (is_get_request()) {
 
@@ -20,7 +20,8 @@
 		$first_id = find_first_id($dbc);
 
 		$lateral_ids = array($last_id, $first_id);
-		$comments = load_comments($dbc, $posts);
+		if (is_user_logged_in())
+			$comments = load_comments($dbc, $posts);
 		// print "<pre>";
 		// print_r($comments);
 		// print "</pre>";

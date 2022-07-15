@@ -6,7 +6,7 @@
 	$err_email = $err_username = $err_pass = $err_conf = $error = '';
 	$submit = $email = $username = $password = $hash = $confirmation = '';
 
-	if (isset($_SESSION['user_id'])) {
+	if (is_user_logged_in()) {
 		header('Location: feed.php');
 		exit();
 	}
