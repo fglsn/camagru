@@ -31,6 +31,18 @@
 		// throw new FailedToLoadPostException();
 	}
 
+	function load_user_posts($dbc, $user_id) {
+		$sql = 'select users.username,
+				posts.post_id, posts.owner_id, posts.picture_path, posts.webcam
+				from posts join users
+				on posts.owner_id = users.user_id
+				where posts.owner_id = :user_id 
+				order by post_id desc';
+		$stmt = $dbc->prepare($sql);
+		$stmt->execute(array('user_id' => $user_id));
+		return $stmt->fetchAll();
+	}
+
 	function load_thumbnails($dbc, $user_id) {
 		$sql = 'select posts.post_id, posts.owner_id, posts.picture_path, posts.webcam
 				from posts

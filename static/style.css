@@ -481,6 +481,31 @@ input[type="file"] {
 	display: flex;
 	justify-content: center;
 }
+
+/* Profile */
+
+.profile-username {
+	padding: 3rem 0 1rem 0;
+}
+
+.profile-grid {
+	display: grid;
+	gap: 28px;
+	grid-template-columns: repeat(3, 1fr);
+	padding: 2rem 0;
+}
+
+.user-pic {
+	flex: 1 0 0%;
+}
+
+.profile-grid-picture {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+
 /* Login */
 
 .separator {

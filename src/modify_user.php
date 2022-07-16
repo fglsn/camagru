@@ -13,8 +13,8 @@
 		if (!$user)
 			throw new GeneralErrorException();
 		$sql = 'update users
-		set notifications=:value
-		where user_id=:user_id';
+				set notifications=:value
+				where user_id=:user_id';
 		$stmt = $dbc->prepare($sql);
 		return $stmt->execute(array('value' => $value,
 									'user_id' => $user['user_id']));
@@ -24,8 +24,8 @@
 	function update_username($dbc, $new_username) {
 		try {
 			$sql = 'update users
-				set username=:new_username
-				where user_id=:user_id';
+					set username=:new_username
+					where user_id=:user_id';
 			$stmt = $dbc->prepare($sql);
 			return $stmt->execute(array('new_username' => $new_username,
 										'user_id' => $_SESSION['user_id']));
@@ -42,8 +42,8 @@
 	function update_email($dbc, $new_email) {
 		try {
 			$sql = 'update users
-				set email=:new_email
-				where user_id=:user_id';
+					set email=:new_email
+					where user_id=:user_id';
 			$stmt = $dbc->prepare($sql);
 			return $stmt->execute(array('new_email' => $new_email,
 										'user_id' => $_SESSION['user_id']));
