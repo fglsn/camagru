@@ -43,9 +43,9 @@
 	}
 
 	function validate_comment($comment) {
-		$comment = input_data($comment);
-		if (!preg_match("/^[a-zA-Z0-9_\-!?. ,@#:)(;'\"]*$/", $comment))
+		if (!preg_match("/^[a-zA-Z0-9_\-+!?. ,@#:)(;'\"]*$/", $comment))
 			throw new ValidationException("Forbidden characters used. Please try again");
+		$comment = input_data($comment);
 		if (strlen($comment) > 250)
 			throw new ValidationException("Invalid length (max 250 chars).");
 		return $comment;
