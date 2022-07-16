@@ -2,25 +2,12 @@
 	require_once('./config/include.php');
 	require_once('./src/user_create_activate.php');
 	require_once('./src/validations.php');
-	require_once('./src/post_create.php');
-	require_once('./src/webcam.php');
-
-	class NoFileProvidedException extends Exception {};
-	class TooBigFileException extends Exception {};
-	class FileNotAllowedException extends Exception {};
+	require_once('./src/post_db.php');
+	require_once('./src/images.php');
 
 	require_login('');
 
 	$info = $error = $thumbnails = $description = '';
-
-	$allowedTypes = [
-		'image/png' => 'png',
-		'image/jpeg' => 'jpg'
-	];
-
-	$upload_dir = '/uploads/';
-
-	const MAX_SIZE  = 5 * 1024 * 1024; //  5MB
 
 	const MESSAGES = [
 		UPLOAD_ERR_OK => 'File uploaded successfully',
@@ -40,54 +27,28 @@
 					throw new NoFileProvidedException();
 
 				$filepath = $_FILES['file']['tmp_name'];
-				$filesize = filesize($filepath);
-
-				if ($filesize == 0)
-					throw new NoFileProvidedException();
-				if ($filesize > MAX_SIZE)
-					throw new TooBigFileException();
-
-				$fileinfo = finfo_open(FILEINFO_MIME_TYPE);
-				$filetype = finfo_file($fileinfo, $filepath);
-
-				if(!in_array($filetype, array_keys($allowedTypes))) 
-					throw new FileNotAllowedException();
 
 				if (is_uploaded_file($_FILES['file']['tmp_name']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
 
 					if (isset($_POST['description']) && !empty($_POST['description']))
 						$description = validate_comment($_POST['description']);
 
-					$extension = substr($filetype, strripos($filetype, "/") + 1);
-					$filename = uniqid('img_') . '.' . $extension;
+					$sticker_ids = parse_sticker_ids($_POST);
 
-					$sticker_ids = array();
-					for ($i = 1; $i < 9; $i++) {
-						if (isset($_POST['stick'.$i]) && $_POST['stick'.$i] === 'on')
-							array_push($sticker_ids, $i);
-					}
-
-					move_uploaded_file($filepath, __DIR__ . $upload_dir . $filename);
-
-					$sticker_count = count($sticker_ids);
-					if ($sticker_count > 0) {
-						$image = imagecreatefromjpeg(__DIR__ . $upload_dir . $filename);
-						$image = imagescale($image, 680);
-						add_stickers($image, $sticker_ids);
-						imagepng($image, __DIR__ . $upload_dir . $filename, 0);
-					}
-					create_post($dbc, $upload_dir, $filename, $_SESSION['user_id'], $description);
-					unlink($filepath);
+					$image_relative_path = save_image($filepath, $sticker_ids);
+					create_post($dbc, $image_relative_path, $_SESSION['user_id'], $description);
 					$qparam = http_build_query(array('info' => 'uploaded'));
 					header('Location: upload.php?' . $qparam);
 				}
+				else
+					$error = 'There is no file to upload. Please upload an image.';
 
 			} catch (NoFileProvidedException $e) {
 				$error = 'There is no file to upload. Please upload an image.';
 			} catch (TooBigFileException $e) {
 				$error = 'This file is too big. Please try again.';
 			} catch (FileNotAllowedException $e) {
-				$error = 'Only jpeg or png files allowed.';
+				$error = 'Oops, invalid filetype. Only jpeg or png files are allowed.';
 			} catch (ValidationException $e) {
 				$error = $e->getMessage();
 			} catch (PDOException $e) {

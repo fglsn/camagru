@@ -1,6 +1,6 @@
 <?php
 	require_once('./config/include.php');
-	require_once('./src/post_load.php');
+	require_once('./src/post_db.php');
 	require_once('./src/validations.php');
 	require_once('./src/comments.php');
 
