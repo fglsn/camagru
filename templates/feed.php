@@ -17,6 +17,23 @@
 						$author = $post['username'];
 						$description = $post['picture_description'];
 						$id = $post['post_id'];
+						$post_like_count = 0;
+						if (!empty($posts_like_counts)) {
+							foreach ($posts_like_counts as $count) {
+								if ($count['post_id'] == $id) {
+									$post_like_count = $count['like_count'];
+								}
+							}
+						}
+						$liked = false;
+						if (!empty($liked_posts)) {
+							foreach ($liked_posts as $liked_post) {
+								if ($liked_post['post_id'] == $id) {
+									$liked = true;
+								}
+							}
+						}
+						//$liked = $post['liked'];
 			?>
 
 					<article class="post-wrapper" >
@@ -30,11 +47,13 @@
 								</div>
 							</div>
 							<div class="post-comment-section">
+								<?php if (!is_user_logged_in())
+											echo "<div style='display: none'>"?>
 								<section class="post-buttons">
 									<span class="post-button">
-										<button class="button" type="button">
+										<button class="button" type="button" onclick="toggleLike(event)" data-post-id="<?php echo $id; ?>" data-liked="<?php if ($liked) echo 'true'; else echo 'false'; ?>">
 											<div class="like">
-												<svg aria-label="Like" class="heart" color="#8e8e8e" fill="#8e8e8e" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path></svg>
+												<svg aria-label="Like" class="heart" color="#8e8e8e" fill="<?php if ($liked) echo 'red'; else echo '#8e8e8e'; ?>" height="24" role="img" viewBox="0 0 24 24" width="24"><path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path></svg>
 											</div>
 										</button>
 									</span>
@@ -45,7 +64,8 @@
 											</div>
 										</button>
 									</span>
-									<span><h6 style="padding: 12px; font-style: bold; margin: 0;">0 likes</h6></span>
+									<span><h6 style="padding: 12px; font-style: bold; margin: 0;" id="like-count-<?php echo $id; ?>"><?php echo $post_like_count; ?> like(s)</h6></span>
+									<span class="error" id="like-error-<?php echo $id; ?>"></span>
 								</section>
 								<section class="author-section">
 									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
@@ -119,6 +139,46 @@
 
 <script type="text/javascript">
 	snackbarPopup();
+
+	function toggleLike(e) {
+		const likeButton = e.currentTarget;
+		const postId = likeButton.dataset.postId;
+		const liked = likeButton.dataset.liked == "true";
+		
+		const formData = new FormData();
+		formData.append('post_id', postId);
+		formData.append('like', !liked);
+
+		fetch('like.php', {
+			method: 'POST',
+			body: formData
+		})
+		.then(response => response.json())
+		.then(json => {
+			changeLikeCount(postId, json['postLikeCount']);
+			likeButton.dataset.liked = !liked;
+			const likeSvg = likeButton.getElementsByTagName('svg')[0];
+			if (!liked) {
+				likeSvg.style.fill = "red";
+			} else {
+				likeSvg.style.fill = "#8e8e8e";
+			}
+		})
+		.catch(error => {
+			console.error('Error: ' + error);
+			changeLikeError(postId, 'Could not like post!');
+		});
+	}
+
+	function changeLikeError(postId, error) {
+		const el = document.getElementById('like-error-' + postId);
+		el.textContent = error;
+	}
+
+	function changeLikeCount(postId, likeCount) {
+		const el = document.getElementById('like-count-' + postId);
+		el.textContent = likeCount + ' like(s)';
+	}
 
 <?php
 	if (isset($post_id) && !empty($post_id)) {

@@ -74,6 +74,7 @@ create table if not exists camagru_db.likes (
 	like_id	int auto_increment primary key,
 	post_id int not null,
 	user_id int not null,
+	unique key post_and_user_unique (post_id, user_id),
 	foreign key (post_id)
 		references camagru_db.posts (post_id)
 		on delete cascade,

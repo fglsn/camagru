@@ -3,8 +3,9 @@
 	require_once('./src/posts_db.php');
 	require_once('./src/validations.php');
 	require_once('./src/comments.php');
+	require_once('./src/like_db.php');
 
-	$info = $error = $posts = $post_id = $author = $comments = '';
+	$info = $error = $posts = $post_id = $author = $comments = $posts_like_counts = $liked_posts = '';
 
 	if (is_get_request()) {
 
@@ -19,8 +20,11 @@
 		$first_id = find_first_id($dbc);
 
 		$lateral_ids = array($last_id, $first_id);
-		if (is_user_logged_in())
+		if (is_user_logged_in()) {
 			$comments = load_comments($dbc, $posts);
+			$posts_like_counts = posts_like_counts($dbc, $posts);
+			$liked_posts = liked_posts($dbc, $posts, $_SESSION['user_id']);
+		}
 		// print "<pre>";
 		// print_r($comments);
 		// print "</pre>";
@@ -44,19 +48,23 @@
 				'post_id' => $post_id,
 				'after_id' => $after_id,
 				'lateral_ids' => $lateral_ids,
+				'posts_like_counts' => $posts_like_counts,
+				'liked_posts' => $liked_posts,
 			));
 		}
 		else {
 			echo get_template('feed.php', array(
-					'title' => 'Feed',
-					'info' => $info,
-					'error' => $error,
-					'posts' => $posts,
-					'comments' => $comments,
-					'post_id' => $post_id,
-					'after_id' => $after_id,
-					'lateral_ids' => $lateral_ids,
-				));
+				'title' => 'Feed',
+				'info' => $info,
+				'error' => $error,
+				'posts' => $posts,
+				'comments' => $comments,
+				'post_id' => $post_id,
+				'after_id' => $after_id,
+				'lateral_ids' => $lateral_ids,
+				'posts_like_counts' => $posts_like_counts,
+				'liked_posts' => $liked_posts,
+			));
 		}
 	}
 
