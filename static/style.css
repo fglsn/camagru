@@ -372,6 +372,46 @@ main {
 	margin: 5px;
 	max-width: 91%!important;
 }
+
+@media only screen and (max-width: 560px) {
+
+	.thumbnails {
+		min-width: 100%
+	}
+
+	.thumbnails-form {
+		padding: 0.5rem;
+		max-width: 700px;
+		margin: 1.5rem;
+		display: flex;
+		flex-direction: row;
+	}
+	.upload-main {
+		display: flex;
+		flex-direction: column-reverse;
+		flex-wrap: inherit;
+		align-items: center;
+		justify-content: space-between;
+	}
+	.thumbnails-container {
+		display: flex!important;
+		flex-direction: row!important;
+		max-height: 100%;
+		min-width: 100%;
+		overflow-x: scroll;
+	}
+	.img-thumbnail-wrapper {
+		min-width: 50%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	#save-redo {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
 .sticker-container {
 	display: flex;
 	flex-direction: row;
@@ -425,8 +465,6 @@ input[type="file"] {
 	-ms-overflow-style: none;	/* IE and Edge */
 	scrollbar-width: none;		/* Firefox */
 }
-
-
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .custom-file-upload::-webkit-scrollbar {
@@ -484,9 +522,18 @@ input[type="file"] {
 
 /* Profile */
 
-.profile-username {
+.stats {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: baseline;
 	padding: 3rem 0 1rem 0;
+
 }
+
+/* .profile-username {
+	padding: 3rem 0 1rem 0;
+} */
 
 .profile-grid {
 	display: grid;

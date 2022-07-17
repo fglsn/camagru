@@ -3,7 +3,10 @@
 ?>
 
 <main class="container" role="main">
-		<h4 class="profile-username"><?php if (!empty($username)) echo '@'. $username?></h4>
+		<div class="stats">
+			<h4 class="profile-username"><?php if (!empty($username)) echo '@'. $username?></h4>
+			<h6><?php if (!empty($stats) && $stats['0'] > 0) echo $stats['0'] . ' posts';?></h6>
+		</div>
 		<div class="profile-grid">
 			<?php
 				if (!empty($posts)) {

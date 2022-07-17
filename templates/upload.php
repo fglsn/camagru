@@ -81,7 +81,7 @@
 		</div>
 	</div>
 	<div class="form-wrapper thumbnails">
-		<div class="form-container">
+		<div class="form-container thumbnails-form">
 			<div class="thumbnails-container">
 				<?php
 					if (!empty($thumbnails)) {
@@ -101,6 +101,10 @@
 		</div>
 	</div>
 </main>
+
+<?php
+	include(__DIR__ . "/footer.php");
+?>
 
 <script type="text/javascript">
 
@@ -244,7 +248,7 @@
 			ctx.scale(-1, 1);
 			ctx.drawImage(video, 0, 0);
 			let imageDataUrl = canvas.toDataURL('image/jpeg');
-			saveRedoButtons.style.display = "block";
+			saveRedoButtons.style.display = "flex";
 			pictureUrl.value = imageDataUrl;
 		});
 	
@@ -256,7 +260,3 @@
 	snackbarPopup();
 
 </script>
-
-<?php
-	include(__DIR__ . "/footer.php");
-?>
