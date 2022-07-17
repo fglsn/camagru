@@ -53,6 +53,13 @@
 		return $stmt->fetchAll();
 	}
 
+	function load_user_statistics($dbc, $user_id) {
+		$sql = "select count(*) from posts where owner_id = :user_id";
+		$stmt = $dbc->prepare($sql);
+		$stmt->execute(array('user_id' => $user_id));
+		return $stmt->fetch();
+	}
+
 	function find_last_id($dbc) {
 		$sql = 'select max(post_id) from posts;';
 		$stmt = $dbc->prepare($sql);
