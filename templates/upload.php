@@ -80,6 +80,8 @@
 
 		</div>
 	</div>
+	<?php
+		if (empty($thumbnails)) echo '<div style="display: none;'; ?>
 	<div class="form-wrapper thumbnails">
 		<div class="form-container thumbnails-form">
 			<div class="thumbnails-container">

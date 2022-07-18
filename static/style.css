@@ -353,19 +353,16 @@ main {
 	top: 14px;
 	right: 25px;
 	z-index: 100;
-	color: rgb(255, 255, 255);
 	height: 26px;
 	width: 26px;
 	padding: 0;
-	background-color: #ffffff6b;
 }
 
 .delete {
+	position: absolute;
 	background: none;
-	border-radius: 25px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(255, 255, 255, 0.514);
+	border-style: none;
+	color: #262626;
 }
 
 .pic-thumbnail {
@@ -544,6 +541,9 @@ input[type="file"] {
 
 .user-pic {
 	flex: 1 0 0%;
+	position: relative;
+	justify-content: center;
+	align-content: space-between;
 }
 
 .profile-grid-picture {
