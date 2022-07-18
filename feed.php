@@ -25,6 +25,7 @@
 			$posts_like_counts = posts_like_counts($dbc, $posts);
 			$liked_posts = liked_posts($dbc, $posts, $_SESSION['user_id']);
 		}
+
 		// print "<pre>";
 		// print_r($comments);
 		// print "</pre>";
