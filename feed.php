@@ -5,7 +5,7 @@
 	require_once('./src/comments.php');
 	require_once('./src/like_db.php');
 
-	$info = $error = $posts = $post_id = $author = $comments = $posts_like_counts = $liked_posts = '';
+	$info = $error = $posts = $post_id = $author = $comments = $posts_like_counts = $liked_posts = $after_id ='';
 
 	if (is_get_request()) {
 

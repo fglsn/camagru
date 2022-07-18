@@ -41,7 +41,7 @@
 		rename($filepath, $image_full_path);
 
 		add_stickers($image_full_path, $extension, $sticker_ids);
-		unlink($filepath);
+		// unlink($filepath);
 
 		return $image_relative_path;
 	}

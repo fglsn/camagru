@@ -356,13 +356,20 @@ main {
 	height: 26px;
 	width: 26px;
 	padding: 0;
+	background-color: #ffffff6b;
+	color: rgb(255, 255, 255);
+
 }
 
 .delete {
+	border-radius: 25px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgba(255, 255, 255, 0.514);
 	position: absolute;
 	background: none;
-	border-style: none;
-	color: #262626;
+	background-color: #ffffff6b;
+	color: rgb(255, 255, 255);
 }
 
 .pic-thumbnail {
