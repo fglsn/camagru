@@ -58,7 +58,6 @@
 			header('Location: feed.php?' . $qparam);
 		}
 	}
-	//todo: Add message if not activated yet or username incorrect
 	else if (is_get_request()) {
 		if (isset($_GET['info'])) {
 			if ($_GET['info'] === 'activation_link')

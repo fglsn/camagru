@@ -23,6 +23,9 @@
 			echo '{"error": "Provide post_id"}';
 			exit();
 		}
+	} else {
+		header('Location: feed.php');
+		exit();
 	}
 
 ?>

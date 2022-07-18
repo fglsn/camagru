@@ -2,8 +2,6 @@
 	include(__DIR__ . "/header.php");
 ?>
 
-<!-- todo: remember to pur require back to comment field! -->
-
 <main class="main-feed container" role="main">
 
 	<?php if ($info !== '') {
@@ -89,7 +87,7 @@
 								</section>
 								<section>
 									<form action="feed.php" method="post" class="input-box">
-										<input type="text" class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
+										<input type="text" required class="form-control input-comment-control" style="border: none!important;" id="input-comment" name="comment" placeholder="Add a comment..." autocomplete="off">
 										<button type="submit" name="submit" value="submit" class="btn btn-outline-primary">Post</button>
 										<input type="hidden" readonly value="<?php if (isset($after_id)) echo $after_id ?>" name="after_id"/>
 										<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
@@ -144,7 +142,7 @@
 		const likeButton = e.currentTarget;
 		const postId = likeButton.dataset.postId;
 		const liked = likeButton.dataset.liked == "true";
-		
+
 		const formData = new FormData();
 		formData.append('post_id', postId);
 		formData.append('like', !liked);

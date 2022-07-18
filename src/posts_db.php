@@ -60,6 +60,15 @@
 		return $stmt->fetch();
 	}
 
+	function remove_post($dbc, $post_id, $user_id) {
+		$sql = "delete from posts
+				where owner_id = :user_id
+				and post_id = :post_id";
+		$stmt = $dbc->prepare($sql);
+		return $stmt->execute(array('post_id' => $post_id,
+									'user_id' => $user_id));
+	}
+
 	function find_last_id($dbc) {
 		$sql = 'select max(post_id) from posts;';
 		$stmt = $dbc->prepare($sql);
