@@ -10,21 +10,21 @@
 			<span class="error"><?php echo $error;?> </span>
 			<form action="signup.php" class="form-box" method="post">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $email?>" require>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $email?>" autocomplete="email" required>
 					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="mb-3">
-					<input type="username" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $username?>" require>
+					<input type="username" class="form-control" id="username" name="username" placeholder="Username" value="<?php echo $username?>" autocomplete="off" required>
 					<span class="error"><?php echo $err_username; ?></span>
 				</div>
 
 				<div class="mb-3">
-					<input type="password" class="form-control" id="password" name="password" placeholder="Password" require title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long">
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password" required autocomplete="new-password" title="Must contain at least one number, upper- and lowercase letter, special character and be at least 8 characters long">
 					<span class="error"><?php echo $err_pass;?></span>
 					<div id="passwordHelp" class="form-text">Your password must be at least 8 characters long, contain uppercase and lowercase letters, numbers and at least one special character.</div>
 				</div>
 				<div class="mb-3">
-					<input type="password" id="confirmation" class="form-control" name="confirmation" placeholder="Confirm password" require>
+					<input type="password" id="confirmation" class="form-control" name="confirmation" placeholder="Confirm password" required autocomplete="new-password">
 					<span class="error"><?php echo $err_conf;?></span>
 				</div>
 				<div class="d-grid gap-2">

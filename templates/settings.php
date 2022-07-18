@@ -44,7 +44,7 @@
 				<h6 class="form-header-light">Change Email</h6>
 				<div class="mb-3">
 					<label for="item">Old Email: </label>
-					<input type="email" class="form-control" id="old-email" name="old-email" autocomplete="off">
+					<input type="email" class="form-control" id="old-email" name="old-email" autocomplete="email">
 					<span class="error"><?php echo $err_old_email;?></span>
 				</div>
 				<div class="mb-3">
