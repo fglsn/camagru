@@ -36,12 +36,6 @@
 			</div>
 			<form class="container" id="camera" name="camera" action="snapshot.php" method="post" style="display:none; max-width: 80%">
 				<div class="webcam-container container">
-					<div class="sticker-preview-container" style="width: 0; height: 332px;">
-						<img src="" alt="" id="sticker-preview-1" class="sticker-preview">
-						<img src="" alt="" id="sticker-preview-2" class="sticker-preview">
-						<img src="" alt="" id="sticker-preview-3" class="sticker-preview">
-						<img src="" alt="" id="sticker-preview-4" class="sticker-preview">
-					</div>
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam"></video>
 					</canvas>
@@ -54,6 +48,12 @@
 					<input type="checkbox" class="webcam-checkbox" hidden id="stick7-webcam" name="stick7"></input>
 					<input type="checkbox" class="webcam-checkbox" hidden id="stick8-webcam" name="stick8"></input>
 					<input type="text" id="picture-url" name="pic-url" hidden readonly></input>
+				</div>
+				<div class="sticker-preview-container container">
+					<div class="canvas-preview" id="canvas_preview"><img src="" alt="" id="sticker-preview-1" class="sticker-preview"></div>
+					<div class="canvas-preview1" id="canvas_preview1"><img src="" alt="" id="sticker-preview-2" class="sticker-preview"></div>
+					<div class="canvas-preview1" id="canvas_preview1"><img src="" alt="" id="sticker-preview-3" class="sticker-preview"></div>
+					<div class="canvas-preview1" id="canvas_preview1"><img src="" alt="" id="sticker-preview-4" class="sticker-preview"></div>
 				</div>
 				<div id="save-redo" style="display:none;">
 					<input type="text" class="custom-file-upload" name="description" value="" placeholder="Description: " autocomplete="off"/>
