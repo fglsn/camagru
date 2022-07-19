@@ -426,6 +426,34 @@ main {
 	opacity: 0.5;
 }
 
+#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
+	position: relative;
+	height: 20%;
+	z-index: 100;
+}
+
+#sticker-preview-1 {
+	top: 79%;
+	left: 15px;
+}
+
+#sticker-preview-2 {
+	top: 59%;
+	left: 115px;
+
+}
+
+#sticker-preview-3 {
+	top: 39%;
+	left: 215px;
+
+}
+
+#sticker-preview-4 {
+	top: 19%;
+	left: 320px;
+}
+
 .sticker {
 	margin: 10px;
 	max-width: 9%;

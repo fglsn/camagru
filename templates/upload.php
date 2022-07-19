@@ -15,14 +15,14 @@
 			<div class="stickers-wrapper container">
 				<h4 class="form-header-light">Choose a sticker</h4>
 				<div class="sticker-container">
-					<img class="sticker img-thumbnail" id="stick1" onclick="selectSticker('stick1')" src="./static/stickers/1.png" alt="">
-					<img class="sticker img-thumbnail" id="stick2" onclick="selectSticker('stick2')" src="./static/stickers/2.png" alt="">
-					<img class="sticker img-thumbnail" id="stick3" onclick="selectSticker('stick3')" src="./static/stickers/3.png" alt="">
-					<img class="sticker img-thumbnail" id="stick4" onclick="selectSticker('stick4')" src="./static/stickers/4.png" alt="">
-					<img class="sticker img-thumbnail" id="stick5" onclick="selectSticker('stick5')" src="./static/stickers/5.png" alt="">
-					<img class="sticker img-thumbnail" id="stick6" onclick="selectSticker('stick6')" src="./static/stickers/6.png" alt="">
-					<img class="sticker img-thumbnail" id="stick7" onclick="selectSticker('stick7')" src="./static/stickers/7.png" alt="">
-					<img class="sticker img-thumbnail" id="stick8" onclick="selectSticker('stick8')" src="./static/stickers/8.png" alt="">
+					<img class="sticker img-thumbnail" id="stick1" onclick="selectSticker(1)" src="./static/stickers/1.png" alt="">
+					<img class="sticker img-thumbnail" id="stick2" onclick="selectSticker(2)" src="./static/stickers/2.png" alt="">
+					<img class="sticker img-thumbnail" id="stick3" onclick="selectSticker(3)" src="./static/stickers/3.png" alt="">
+					<img class="sticker img-thumbnail" id="stick4" onclick="selectSticker(4)" src="./static/stickers/4.png" alt="">
+					<img class="sticker img-thumbnail" id="stick5" onclick="selectSticker(5)" src="./static/stickers/5.png" alt="">
+					<img class="sticker img-thumbnail" id="stick6" onclick="selectSticker(6)" src="./static/stickers/6.png" alt="">
+					<img class="sticker img-thumbnail" id="stick7" onclick="selectSticker(7)" src="./static/stickers/7.png" alt="">
+					<img class="sticker img-thumbnail" id="stick8" onclick="selectSticker(8)" src="./static/stickers/8.png" alt="">
 				</div>
 			</div>
 
@@ -36,6 +36,12 @@
 			</div>
 			<form class="container" id="camera" name="camera" action="snapshot.php" method="post" style="display:none; max-width: 80%">
 				<div class="webcam-container container">
+					<div class="sticker-preview-container" style="width: 0; height: 332px;">
+						<img src="" alt="" id="sticker-preview-1" class="sticker-preview">
+						<img src="" alt="" id="sticker-preview-2" class="sticker-preview">
+						<img src="" alt="" id="sticker-preview-3" class="sticker-preview">
+						<img src="" alt="" id="sticker-preview-4" class="sticker-preview">
+					</div>
 					<canvas id="canvas" class="container">
 						<video autoplay="true" class="container" id="webcam"></video>
 					</canvas>
@@ -111,39 +117,59 @@
 
 <script type="text/javascript">
 
-	function selectSticker(stickerId) {
-		let stickerInputUpload = document.getElementById(stickerId + "-upload");
-		let stickerInput = document.getElementById(stickerId + "-webcam");
+	let selectedStickers = [];
 
-		if (checkboxControl() || (!checkboxControl() && stickerInput.checked === true)) {
+	function selectSticker(stickerId) {
+		let stickerInputUpload = document.getElementById('stick' + stickerId + "-upload");
+		let stickerInput = document.getElementById('stick' + stickerId + "-webcam");
+		let currentlySelected = selectedStickers.includes(stickerId);
+		if (checkboxControl() || (!checkboxControl() && currentlySelected === true)) {
 			changeOpacity(stickerId);
-			stickerInput.checked = !stickerInput.checked;
-		} if (checkboxControl() || (!checkboxControl() && stickerInputUpload.checked === true)) {
-			stickerInputUpload.checked = !stickerInputUpload.checked;
-		}
+			stickerInput.checked = !currentlySelected;
+			stickerInputUpload.checked = !currentlySelected;
+			if (!currentlySelected) {
+				stickerPreview(stickerId);
+			} else {
+				removePreview(stickerId);
+			}
+		} 
 		else if (!checkboxControl()) {
 			alert("Max 4 stickers");
 		}
 		enableSnapButton();
 	}
 
-	function countCheckboxes () {
-		let inputElems = document.getElementsByClassName("webcam-checkbox"),
-		count = 0;
-		for (var i = 0; i < inputElems.length; i++) {
-			if (inputElems[i].type === "checkbox" && inputElems[i].checked === true)
-				count++;
+	function stickerPreview(stickerId) {
+		selectedStickers.push(stickerId);
+		previewSelected();
+	}
+
+	function removePreview(stickerId) {
+		selectedStickers = selectedStickers.filter(s => s !== stickerId);
+		previewSelected();
+	}
+
+	function previewSelected() {
+		for (let i = 0; i < selectedStickers.length; i++) {
+			const stickerPreview = document.getElementById('sticker-preview-' + (i + 1));
+			stickerPreview.src = './static/stickers/' + selectedStickers[i] + '.png';
 		}
-		return (count);
+		for (let i = selectedStickers.length; i < 4; i++) {
+			const stickerPreview = document.getElementById('sticker-preview-' + (i + 1));
+			stickerPreview.src = '';
+		}
+	}
+
+	function countCheckboxes() {
+		return selectedStickers.length;
 	}
 
 	function checkboxControl() {
-		count = countCheckboxes();
-		return (count < 8);
+		return (countCheckboxes() < 4);
 	}
 
 	function changeOpacity(stickId) {
-		let stick = document.getElementById(stickId);
+		let stick = document.getElementById('stick' + stickId);
 		stick.classList.toggle('selected');
 	}
 
