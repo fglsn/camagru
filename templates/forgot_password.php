@@ -16,7 +16,7 @@
 			<p class="form-header-text" style="font-size: 15px; font-weight: 300;">Enter your email and we'll send you a link to get back into your account.</p>
 			<form action="forgot_password.php" method="post" class="form-box">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off">
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="email">
 					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="d-grid gap-2">
