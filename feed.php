@@ -5,7 +5,7 @@
 	require_once('./src/comments.php');
 	require_once('./src/like_db.php');
 
-	$info = $error = $posts = $post_id = $author = $comments = $posts_like_counts = $liked_posts = $after_id ='';
+	$info = $error = $posts = $post_id = $post_owner_id = $comments = $posts_like_counts = $liked_posts = $after_id ='';
 
 	if (is_get_request()) {
 
@@ -77,15 +77,15 @@
 						$after_id = $_POST['after_id'];
 					if (isset($_POST['post_id']) && !empty($_POST['post_id']))
 						$post_id = $_POST['post_id'];
-					if (isset($_POST['author']) && !empty($_POST['author']))
-						$author = $_POST['author'];
+					if (isset($_POST['post_owner_id']) && !empty($_POST['post_owner_id']))
+						$post_owner_id = $_POST['post_owner_id'];
 					$comment = validate_comment($_POST['comment']);
 
-					post_comment($dbc, $post_id, $author, $comment, $_SESSION['username']);
+					post_comment($dbc, $post_id, $post_owner_id, $comment, $_SESSION['user_id']);
 
-					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
+					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'post_owner_id' => $post_owner_id));
 
-					$notification_details = check_notifications_status($dbc, $author);
+					$notification_details = check_notifications_status($dbc, $post_owner_id);
 					if ($notification_details['notifications'] == 1) {
 						$email = $notification_details['email'];
 						send_notification($email, $_SESSION['username'], 'New comment', $qparam);

@@ -54,18 +54,18 @@ create table if not exists camagru_db.posts (
 create table if not exists camagru_db.comments (
 	comment_id int auto_increment primary key,
 	post_id int not null,
-	post_owner varchar(10) not null,
+	post_owner_id int not null,
 	comment varchar(250) not null,
-	commentator varchar(10) not null,
+	commentator_id int not null,
 	created_at timestamp not null default current_timestamp(),
 	foreign key (post_id)
 		references camagru_db.posts (post_id)
 		on delete cascade,
-	foreign key (post_owner)
-		references camagru_db.users (username)
+	foreign key (post_owner_id)
+		references camagru_db.users (user_id)
 		on delete cascade,
-	foreign key (commentator)
-		references camagru_db.users (username)
+	foreign key (commentator_id)
+		references camagru_db.users (user_id)
 		on delete cascade
 );
 

@@ -13,6 +13,7 @@
 					foreach ($posts as $post) {
 						$src = '.'.$post['picture_path'];
 						$author = $post['username'];
+						$post_owner_id = $post['owner_id'];
 						$description = $post['picture_description'];
 						$id = $post['post_id'];
 						$post_like_count = 0;
@@ -82,9 +83,9 @@
 								<section class="comments">
 									<?php if (!empty($comments)) {
 											foreach ($comments as $comment) {
-												if ($comment['post_id'] == $id && $comment['post_owner'] == $author) {
+												if ($comment['post_id'] == $id) {
 													echo '<div class="comment">
-															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['commentator'] . '</h6>
+															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['username'] . '</h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
 														</div>';
 												}
@@ -98,7 +99,7 @@
 										<button type="submit" name="submit" value="submit" class="btn btn-outline-primary">Post</button>
 										<input type="hidden" readonly value="<?php if (isset($after_id)) echo $after_id ?>" name="after_id"/>
 										<input type="hidden" readonly value="<?php echo $id ?>" name="post_id"/>
-										<input type="hidden" readonly value="<?php echo $author ?>" name="author"/>
+										<input type="hidden" readonly value="<?php echo $post_owner_id ?>" name="post_owner_id"/>
 									</form>
 									<?php 
 										if (isset($error) && !empty($error)) {
@@ -117,7 +118,6 @@
 			?>
 			<?php if (empty($posts)) echo '<div style="display: none;'; ?>
 				<ul class="pagination">
-					<!-- make previous -->
 					<li class="page-item"><a class="page-link" href="feed.php<?php
 						
 						if (count($posts) > 0) {

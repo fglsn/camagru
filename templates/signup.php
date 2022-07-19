@@ -10,7 +10,7 @@
 			<span class="error"><?php echo $error;?> </span>
 			<form action="signup.php" class="form-box" method="post">
 				<div class="mb-3">
-					<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $email?>" autocomplete="email" required>
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $email?>" autocomplete="off" required>
 					<span class="error"><?php echo $err_email;?> </span>
 				</div>
 				<div class="mb-3">

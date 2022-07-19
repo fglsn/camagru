@@ -354,22 +354,21 @@ main {
 	right: 25px;
 	z-index: 100;
 	height: 26px;
-	width: 26px;
+	width: 32px;
 	padding: 0;
-	background-color: #ffffff6b;
-	color: rgb(255, 255, 255);
+	background-color: #ffffffe2;
+	color: rgb(0, 0, 0);
 
 }
 
 .delete {
-	border-radius: 25px;
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(255, 255, 255, 0.514);
 	position: absolute;
 	background: none;
-	background-color: #ffffff6b;
-	color: rgb(255, 255, 255);
+	border-radius: 4px;
+	background-color: #ffffffe2;
+	color: rgb(0, 0, 0);
+	border-style: none;
+	/* border-color: rgba(255, 255, 255, 0.514); */
 }
 
 .pic-thumbnail {
@@ -441,7 +440,7 @@ main {
 	z-index: 100;
 }
 
-@media only screen and (max-width: 780px) {
+@media only screen and (max-width: 960px) {
 	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
 		max-width: 72px;
 	}
@@ -450,21 +449,59 @@ main {
 	}
 }
 
-@media only screen and (max-width: 580px) {
+@media only screen and (max-width: 780px) {
 	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
-		max-width: 50px;
+		max-width: 60px;
+	}
+	.sticker-preview-container {
+		bottom: 70px;
+	}
+}
+
+
+@media only screen and (max-width: 715px) {
+	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
+		max-width: 53px;
 	}
 	.sticker-preview-container {
 		bottom: 65px;
 	}
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 670px) {
 	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
-		max-width: 30px;
+		max-width: 47px;
 	}
 	.sticker-preview-container {
-		bottom: 45px;
+		bottom: 60px;
+	}
+}
+
+@media only screen and (max-width: 630px) {
+	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
+		max-width: 43px;
+	}
+	.sticker-preview-container {
+		bottom: 55px;
+	}
+}
+
+
+@media only screen and (max-width: 600px) {
+	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
+		max-width: 37px;
+	}
+	.sticker-preview-container {
+		bottom: 52px;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	#sticker-preview-1, #sticker-preview-2, #sticker-preview-3, #sticker-preview-4 {
+		max-width: 34px;
+	}
+	.sticker-preview-container {
+		bottom: 50px;
 	}
 }
 
