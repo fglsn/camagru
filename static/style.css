@@ -144,6 +144,14 @@ main {
 	margin: 0 12px 0 0;
 }
 
+.comments-btn {
+	border-style: none!important;
+	background-color: none!important;
+	background: none;
+	margin: 10px;
+	color:#606770;
+	text-decoration: underline;
+}
 .comments {
 	padding: 12px 0;
 }

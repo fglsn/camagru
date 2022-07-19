@@ -42,6 +42,12 @@
 								}
 							}
 						}
+						$post_comments = array();
+						foreach ($comments as $comment) {
+							if ($comment['post_id'] == $id) {
+								array_push($post_comments, $comment);
+							}
+						}
 						//$liked = $post['liked'];
 			?>
 
@@ -91,14 +97,21 @@
 										echo "<div style='display: none'>"?>
 								<div class="line" style="flex-grow: 0"></div>
 								<section class="comments">
-									<?php if (!empty($comments)) {
-											foreach ($comments as $comment) {
-												if ($comment['post_id'] == $id) {
-													echo '<div class="comment">
+									<?php 
+										if (!empty($post_comments)) {
+											if (count($post_comments) > 5) {
+												echo '<button class="comments-btn" id="show-comments-' . $id . '" onclick="toggleComments(' . $id . ')">Show all ' . count($post_comments) . ' comments</button>';
+												echo '<div id="many-comments-' . $id . '" style="display: none">';
+											}
+											foreach ($post_comments as $comment) {
+												echo '<div class="comment">
 															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['username'] . '</h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
 														</div>';
-												}
+											}
+											if (count($post_comments) > 5) {
+												echo '<button class="comments-btn" id="hide-comments-' . $id . '" onclick="toggleComments(' . $id . ')">Hide comments</button>';
+												echo '</div>';
 											}
 										}
 									?>
@@ -192,6 +205,21 @@
 	function changeLikeCount(postId, likeCount) {
 		const el = document.getElementById('like-count-' + postId);
 		el.textContent = likeCount + ' like(s)';
+	}
+
+	function toggleComments(postId) {
+		const commentsDiv = document.getElementById('many-comments-' + postId);
+		const showButton = document.getElementById('show-comments-' + postId);
+		const hideButton = document.getElementById('hide-comments-' + postId);
+		if (commentsDiv.style.display == 'none') {
+			showButton.style.display = 'none';
+			commentsDiv.style.display = 'block';
+			hideButton.style.display = 'inline-block';
+		} else {
+			showButton.style.display = 'inline-block';
+			commentsDiv.style.display = 'none';
+			hideButton.style.display = 'none';
+		}
 	}
 
 <?php
