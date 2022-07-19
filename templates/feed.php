@@ -9,6 +9,16 @@
 	<section class="feed container">
 		<div class="post-listing">
 			<?php
+				if (empty($posts) || !isset($posts)) { ?>
+					<div class="container" style="display: flex; flex-direction: column; align-items: center;">
+						<svg style="margin: 2rem;" xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-postcard-heart" viewBox="0 0 16 16">
+							<path d="M8 4.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7Zm3.5.878c1.482-1.42 4.795 1.392 0 4.622-4.795-3.23-1.482-6.043 0-4.622ZM2.5 5a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3Z"/>
+							<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z"/>
+						</svg>
+						<h3>No posts here yet!</h3>
+						<h5 style="margin: 0 0 2rem 0;"> Are you ready to leave one? :) </h5>
+					</div>
+				<?php }
 				if (!empty($posts)) {
 					foreach ($posts as $post) {
 						$src = '.'.$post['picture_path'];
@@ -118,27 +128,25 @@
 			?>
 			<?php if (empty($posts)) echo '<div style="display: none;'; ?>
 				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="feed.php<?php
-						
+					<?php 
 						if (count($posts) > 0) {
-							$num = $posts[count($posts) - 1]['post_id'];
-							if ($num + 10 >= $lateral_ids[0][0] || $num + 10 <= $lateral_ids[1][0])
-								echo '';
-							else
-								echo '?after_id=' . $num + 10;
-						} else {
-							echo '';
-						} ?>">Previous</a></li>
+							$latest_post_id = $lateral_ids[0][0];
+							$first_post_id = $lateral_ids[1][0];
 
-						<li class="page-item"><a class="page-link" href="feed.php<?php 
-						if (count($posts) > 0) {
-							$num = $posts[count($posts) - 1]['post_id'];
-							if ($num >= $lateral_ids[0][0] || $num <= $lateral_ids[1][0])
-								echo '';
-							else
-								echo '?after_id=' . $num;
-						} else { echo ''; }?>">Next</a></li>
+							$latest_post_on_page = $posts[0]['post_id'];
+							if ($latest_post_on_page != $latest_post_id) {
+								$previous_after_id = $latest_post_on_page + 5 + 1;
+								echo '<li class="page-item"><a class="page-link" href="feed.php?after_id=' . $previous_after_id . '">Previous</a></li>';
+							}
+
+							$first_post_on_page = $posts[count($posts) - 1]['post_id'];
+							if ($first_post_on_page != $first_post_id) {
+								echo '<li class="page-item"><a class="page-link" href="feed.php?after_id=' . $first_post_on_page . '">Next</a></li>';
+							}
+						}
+					?>
 				</ul>
+			<?php if (empty($posts)) echo '</div>'; ?>
 		</div>
 	</section>
 </main>
