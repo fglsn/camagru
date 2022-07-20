@@ -18,7 +18,7 @@
 			header('Location: login.php?' . $qparam);
 			exit;
 		} 
-		if (isset($path)) {
+		if (isset($path) && !empty($path)) {
 			header("Location: $path");
 		}
 	}

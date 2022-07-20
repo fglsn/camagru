@@ -102,7 +102,7 @@
 				$error = $e->getMessage();
 			}
 			if ($error) {
-				$qparam = http_build_query(array('info' => 'comment_failed', 'error' => $error, 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $author));
+				$qparam = http_build_query(array('info' => 'comment_failed', 'error' => $error, 'after_id' => $after_id, 'post_id' => $post_id, 'author' => $post_owner_id));
 				header('Location: feed.php?' . $qparam);
 			}
 		}

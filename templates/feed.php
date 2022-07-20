@@ -43,12 +43,13 @@
 							}
 						}
 						$post_comments = array();
-						foreach ($comments as $comment) {
-							if ($comment['post_id'] == $id) {
-								array_push($post_comments, $comment);
+						if (isset($comments) && !empty($comments)) {
+							foreach ($comments as $comment) {
+								if ($comment['post_id'] == $id) {
+									array_push($post_comments, $comment);
+								}
 							}
 						}
-						//$liked = $post['liked'];
 			?>
 
 					<article class="post-wrapper" id="post-container-<?php echo $id; ?>">
