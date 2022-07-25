@@ -18,10 +18,12 @@ header {
 	top: -2px;
 	border: 1px solid #dddddd80;
 	height: 4rem;
+	position: sticky!important;
+	z-index: 500;
 }
 
 .navbar {
-	align-content: center
+	align-content: center;
 }
 
 .navbar-brand {
