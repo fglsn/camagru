@@ -66,4 +66,4 @@ User will recieve an email notification when his post was commented, unless user
 ![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/11.png?raw=true)  
 ![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/12.png?raw=true)  
   
-  
+All pages have responsive layout, application is compatible at least with Chrome and Mozilla Firefox  
