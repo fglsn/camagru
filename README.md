@@ -17,5 +17,25 @@ This application serves as a photo-gallery where user can:
     * remove account  
       
 User will recieve an email notification when his post was commented.  
+
+# Project visual layout
+
+**Starting page**  
   
+![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/1-1.png?raw=true)  
   
+**Signup page**  
+  
+![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/2.png?raw=true)  
+  
+**Login page**  
+  
+![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/3.png?raw=true)  
+  
+**Forgot password**  
+  
+![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/4.png?raw=true)  
+  
+**Main page / Main feed**  
+  
+![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/7.png?raw=true)  
