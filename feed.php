@@ -86,7 +86,7 @@
 					$qparam = http_build_query(array('info' => 'comment_posted', 'after_id' => $after_id, 'post_id' => $post_id, 'post_owner_id' => $post_owner_id));
 
 					$notification_details = check_notifications_status($dbc, $post_owner_id);
-					if ($notification_details['notifications'] == 1) {
+					if ($notification_details['notifications'] == 1 && $post_owner_id != $_SESSION['user_id']) {
 						$email = $notification_details['email'];
 						send_notification($email, $_SESSION['username'], 'New comment', $qparam);
 					}
