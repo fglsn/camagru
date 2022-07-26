@@ -92,7 +92,7 @@
 					<?php }; ?>
 								</section>
 								<section class="author-section">
-									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
+									<h6 class="author-username" style="padding: 12px;"><a href="profile.php?user=<?php echo $post_owner_id;?>" style="color:black!important"><?php echo '@' . $author ?></a></h6>
 									<p class="post-description"><?php echo $description ?></p>
 									<section class="date">
 										<time datetime="<?php echo $post['created_at'];?>"><?php echo $creation_time;?></time>
