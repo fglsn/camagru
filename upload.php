@@ -69,7 +69,7 @@
 	if (is_get_request()) {
 		$thumbnails = load_thumbnails($dbc, $_SESSION['user_id']);
 		if (isset($_GET['info']) && $_GET['info'] === 'uploaded') {
-			$info = "Uploaded successfully!";
+			$info = 'Uploaded successfully!';
 		}
 		echo get_template('upload.php', array(
 			'title' => 'New post',

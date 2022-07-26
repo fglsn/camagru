@@ -19,7 +19,7 @@
 			exit;
 		} 
 		if (isset($path) && !empty($path)) {
-			header("Location: $path");
+			header('Location: $path');
 		}
 	}
 
@@ -64,7 +64,7 @@
 		$output = $data;
 		if (is_array($output))
 			$output = implode(',', $output);
-		echo "<script>console.log('Debug output: " . $output . "' );</script>";
+		echo "<script>console.log('Debug output: ' . $output . '' );</script>";
 	}
 
 ?>

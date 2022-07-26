@@ -1,7 +1,7 @@
 <?php
-	require_once("./config/include.php");
-	require_once("./src/user_create_activate.php");
-	require_once("./src/validations.php");
+	require_once('./config/include.php');
+	require_once('./src/user_create_activate.php');
+	require_once('./src/validations.php');
 
 	$err_email = $err_username = $err_pass = $err_conf = $error = '';
 	$submit = $email = $username = $password = $hash = $confirmation = '';
@@ -28,16 +28,16 @@
 
 		//Validate password
 		try {
-			validate_password($_POST["password"]);
+			validate_password($_POST['password']);
 			$options = ['cost' => 12,];
-			$hash = password_hash($_POST["password"], PASSWORD_BCRYPT, $options);
+			$hash = password_hash($_POST['password'], PASSWORD_BCRYPT, $options);
 		} catch (ValidationException $e) {
 			$err_pass = $e->getMessage();
 		}
 
 		// Validate confirmation
 		try {
-			validate_confirmation($_POST["password"], $_POST["confirmation"]);
+			validate_confirmation($_POST['password'], $_POST['confirmation']);
 		} catch (ValidationException $e) {
 			$err_conf = $e->getMessage();
 		}
@@ -45,7 +45,7 @@
 
 	//Create user
 	if(isset($_POST['submit'])) {
-		if($err_username == "" && $err_email == "" && $err_pass == "" && $err_conf == "") {
+		if($err_username == '' && $err_email == '' && $err_pass == '' && $err_conf == '') {
 			try {
 				$activation_code = create_user($dbc, $username, $email, $hash);
 				send_activation_email($root_url, $sender_email, $email, $activation_code);
@@ -53,21 +53,21 @@
 				header('Location: login.php?' . $qparam);
 			}
 			catch (UsernameExistsException $e) { //error thrown if username or email already in use, see unique indexes (sql)
-				$err_username = "Username already exists. Try another username." . PHP_EOL;
+				$err_username = 'Username already exists. Try another username.' . PHP_EOL;
 			}
 			catch (EmailExistsException $e) {
-				$err_email = "This email address is already in use. Please try another email address" . PHP_EOL;
+				$err_email = 'This email address is already in use. Please try another email address' . PHP_EOL;
 			}
 			catch (FailedToSendMail $e) {
-				$info = "Failed to send email." . PHP_EOL;
+				$info = 'Failed to send email.' . PHP_EOL;
 			}
 			catch (Exception $e) {
-				$err_username = "The user could not be added. ".$e->getMessage();
+				$err_username = 'The user could not be added. '.$e->getMessage();
 			}
 		}
 	}
 
-	echo get_template("signup.php", array(
+	echo get_template('signup.php', array(
 		'title' => 'Sign up',
 		'error' => $error,
 		'err_email' => $err_email,

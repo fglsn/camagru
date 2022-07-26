@@ -1,6 +1,6 @@
 <?php
-	require_once("./config/include.php");
-	require_once("./src/user_create_activate.php");
+	require_once('./config/include.php');
+	require_once('./src/user_create_activate.php');
 
 	if (is_get_request()) {
 		if (isset($_GET['activation_code'])) {
@@ -15,11 +15,11 @@
 				$qparam = http_build_query(array('info' => 'already_verified'));
 				header('Location: login.php?' . $qparam);
 			} else {
-				header("Location: login.php");
+				header('Location: login.php');
 			}
 		}
 		else {
-			header("Location: login.php");
+			header('Location: login.php');
 		}
 	}
 ?>

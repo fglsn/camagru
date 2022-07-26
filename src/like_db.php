@@ -1,22 +1,22 @@
 <?php
 
 function like($dbc, $post_id, $user_id) {
-	$stmt = $dbc->prepare("insert into likes (post_id, user_id)
+	$stmt = $dbc->prepare('insert into likes (post_id, user_id)
 								values (:post_id, :user_id)
-								on duplicate key update like_id = like_id");
+								on duplicate key update like_id = like_id');
 	return $stmt->execute(array('post_id' => $post_id,
 						 		'user_id' => $user_id));
 }
 
 function dislike($dbc, $post_id, $user_id) {
-	$stmt = $dbc->prepare("delete from likes
-							where post_id = :post_id and user_id = :user_id");
+	$stmt = $dbc->prepare('delete from likes
+							where post_id = :post_id and user_id = :user_id');
 	return $stmt->execute(array('post_id' => $post_id,
 						 		'user_id' => $user_id));
 }
 
 function post_like_count($dbc, $post_id) {
-	$stmt = $dbc->prepare("select count(*) from likes where post_id = :post_id");
+	$stmt = $dbc->prepare('select count(*) from likes where post_id = :post_id');
 	$stmt->execute(array('post_id' => $post_id));
 	$result = $stmt->fetch();
 	return $result['0'];

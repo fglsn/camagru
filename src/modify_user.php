@@ -32,7 +32,7 @@
 		}
 		catch (PDOException $e) {
 			$err = $e->getMessage();
-			if (strpos($err, "username_index"))
+			if (strpos($err, 'username_index'))
 				throw new UsernameExistsException();
 			else
 				throw $e;

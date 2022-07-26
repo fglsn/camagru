@@ -1,13 +1,13 @@
 <?php
 
-	require_once("./config/include.php");
-	require_once("./src/reset_pwd.php");
+	require_once('./config/include.php');
+	require_once('./src/reset_pwd.php');
 
 	$info = $err_email = $error = '';
 	
 	if (is_post_request()) {
 		if (empty($_POST['email'])) {
-			$err_email = "Please provide your email address.";
+			$err_email = 'Please provide your email address.';
 		}
 		else {
 			$email = input_data($_POST['email']);
@@ -18,10 +18,10 @@
 				header('Location: forgot_password.php?' . $qparam);
 			}
 			catch (NoUserFoundException $e) {
-				$info = "No user found. Please try again." . PHP_EOL;
+				$info = 'No user found. Please try again.' . PHP_EOL;
 			}
 			catch (FailedToSendMail $e) {
-				$info = "Failed to send email." . PHP_EOL;
+				$info = 'Failed to send email.' . PHP_EOL;
 			}
 		}
 		echo get_template('forgot_password.php', array(
@@ -37,7 +37,7 @@
 			$token = isset($_GET['t']) ? trim($_GET['t']) : '';
 			$request_data = fetch_from_password_reset_table($dbc, $token);
 			if (!$request_data) 
-				$info = "Error fetching request, try again.";
+				$info = 'Error fetching request, try again.';
 			else {
 				session_regenerate_id();
 				$_SESSION['user_id_reset_pass'] = $request_data['user_id'];

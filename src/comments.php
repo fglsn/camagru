@@ -37,7 +37,7 @@
 				You can check it out here: http://localhost:8080/camagru/feed.php?$qparam'
 				MESSAGE;
 		$sender_email = 'no-reply@camagru.com';
-		$header = "From:" . $sender_email;
+		$header = 'From:' . $sender_email;
 		mail($email, $subject, $message, $header);
 	}
 ?>

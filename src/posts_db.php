@@ -4,8 +4,8 @@
 	require_once(__DIR__ . '/user_db.php');
 
 	function create_post($dbc, $image_relative_path, $user_id, $description, $webcam = 0) {
-		$stmt = $dbc->prepare("insert into posts (owner_id, picture_path, picture_description, webcam)
-								values (:owner_id, :picture_path, :picture_description, :webcam)");
+		$stmt = $dbc->prepare('insert into posts (owner_id, picture_path, picture_description, webcam)
+								values (:owner_id, :picture_path, :picture_description, :webcam)');
 		return $stmt->execute(array('owner_id' => $user_id,
 							'picture_path' => $image_relative_path,
 							'picture_description' => $description,
@@ -54,16 +54,16 @@
 	}
 
 	function load_user_statistics($dbc, $user_id) {
-		$sql = "select count(*) from posts where owner_id = :user_id";
+		$sql = 'select count(*) from posts where owner_id = :user_id';
 		$stmt = $dbc->prepare($sql);
 		$stmt->execute(array('user_id' => $user_id));
 		return $stmt->fetch();
 	}
 
 	function remove_post($dbc, $post_id, $user_id) {
-		$sql = "delete from posts
+		$sql = 'delete from posts
 				where owner_id = :user_id
-				and post_id = :post_id";
+				and post_id = :post_id';
 		$stmt = $dbc->prepare($sql);
 		return $stmt->execute(array('post_id' => $post_id,
 									'user_id' => $user_id));

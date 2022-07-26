@@ -47,7 +47,7 @@
 	}
 
 	function prepare_image($picture_url) {
-		$img = base64_decode(preg_replace("/data:image\/jpeg;base64,/", '', $picture_url));
+		$img = base64_decode(preg_replace('/data:image\/jpeg;base64,/', '', $picture_url));
 		$temp_filepath = TEMP_DIR_LOCATION . uniqid('webcam') . '.jpeg';
 		file_put_contents($temp_filepath, $img);
 

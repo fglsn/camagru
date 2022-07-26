@@ -1,7 +1,7 @@
 <?php
-	require_once("./config/include.php");
+	require_once('./config/include.php');
 	require_once('./src/posts_db.php');
-	require_once("./src/validations.php");
+	require_once('./src/validations.php');
 
 	require_login('');
 
