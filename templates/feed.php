@@ -25,6 +25,7 @@
 						$author = $post['username'];
 						$post_owner_id = $post['owner_id'];
 						$description = $post['picture_description'];
+						$creation_time = time_elapsed_string($post['created_at']);
 						$id = $post['post_id'];
 						$post_like_count = 0;
 						if (!empty($posts_like_counts)) {
@@ -93,6 +94,9 @@
 								<section class="author-section">
 									<h6 class="author-username" style="padding: 12px;"><?php echo '@' . $author ?></h6>
 									<p class="post-description"><?php echo $description ?></p>
+									<section class="date">
+										<time datetime="<?php echo $post['created_at'];?>"><?php echo $creation_time;?></time>
+									</section>
 								</section>
 									<?php if (!is_user_logged_in())
 										echo "<div style='display: none'>"?>
@@ -108,6 +112,7 @@
 												echo '<div class="comment">
 															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['username'] . '</h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
+															<p class="date">' . time_elapsed_string($comment['created_at']) . '</p>
 														</div>';
 											}
 											if (count($post_comments) > 5) {

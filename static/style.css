@@ -97,6 +97,15 @@ main {
 	min-width: 120px;
 }
 
+.date {
+	margin-left: auto;
+	margin-right: 14px;
+	font-size: 0.75rem;
+	letter-spacing: .2px;
+	color: #ced4da;;
+	overflow-y: visible;
+}
+
 .post-content {
 	display: flex;
 	justify-content: center;

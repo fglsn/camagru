@@ -19,7 +19,7 @@
 		else
 			$where_clause = 'where posts.post_id < :after_id';
 		$sql = 'select users.username,
-				posts.post_id, posts.owner_id, posts.picture_path, posts.picture_description
+				posts.post_id, posts.owner_id, posts.picture_path, posts.picture_description, posts.created_at
 				from posts join users
 				on posts.owner_id = users.user_id '
 				. $where_clause .
