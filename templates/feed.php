@@ -56,7 +56,7 @@
 					<article class="post-wrapper" id="post-container-<?php echo $id; ?>">
 						<div class="post">
 							<div class="post-header">
-								<h6 class="author-username"><?php echo '@'.$author;?></h6>
+								<h6 class="author-username"><a href="profile.php?user=<?php echo $post_owner_id;?>" style="color:black!important"><?php echo '@'.$author;?></a></h6>
 							</div>
 							<div class="post-content">
 								<div class="post-pic-section" id="<?php echo $id;?>">

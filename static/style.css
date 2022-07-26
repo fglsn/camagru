@@ -217,7 +217,7 @@ main {
 	text-align: center;
 	padding: 16px;
 	position: fixed;
-	z-index: 1;
+	z-index: 1000;
 	left: 50%;
 	top: 30px;
 	border: 1px solid #ebe9e93e;
@@ -377,6 +377,7 @@ main {
 	padding: 0;
 	background-color: #ffffffe2;
 	color: rgb(0, 0, 0);
+	margin: 0;
 
 }
 
@@ -387,6 +388,8 @@ main {
 	background-color: #ffffffe2;
 	color: rgb(0, 0, 0);
 	border-style: none;
+	margin-left: auto;
+    margin-right: 14px;
 	/* border-color: rgba(255, 255, 255, 0.514); */
 }
 
@@ -629,19 +632,14 @@ input[type="file"] {
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: baseline;
-	padding: 3rem 0 1rem 0;
-
+	padding-top: 3rem;
 }
-
-/* .profile-username {
-	padding: 3rem 0 1rem 0;
-} */
 
 .profile-grid {
 	display: grid;
 	gap: 28px;
 	grid-template-columns: repeat(3, 1fr);
-	padding: 2rem 0;
+	padding: 1rem 0 1rem 0;
 }
 
 .user-pic {
@@ -700,6 +698,6 @@ span.sign-link {
 /* Footer */
 
 .footer {
-	position: inherit;
+	position: initial;
 	bottom: 0;
 }

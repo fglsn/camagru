@@ -36,7 +36,7 @@ function find_user_by_email($dbc, $email) {
 	return $stmt->fetch();
 }
 
-function  find_username_by_id($dbc, $user_id) {
+function find_username_by_id($dbc, $user_id) {
 	$sql = 'select username from users where user_id=:user_id';
 	$stmt = $dbc->prepare($sql);
 	$stmt->execute(array('user_id' => $user_id));

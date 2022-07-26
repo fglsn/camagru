@@ -5,7 +5,7 @@
 <main class="container" role="main">
 		<div class="stats">
 			<h4 class="profile-username"><?php if (!empty($username)) echo '@'. $username?></h4>
-			<h6><?php if (!empty($stats) && $stats['0'] > 0) echo $stats['0'] . ' posts';?></h6>
+			<h6><?php if (!empty($total_posts) && $total_posts > 0) echo $total_posts . ' post(s)';?></h6>
 		</div>
 
 		<?php
@@ -16,9 +16,10 @@
 						<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z"/>
 					</svg>
 					<h3>No posts here yet!</h3>
+					<?php if ($username == $_SESSION['username']) { ?>
 					<h5 style="margin: 0 0 2rem 0;"> Click <a href="upload.php">here</a> to add your first post. </h5>
 				</div>
-		<?php }; ?>
+		<?php }}; ?>
 
 		<div class="profile-grid">
 			<?php
