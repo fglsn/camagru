@@ -110,7 +110,7 @@
 											}
 											foreach ($post_comments as $comment) {
 												echo '<div class="comment">
-															<h6 class="commentator" style="padding: 5px 12px;">' . $comment['username'] . '</h6>
+															<h6 class="commentator" style="padding: 5px 12px;"><a href="profile.php?user=' . $comment['commentator_id'] . '"' . ' style="color:black!important">' . $comment['username'] . '</a></h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
 															<p class="date">' . time_elapsed_string($comment['created_at']) . '</p>
 														</div>';
