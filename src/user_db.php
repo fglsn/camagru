@@ -51,4 +51,10 @@ function check_notifications_status($dbc, $user_id) {
 	return $stmt->fetch();
 }
 
+function delete_user($dbc, $user_id) {
+	$sql = 'delete from users where user_id=:user_id';
+	$stmt = $dbc->prepare($sql);
+	return $stmt->execute(array('user_id' => $user_id));
+}
+
 ?>

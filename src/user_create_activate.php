@@ -31,7 +31,7 @@
 
 	// -- Email user --
 	function send_activation_email($root_url, $sender_email, $email, $activation_code): void {
-		$activation_link = $root_url . '/activate.php?activation_code=$activation_code';
+		$activation_link = $root_url . "/activate.php?activation_code=$activation_code";
 		$subject = 'Please activate your account';
 		$message = <<<MESSAGE
 				Hi and thanks for registration!

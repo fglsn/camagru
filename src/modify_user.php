@@ -76,12 +76,6 @@
 									'user_id' => $_SESSION['user_id']));
 	}
 
-	function delete_user($dbc, $user_id) {
-		$sql = 'delete from users where user_id=:user_id';
-		$stmt = $dbc->prepare($sql);
-		return $stmt->execute(array('user_id' => $user_id));
-	}
-
 	function update_session_username($new_username) {
 		$_SESSION['username'] = $new_username;
 	}

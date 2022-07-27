@@ -13,6 +13,12 @@
 		));
 	}
 
+	function remove_comment($dbc, $comment_id) {
+		$sql = 'delete from comments where comment_id = :comment_id';
+		$stmt = $dbc->prepare($sql);
+		return $stmt->execute(array('comment_id' => $comment_id));
+	}
+
 	function load_comments($dbc, $posts) {
 		if (count($posts) > 0) {
 			$posts_count = (string)(count($posts) - 1);
