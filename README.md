@@ -43,6 +43,7 @@ A user will receive an email notification when his post is commented, unless us
  The main page is paginated, there are five posts per page.  
  An id of the last post from the current page will be sent to the PHP script, which will fetch only the next 5 posts from the db.  
  Users are able to comment and like any post. Comment sections and likes are disabled and comments are not loaded for not logged in visitors.  
+ Upd: Comment can be now removed by post owner or comment owner. Also elapsed timestamps ("N time ago") are added to posts and comments.
    
 ![alt text](https://github.com/fglsn/camagru/blob/main/screenshots/8.png?raw=true)  
   
