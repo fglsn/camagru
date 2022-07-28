@@ -109,11 +109,19 @@
 												echo '<div id="many-comments-' . $id . '" style="display: none">';
 											}
 											foreach ($post_comments as $comment) {
-												echo '<div class="comment">
+												$comment_id = $comment["comment_id"];
+												echo '<div class="comment" id="comment-id-' . $comment_id . '">
 															<h6 class="commentator" style="padding: 5px 12px;"><a href="profile.php?user=' . $comment['commentator_id'] . '"' . ' style="color:black!important">' . $comment['username'] . '</a></h6>
 															<p class="comment-text">' . $comment['comment'] . '</p>
-															<p class="date">' . time_elapsed_string($comment['created_at']) . '</p>
-														</div>';
+															<p class="date" style="font-size: 10px">' . time_elapsed_string($comment['created_at']) . '</p>';
+															if ($post['post_id'] == $id && isset($_SESSION['username']) && ($author == $_SESSION['username'] ||  $comment['commentator_id'] == $_SESSION['user_id'])) {
+																echo '<button onclick="removeComment(' . $comment_id .')" class="delete-comment">
+																		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+																			<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+																		</svg>
+																	</button>';
+															}
+													echo '</div>';
 											}
 											if (count($post_comments) > 5) {
 												echo '<button class="comments-btn" id="hide-comments-' . $id . '" onclick="toggleComments(' . $id . ')">Hide comments</button>';
@@ -200,6 +208,28 @@
 		.catch(error => {
 			console.error('Error: ' + error);
 			changeLikeError(postId, 'Could not like post!');
+		});
+	}
+
+	function removeComment(commentId) {
+		const formData = new FormData();
+		formData.append('comment_id', commentId);
+
+		fetch('remove_comment.php', {
+			method: 'POST',
+			body: formData
+		})
+		.then(response => response.text())
+		.then(text => {
+			if (!text) {
+				const commentToRemove = document.getElementById('comment-id-' + commentId);
+				commentToRemove.remove();
+			} else {
+				console.error('Error removing comment: ' + text);
+			}
+		})
+		.catch(error => {
+			console.error('Erorr removing comment: ' + error);
 		});
 	}
 

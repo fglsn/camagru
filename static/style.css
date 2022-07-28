@@ -191,6 +191,13 @@ main {
 	display: none;
 }
 
+.delete-comment {
+	background: none;
+	border: none;
+	color: rgb(0, 0, 0);
+	margin-right: 14px;
+}
+
 .input-box {
 	display: flex;
 	flex-direction: row;

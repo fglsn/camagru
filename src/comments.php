@@ -25,7 +25,7 @@
 			$first_post = $posts['0']['post_id'];
 			$last_post = $posts[$posts_count]['post_id'];
 			$sql = 'select users.username,
-					comments.post_id, comments.post_owner_id, comments.comment, comments.commentator_id, comments.created_at
+					comments.comment_id, comments.post_id, comments.post_owner_id, comments.comment, comments.commentator_id, comments.created_at
 					from comments join users
 					on comments.commentator_id = users.user_id
 					where post_id <= :first_post and post_id >= :last_post
